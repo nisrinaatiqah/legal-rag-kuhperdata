@@ -1,0 +1,1 @@
+Tahap ingestion saat ini hanya inspeksi dan ekstraksi per halaman. Buat parser dan chunk pasal setelah format hasil PDF benar-benar diperiksa, bukan dengan asumsi pola heading yang belum diverifikasi.

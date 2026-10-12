@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+
+# PDF sumber dan hasil olah disimpan lokal; jangan otomatis masuk version control
+data/raw_trusted/*.pdf
+data/extracted/*.jsonl
+data/extracted/*.txt
+data/processed/*
+data/poisoning/*
+data/evaluation/results/*
+data/manifests/*.json
+outputs/*
+!data/raw_trusted/.gitkeep
+!data/extracted/.gitkeep
+!data/processed/.gitkeep
+!data/poisoning/.gitkeep
+!data/evaluation/.gitkeep
+!data/manifests/.gitkeep
+!outputs/.gitkeep

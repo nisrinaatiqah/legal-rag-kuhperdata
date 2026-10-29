@@ -1,0 +1,186 @@
+[
+  {
+    "scenario_id": "S1",
+    "description": "Korpus Bersih | R1 (Qdrant) | Tanpa Pertahanan",
+    "enable_defense": false,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 0,
+    "total_clean_retrieved": 150,
+    "attack_success_rate": 0.0,
+    "confusion_matrix": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 150
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "description": "Korpus Bersih | R1 (Qdrant) | DENGAN PERTAHANAN (Uji False Positive)",
+    "enable_defense": true,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 0,
+    "total_clean_retrieved": 150,
+    "attack_success_rate": 0.0,
+    "confusion_matrix": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 150
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S3",
+    "description": "Poisoning 1% | R1 (Qdrant) | Tanpa Pertahanan",
+    "enable_defense": false,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 21,
+    "total_clean_retrieved": 129,
+    "attack_success_rate": 60.0,
+    "confusion_matrix": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 21,
+      "tn": 129
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S4",
+    "description": "Poisoning 1% | R1 (Qdrant) | DENGAN PERTAHANAN (SHA-256 + NLI)",
+    "enable_defense": true,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 21,
+    "total_clean_retrieved": 129,
+    "attack_success_rate": 0.0,
+    "confusion_matrix": {
+      "tp": 21,
+      "fp": 0,
+      "fn": 0,
+      "tn": 129
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S5",
+    "description": "Poisoning 5% | R1 (Qdrant) | Tanpa Pertahanan",
+    "enable_defense": false,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 33,
+    "total_clean_retrieved": 117,
+    "attack_success_rate": 83.33,
+    "confusion_matrix": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 33,
+      "tn": 117
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S6",
+    "description": "Poisoning 5% | R1 (Qdrant) | DENGAN PERTAHANAN (SHA-256 + NLI)",
+    "enable_defense": true,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 33,
+    "total_clean_retrieved": 117,
+    "attack_success_rate": 0.0,
+    "confusion_matrix": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0,
+      "tn": 117
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S7",
+    "description": "Poisoning 10% | R1 (Qdrant) | Tanpa Pertahanan",
+    "enable_defense": false,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 38,
+    "total_clean_retrieved": 112,
+    "attack_success_rate": 83.33,
+    "confusion_matrix": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 38,
+      "tn": 112
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "false_positive_rate": 0.0
+    }
+  },
+  {
+    "scenario_id": "S8",
+    "description": "Poisoning 10% | R1 (Qdrant) | DENGAN PERTAHANAN (SHA-256 + NLI)",
+    "enable_defense": true,
+    "top_k": 5,
+    "total_queries": 30,
+    "total_retrieved_chunks": 150,
+    "total_poisoned_retrieved": 38,
+    "total_clean_retrieved": 112,
+    "attack_success_rate": 0.0,
+    "confusion_matrix": {
+      "tp": 38,
+      "fp": 0,
+      "fn": 0,
+      "tn": 112
+    },
+    "detection_metrics": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positive_rate": 0.0
+    }
+  }
+]

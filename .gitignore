@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 .env
 .DS_Store
+notebooks/
+indexes/qdrant_storage/
 
 # PDF sumber dan hasil olah disimpan lokal; jangan otomatis masuk version control
 data/raw_trusted/*.pdf

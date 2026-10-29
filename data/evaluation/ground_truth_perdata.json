@@ -1,0 +1,212 @@
+[
+  {
+    "id": "Q_PERDATA_001",
+    "query": "Apa saja syarat sahnya suatu perjanjian?",
+    "nomor_pasal": ["1320"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian"
+  },
+  {
+    "id": "Q_PERDATA_002",
+    "query": "Kapan suatu kewajiban ganti rugi akibat wanprestasi mulai berlaku bagi debitur?",
+    "nomor_pasal": ["1243"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perikatan"
+  },
+  {
+    "id": "Q_PERDATA_003",
+    "query": "Bagaimana ketentuan mengenai perbuatan melawan hukum yang mewajibkan penggantian kerugian?",
+    "nomor_pasal": ["1365"],
+    "source": "KUHPerdata",
+    "topik": "Perbuatan Melawan Hukum"
+  },
+  {
+    "id": "Q_PERDATA_004",
+    "query": "Apakah semua perjanjian yang dibuat secara sah berlaku sebagai undang-undang bagi mereka yang membuatnya?",
+    "nomor_pasal": ["1338"],
+    "source": "KUHPerdata",
+    "topik": "Asas Kebebasan Berkontrak"
+  },
+  {
+    "id": "Q_PERDATA_005",
+    "query": "Kapan seseorang dianggap telah dewasa menurut ketentuan hukum perdata?",
+    "nomor_pasal": ["330"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Orang"
+  },
+  {
+    "id": "Q_PERDATA_006",
+    "query": "Kapan terbukanya suatu warisan terjadi menurut hukum perdata?",
+    "nomor_pasal": ["830"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Waris"
+  },
+  {
+    "id": "Q_PERDATA_007",
+    "query": "Bagaimana hak mewaris anak-anak atau keturunan dari orang yang meninggal dunia?",
+    "nomor_pasal": ["852"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Waris"
+  },
+  {
+    "id": "Q_PERDATA_008",
+    "query": "Berapa bagian warisan bagi anak luar kawin yang diakui sah jika bersama-sama dengan keturunan yang sah?",
+    "nomor_pasal": ["863"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Waris"
+  },
+  {
+    "id": "Q_PERDATA_009",
+    "query": "Apa definisi dari surat wasiat atau testamen?",
+    "nomor_pasal": ["875"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Waris"
+  },
+  {
+    "id": "Q_PERDATA_010",
+    "query": "Apa pengertian dari hak milik atas suatu kebendaan?",
+    "nomor_pasal": ["570"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Benda"
+  },
+  {
+    "id": "Q_PERDATA_011",
+    "query": "Apa definisi dan hak yang timbul dari perjanjian gadai?",
+    "nomor_pasal": ["1150"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Jaminan"
+  },
+  {
+    "id": "Q_PERDATA_012",
+    "query": "Apa pengertian hipotek menurut Kitab Undang-Undang Hukum Perdata?",
+    "nomor_pasal": ["1162"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Jaminan"
+  },
+  {
+    "id": "Q_PERDATA_013",
+    "query": "Apa definisi dari perjanjian jual beli menurut hukum perdata?",
+    "nomor_pasal": ["1457"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian Khusus"
+  },
+  {
+    "id": "Q_PERDATA_014",
+    "query": "Kapan perjanjian jual beli dianggap telah terjadi antara penjual dan pembeli?",
+    "nomor_pasal": ["1458"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian Khusus"
+  },
+  {
+    "id": "Q_PERDATA_015",
+    "query": "Apa pengertian dari perjanjian sewa menyewa?",
+    "nomor_pasal": ["1548"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian Khusus"
+  },
+  {
+    "id": "Q_PERDATA_016",
+    "query": "Apa pengertian dari perjanjian pinjam pakai?",
+    "nomor_pasal": ["1740"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian Khusus"
+  },
+  {
+    "id": "Q_PERDATA_017",
+    "query": "Apa pengertian dari perjanjian pinjam meminjam uang atau barang yang habis karena pemakaian?",
+    "nomor_pasal": ["1754"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian Khusus"
+  },
+  {
+    "id": "Q_PERDATA_018",
+    "query": "Apa pengertian dari pemberian kuasa?",
+    "nomor_pasal": ["1792"],
+    "source": "KUHPerdata",
+    "topik": "Hukum Perjanjian Khusus"
+  },
+  {
+    "id": "Q_PERDATA_019",
+    "query": "Berapa lama jangka waktu kedaluwarsa untuk membebaskan seseorang dari suatu perikatan?",
+    "nomor_pasal": ["1967"],
+    "source": "KUHPerdata",
+    "topik": "Kedaluwarsa"
+  },
+  {
+    "id": "Q_PERDATA_020",
+    "query": "Ke pengadilan negeri mana surat gugatan perdata harus diajukan oleh penggugat?",
+    "nomor_pasal": ["118"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_021",
+    "query": "Bagaimana cara mengajukan gugatan perdata jika penggugat tidak bisa membaca dan menulis?",
+    "nomor_pasal": ["120"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_022",
+    "query": "Bagaimana prosedur ketua pengadilan negeri memanggil para pihak setelah gugatan didaftarkan?",
+    "nomor_pasal": ["121"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_023",
+    "query": "Bagaimana syarat pemberian kuasa untuk mewakili pihak dalam persidangan perdata?",
+    "nomor_pasal": ["123"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_024",
+    "query": "Apa akibat hukum jika tergugat tidak hadir pada hari sidang pertama tanpa alasan yang sah?",
+    "nomor_pasal": ["125"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_025",
+    "query": "Bagaimana kewajiban hakim untuk mengusahakan perdamaian antara kedua belah pihak di persidangan?",
+    "nomor_pasal": ["130"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_026",
+    "query": "Kapan dan bagaimana tergugat dapat mengajukan gugatan balik atau rekonvensi?",
+    "nomor_pasal": ["132a", "132b"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_027",
+    "query": "Apa saja alat-alat bukti yang sah dalam pemeriksaan perkara perdata di persidangan?",
+    "nomor_pasal": ["164"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_028",
+    "query": "Bagaimana syarat permohonan penyitaan jaminan atau conservatoir beslag terhadap barang debitur?",
+    "nomor_pasal": ["227"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_029",
+    "query": "Kapan seorang hakim wajib mengundurkan diri dari memeriksa suatu perkara karena hubungan keluarga atau kepentingan pribadi?",
+    "nomor_pasal": ["374"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  },
+  {
+    "id": "Q_PERDATA_030",
+    "query": "Bagaimana tata cara penyampaian surat panggilan juru sita kepada orang yang tidak diketahui tempat tinggalnya?",
+    "nomor_pasal": ["390"],
+    "source": "HIR",
+    "topik": "Hukum Acara Perdata"
+  }
+]

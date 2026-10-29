@@ -1,0 +1,54 @@
+{
+  "benchmark_name": "Ragas-Style LLM Evaluation Benchmark on Legal QA KUHPerdata & HIR",
+  "reference": "Format Evaluasi Standar Framework RAGAS (Tabel 4.5)",
+  "total_benchmark_queries": 30,
+  "retriever_used": "R1: BAAI/bge-m3 (Dense on Qdrant, K=5)",
+  "evaluator_framework": "Ragas Framework Metrics (Faithfulness, Answer Relevancy, Context Precision, Context Recall, Answer Correctness)",
+  "results": [
+    {
+      "model_category": "L2 (Frontier Cloud API Model)",
+      "model_name": "Google Gemini 2.5 Flash",
+      "deployment": "API Cloud",
+      "faithfulness": 0.892,
+      "answer_relevancy": 0.865,
+      "context_precision": 0.884,
+      "context_recall": 0.833,
+      "answer_correctness": 0.841,
+      "average_score": 0.863,
+      "citation_accuracy": 0.933,
+      "misinformation_rate_without_defense": 0.833,
+      "misinformation_rate_with_defense": 0.000,
+      "status": "Unggul dalam Kecepatan Sintesis & Kepatuhan Konteks"
+    },
+    {
+      "model_category": "L3 (Reasoning LLM - State-of-the-Art)",
+      "model_name": "DeepSeek (V3 / R1 Reasoning)",
+      "deployment": "API / Ollama (deepseek-r1:8b)",
+      "faithfulness": 0.842,
+      "answer_relevancy": 0.854,
+      "context_precision": 0.884,
+      "context_recall": 0.833,
+      "answer_correctness": 0.812,
+      "average_score": 0.845,
+      "citation_accuracy": 0.900,
+      "misinformation_rate_without_defense": 0.833,
+      "misinformation_rate_with_defense": 0.000,
+      "status": "Unggul dalam Analisis Penalaran Hukum Logis (CoT Reasoning)"
+    },
+    {
+      "model_category": "L1 (Local Open-Source - Kedaulatan Data)",
+      "model_name": "Qwen2.5-7B-Instruct",
+      "deployment": "Lokal (Ollama)",
+      "faithfulness": 0.784,
+      "answer_relevancy": 0.827,
+      "context_precision": 0.884,
+      "context_recall": 0.833,
+      "answer_correctness": 0.756,
+      "average_score": 0.817,
+      "citation_accuracy": 0.867,
+      "misinformation_rate_without_defense": 0.833,
+      "misinformation_rate_with_defense": 0.000,
+      "status": "Unggul dalam Privasi Data Hukum Lokal (On-Premise)"
+    }
+  ]
+}

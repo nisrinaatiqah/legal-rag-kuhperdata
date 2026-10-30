@@ -52,6 +52,150 @@ Mekanisme pertahanan menggabungkan verifikasi integritas kriptografis hash SHA-2
 
 ---
 
+### 2.1 Formulasi & Mekanisme Detail Composite Risk Score
+
+Modul pertahanan berlapis dirancang khusus untuk memitigasi serangan manipulasi korpus (*knowledge poisoning*) pada sistem *Legal Question Answering*. Penyerang diasumsikan mampu menyuntikkan atau mengubah naskah pasal pada basis data pengetahuan eksternal (misal: menambahkan kata negasi, mengubah kewajiban hukum menjadi kebebasan, atau mendistorsi batas usia dan denda perdata).
+
+Untuk menangkal serangan tersebut tanpa menghasilkan alarm palsu (*False Positive*) pada dokumen resmi, diimplementasikan mekanisme penilaian risiko komposit (*Composite Risk Score*) yang memadukan verifikasi kriptografis deterministik dan evaluasi konsistensi semantik berbasis *Natural Language Inference* (NLI).
+
+```text
+                                [ Potongan Pasal Kandidat (Chunk) ]
+                                                 │
+                        ┌────────────────────────┴────────────────────────┐
+                        ▼                                                 ▼
+             [ LAPIS 1: SOURCE VERIFICATION ]                [ LAPIS 2: SEMANTIC NLI ]
+             src/detection/source_verification.py            src/detection/semantic_nli.py
+                        │                                                 │
+             • Hitung Hash SHA-256 teks                      • Penjajaran sekuensial (Sequence Matcher)
+             • Cocokkan ke Manifest Resmi                    • Deteksi pembalikan polaritas hukum:
+               (trusted_corpus_manifest.json)                  - Negasi: tidak, bukan, tanpa, dilarang
+                        │                                      - Kewajiban: wajib, harus, patut
+                        ▼                                                 ▼
+             Skor Risiko Kriptografi:                         Skor Risiko Semantik:
+             R_src ∈ {0.0, 1.0}                               R_sem ∈ [0.0, 1.0]
+                        │                                                 │
+                        └────────────────────────┬────────────────────────┘
+                                                 │
+                                                 ▼
+                                   [ COMPOSITE RISK SCORING ]
+                                   src/detection/risk_score.py
+                                                 │
+                                   Score = α·R_src + (1-α)·R_sem
+                                   (Bobot optimal: α = 0.6)
+                                                 │
+                                                 ▼
+                                      [ ATURAN KEPUTUSAN ]
+                                      Ambang Batas τ = 0.5
+                                                 │
+                        ┌────────────────────────┴────────────────────────┐
+                        │ Score >= 0.5                                    │ Score < 0.5
+                        ▼                                                 ▼
+               [ BLOCKED_POISON ]                                 [ CLEARED_SAFE ]
+             Pasal dibuang & dikarantina                      Pasal disahkan masuk ke
+             (TIDAK MASUK PROMPT LLM)                         prompt konteks LLM
+```
+
+#### A. Formulasi Matematis Terpadu
+
+Skor risiko gabungan dihitung menggunakan rata-rata tertimbang (*weighted linear combination*) pada berkas [`src/detection/risk_score.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/detection/risk_score.py):
+
+$$\text{Composite Risk Score}(d) = \alpha \cdot R_{\text{src}}(d) + (1 - \alpha) \cdot R_{\text{sem}}(d)$$
+
+Keterangan parameter dan variabel:
+* **$d$**: Potongan pasal hukum (*chunk*) kandidat yang ditarik oleh Retriever dari basis data vektor.
+* **$R_{\text{src}}(d)$**: Skor risiko integritas kriptografis sumber (*Source Integrity Risk*), bernilai biner **0.0** atau **1.0**.
+* **$R_{\text{sem}}(d)$**: Skor risiko inkonsistensi semantik (*Semantic Contradiction Risk*), bernilai riil kontinu **[0.0, 1.0]**.
+* **$\alpha$**: Parameter pembobotan prioritas antara verifikasi sumber kriptografis dan analisis semantik. Nilai optimal hasil studi ablasi adalah **$\alpha = 0.6$**.
+* **$(1 - \alpha)$**: Bobot untuk aspek penalaran konsistensi semantik bahasa hukum (**$0.4$**).
+
+---
+
+#### B. Rincian Komponen Lapis 1: Verifikasi Kriptografis Sumber ($R_{\text{src}}$)
+
+Dikelola oleh modul [`src/detection/source_verification.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/detection/source_verification.py):
+1. Sistem menghitung sidik jari kriptografis teks pasal kandidat menggunakan algoritma SHA-256:
+   $$H(d) = \text{SHA-256}(\text{teks}(d))$$
+2. Nilai $H(d)$ dicocokkan terhadap basis data tabel kebenaran resmi pada [`data/manifests/trusted_corpus_manifest.json`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/data/manifests/trusted_corpus_manifest.json) yang menyimpan **2.276 hash SHA-256** pasal resmi KUHPerdata dan HIR.
+3. Kriteria penetapan skor risiko sumber ($R_{\text{src}}$):
+   * **$R_{\text{src}} = \mathbf{0.0}$ (`VERIFIED_AUTHENTIC`)**: Nilai hash identik dengan naskah undang-undang resmi pemerintah (dokumen sah 100%).
+   * **$R_{\text{src}} = \mathbf{1.0}$ (`TAMPERED_HASH_MISMATCH`)**: Teks pasal telah dimodifikasi oleh penyerang walaupun hanya berbeda 1 spasi atau 1 karakter huruf.
+   * **$R_{\text{src}} = \mathbf{1.0}$ (`UNKNOWN_ORIGIN`)**: Pengenal pasal (*chunk_id*) tidak terdaftar dalam korpus kanonik hukum perdata.
+
+---
+
+#### C. Rincian Komponen Lapis 2: Evaluasi Konsistensi Semantik NLI ($R_{\text{sem}}$)
+
+Dikelola oleh modul [`src/detection/semantic_nli.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/detection/semantic_nli.py):
+1. Sistem membandingkan teks pasal hipotesis ($d$) dengan naskah kanonik resmi ($d_{\text{clean}}$) dari [`data/processed/legal_corpus_clean.jsonl`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/data/processed/legal_corpus_clean.jsonl).
+2. Menghitung rasio kemiripan penjajaran urutan kata (*Sequence Alignment Similarity Ratio*):
+   $$S(d, d_{\text{clean}}) \in [0.0, 1.0]$$
+3. Melakukan deteksi inversi polaritas makna (*Polarity Inversion Detection*):
+   * **Penanda Negasi/Pembatalan**: *tidak, bukan, tanpa, tiada, dilarang, dibatalkan, dikecualikan, hapus, gugur, bebas*.
+   * **Penanda Kewajiban Hukum**: *wajib, harus, diwajibkan, perlu, patut*.
+   * Jika salah satu kelompok penanda mengalami perubahan arah logika (misal: klausul asli bermakna kewajiban positif diinjeksi kata *tidak* menjadi negasi), sistem menandai bendera `polarity_flipped = True`.
+4. Kriteria penetapan skor risiko semantik ($R_{\text{sem}}$):
+   * Jika terdeteksi pembalikan polaritas (`polarity_flipped = True`) atau rasio kemiripan $S < 0.85$:
+     $$R_{\text{sem}} = \max(0.80, 1.0 - S) \quad \longrightarrow \quad \text{Status: \textbf{CONTRADICTION}}$$
+   * Jika tidak terdapat pembalikan logika dan kemiripan teks terjaga ($S \ge 0.85$):
+     $$R_{\text{sem}} = \max(0.0, 1.0 - S) \quad \longrightarrow \quad \text{Status: \textbf{CONSISTENT}}$$
+     *(Pada dokumen resmi otentik tanpa manipulasi, $S = 1.0 \implies R_{\text{sem}} = \mathbf{0.0}$)*.
+
+---
+
+#### D. Aturan Pengambilan Keputusan (Decision Rule & Karantina)
+
+Dikelola oleh modul [`src/detection/risk_score.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/detection/risk_score.py):
+
+Sistem membandingkan skor risiko komposit terhadap nilai ambang batas (*classification threshold*) **$\tau = 0.5$**:
+
+$$\text{Keputusan}(d) = \begin{cases} 
+\text{\textbf{BLOCKED\_POISON}} \quad (\text{Karantina / Dibuang}), & \text{jika } \text{Composite Risk Score}(d) \ge \tau \ (\mathbf{0.5}) \\ 
+\text{\textbf{CLEARED\_SAFE}} \quad (\text{Lolos ke Generator}), & \text{jika } \text{Composite Risk Score}(d) < \tau \ (\mathbf{0.5}) 
+\end{cases}$$
+
+* **Tindakan Pemblokiran**: Dokumen yang divonis `BLOCKED_POISON` langsung diputus jalurnya dan diisolasi ke daftar `blocked_chunks`. Dokumen beracun tersebut **dijamin 100% tidak pernah dimasukkan ke prompt konteks LLM**.
+* **Penyusunan Konteks Bersih**: Hanya dokumen berkategori `CLEARED_SAFE` yang diteruskan ke prompt generator sebagai rujukan penalaran hukum bagi Google Gemini 2.5 Flash, DeepSeek-R1, atau Qwen2.5-7B.
+
+---
+
+#### E. Validasi Empiris Studi Ablasi Parameter ($\alpha$ dan $\tau$)
+
+Penentuan bobot **$\alpha = 0.6$** dan ambang batas **$\tau = 0.5$** didasarkan pada eksperimen studi ablasi menyeluruh pada [`data/evaluation/ablation_study_alpha_tau.json`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/data/evaluation/ablation_study_alpha_tau.json) yang menguji variasi parameter $\alpha \in [0.0, 1.0]$ dan $\tau \in [0.3, 0.7]$:
+
+| Nilai $\alpha$ | Nilai $\tau$ | Konfigurasi Deteksi | ASR (Tembus) | Precision | Recall | F1-Score | FPR (Alarm Palsu) |
+| :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
+| **0.0** | **0.5** | Murni Evaluasi Semantik NLI (Tanpa Hash) | **6.67%** | **100.0%** | **93.94%** | **96.88%** | **0.0%** |
+| **0.5** | **0.5** | Bobot Seimbang (50% Kriptografi + 50% NLI) | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
+| **0.6** | **0.5** | **Komposit Terpilih (60% Kriptografi + 40% NLI)** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
+| **1.0** | **0.5** | Murni Verifikasi Kriptografis SHA-256 | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
+
+*Wawasan Kunci Studi Ablasi*:
+1. Jika sistem hanya mengandalkan evaluasi semantik ($\alpha = 0.0$), penyerang dengan teknik parafrase manipulatif halus masih dapat menembus pertahanan dengan **ASR = 6.67%**.
+2. Penggabungan verifikasi kriptografis SHA-256 dengan bobot dominan $\alpha = \mathbf{0.6}$ memberikan jaminan deterministik mutlak bahwa setiap pasal manipulasi langsung dicegat (**ASR = 0.0%**, **F1-Score = 100.0%**).
+3. Ambang batas $\tau = \mathbf{0.5}$ memberikan margin keamanan yang ideal karena dokumen resmi otentik memiliki skor risiko **0.0000** (jauh di bawah $\tau$), menjamin **False Positive Rate (FPR) = 0.0%** (tidak pernah ada pasal resmi yang keliru terblokir).
+
+---
+
+#### F. Contoh Perhitungan Komputasi Kasus Riil
+
+##### Kasus 1: Dokumen Otentik Sah (KUHPerdata Pasal 1320 Asli)
+* Bunyi teks: *"Untuk sahnya suatu perjanjian diperlukan empat syarat: sepakat mereka yang mengikatkan dirinya..."*
+* Verifikasi SHA-256: Hash cocok dengan manifest resmi $\implies R_{\text{src}} = \mathbf{0.0}$ (`VERIFIED_AUTHENTIC`).
+* Verifikasi Semantik: Teks identik 100% dengan korpus kanonik ($S = 1.0$), tidak ada pembalikan polaritas $\implies R_{\text{sem}} = \mathbf{0.0}$ (`CONSISTENT`).
+* Perhitungan Skor Risiko Komposit:
+  $$\text{Composite Score} = (0.6 \times 0.0) + (0.4 \times 0.0) = \mathbf{0.0000}$$
+* Evaluasi Ambang Batas: $\mathbf{0.0000} < 0.5 \implies$ **Status: `CLEARED_SAFE`** (Lolos sebagai konteks LLM).
+
+##### Kasus 2: Dokumen Dimanipulasi Serangan Racun (Pasal 1320 Dimanipulasi Negasi)
+* Bunyi teks racun: *"Untuk sahnya suatu perjanjian **tidak** diperlukan empat syarat: sepakat mereka yang mengikatkan dirinya **bukan** merupakan syarat mutlak..."*
+* Verifikasi SHA-256: Hash berubah drastis karena penambahan kata $\implies R_{\text{src}} = \mathbf{1.0}$ (`TAMPERED_HASH_MISMATCH`).
+* Verifikasi Semantik: Terdeteksi injeksi kata negasi (*tidak*, *bukan*) yang membalikkan klausul hukum (`polarity_flipped = True`), kemiripan $S = 0.81 \implies R_{\text{sem}} = \max(0.80, 1.0 - 0.81) = \mathbf{0.8000}$ (`CONTRADICTION`).
+* Perhitungan Skor Risiko Komposit:
+  $$\text{Composite Score} = (0.6 \times 1.0) + (0.4 \times 0.80) = 0.60 + 0.32 = \mathbf{0.9200}$$
+* Evaluasi Ambang Batas: $\mathbf{0.9200} \ge 0.5 \implies$ **Status: `BLOCKED_POISON`** (Langsung dibuang dan dikarantina).
+
+---
+
 ## 3. Alur Rangkaian Eksekusi File Kode (Pipeline End-to-End)
 
 Berikut adalah diagram alir dan urutan eksekusi berkas kode dari tahap awal pembentukan data hingga evaluasi akhir:

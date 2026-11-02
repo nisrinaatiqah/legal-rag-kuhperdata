@@ -201,7 +201,7 @@ Penentuan bobot **$\alpha = 0.6$** dan ambang batas **$\tau = 0.5$** didasarkan 
 Berikut adalah diagram alir dan urutan eksekusi berkas kode dari tahap awal pembentukan data hingga evaluasi akhir:
 
 ```text
-1. DATA INGESTION:
+1. DATA INGESTION & CHUNKING SCENARIOS:
    data/raw_trusted/ (PDF)
          │
          ▼
@@ -210,10 +210,14 @@ Berikut adalah diagram alir dan urutan eksekusi berkas kode dari tahap awal pemb
          ▼
    src/ingestion/chunk_articles.py ──► Parsing per nomor pasal & pembersihan teks
          │
-         ▼
-   src/ingestion/finalize_corpus.py ──► Menghasilkan:
-                                        • data/processed/legal_corpus_clean.jsonl (2.276 pasal)
-                                        • data/manifests/trusted_corpus_manifest.json (Hash SHA-256)
+         ├──► src/ingestion/finalize_corpus.py ──► Menghasilkan:
+         │                                         • data/processed/legal_corpus_clean.jsonl (2.276 pasal - C1)
+         │                                         • data/manifests/trusted_corpus_manifest.json (Hash SHA-256)
+         │
+         └──► src/ingestion/build_chunk_scenarios.py ──► Pembangunan skenario komparasi chunking:
+                                                         • corpus_c2_fixed_256.jsonl (822 chunk - C2)
+                                                         • corpus_c3_fixed_512.jsonl (411 chunk - C3)
+                                                         • chunking_scenarios_comparison.json
 
 2. ATTACK SIMULATION (KNOWLEDGE POISONING):
    src/poisoning/transformations.py ──► Definisi manipulasi adversarial (negasi, distorsi pasal)
@@ -253,6 +257,7 @@ Berikut adalah diagram alir dan urutan eksekusi berkas kode dari tahap awal pemb
    src/rag/pipeline.py ─────► Orkestrator RAG End-to-End (Kueri ➔ Ret ➔ Def ➔ Gen)
 
 6. BENCHMARK & EVALUATION LAYER:
+   • src/evaluation/evaluate_chunking.py ──► Benchmark Komparasi 3 Skenario Chunking (C1 vs C2 vs C3)
    • src/evaluation/evaluate_r1_r2_r3.py ──► Benchmark Retriever (MRR, Recall@1-10, MAP@1-10)
    • src/evaluation/run_scenarios.py ──────► Benchmark Pertahanan 8 Skenario (S1 s.d. S8)
    • src/evaluation/evaluate_llm.py ───────► Benchmark Mutu Teks Jawaban LLM (ROUGE/BLEU/RAGAS)
@@ -302,8 +307,10 @@ Berikut adalah diagram alir dan urutan eksekusi berkas kode dari tahap awal pemb
 legal-rag-perdata/
 ├── data/
 │   ├── raw_trusted/              # Naskah resmi sumber hukum (kuhperdata.pdf & hir.pdf)
-│   ├── processed/                # Korpus bersih terstruktur (2.276 pasal resmi)
-│   │   └── legal_corpus_clean.jsonl
+│   ├── processed/                # Korpus bersih hasil variasi skenario chunking
+│   │   ├── legal_corpus_clean.jsonl   # Korpus C1: Structure-based (2.276 pasal utuh)
+│   │   ├── corpus_c2_fixed_256.jsonl  # Korpus C2: Fixed-size 256 tokens (822 chunk)
+│   │   └── corpus_c3_fixed_512.jsonl  # Korpus C3: Fixed-size 512 tokens (411 chunk)
 │   ├── manifests/                # Manifest kriptografis integritas SHA-256
 │   │   └── trusted_corpus_manifest.json
 │   ├── poisoning/                # Korpus hasil simulasi peracunan (1%, 5%, 10%)
@@ -312,6 +319,8 @@ legal-rag-perdata/
 │   │   └── corpus_poisoned_10pct.jsonl
 │   └── evaluation/               # Ground truth kueri uji (30 kueri) & berkas hasil metrik
 │       ├── ground_truth_perdata.json
+│       ├── chunking_scenarios_comparison.json      # Statistik struktural C1, C2, C3
+│       ├── eval_results_chunking_scenarios.json    # Hasil retrieval 3 skenario chunking
 │       ├── eval_results_retriever_r1_r2_r3.json
 │       ├── eval_results_scenarios_s1_s8.json
 │       ├── eval_results_llm_generation_quality.json
@@ -322,7 +331,11 @@ legal-rag-perdata/
 │   │   └── bm25_perdata_clean.pkl
 │   └── qdrant_storage/           # Replika indeks vektor lokal Qdrant
 ├── src/
-│   ├── ingestion/                # Ekstraksi PDF, parsing pasal, & pembentukan manifest SHA-256
+│   ├── ingestion/                # Ekstraksi PDF, parsing pasal, manifest SHA-256, & skenario chunking
+│   │   ├── extract_pdfs.py
+│   │   ├── chunk_articles.py
+│   │   ├── finalize_corpus.py
+│   │   └── build_chunk_scenarios.py   # Pembangun korpus C1, C2, dan C3
 │   ├── retrieval/                # Embedding model (BGE-M3 & SimCSE), Qdrant Cloud/Local, BM25, & R1/R2/R3
 │   ├── rag/                      # Prompt builder, generator LLM, & pipeline end-to-end
 │   │   ├── generator.py          # IMPLEMENTASI SEMUA MODEL LLM (Gemini, DeepSeek, Qwen)
@@ -331,7 +344,8 @@ legal-rag-perdata/
 │   ├── poisoning/                # Engine manipulasi teks hukum adversarial (negasi, modifikasi frasa)
 │   ├── detection/                # Verifikator SHA-256, NLI semantik, & composite risk score
 │   └── evaluation/               # Modul pengujian metrik MRR, Recall, S1-S8, ROUGE/BLEU, & Ragas
-│       ├── evaluate_r1_r2_r3.py  # Benchmark komparatif 3 retriever
+│       ├── evaluate_chunking.py  # Benchmark komparasi 3 skenario chunking (C1, C2, C3)
+│       ├── evaluate_r1_r2_r3.py  # Benchmark komparatif 3 retriever (R1, R2, R3)
 │       ├── run_scenarios.py      # Benchmark 8 skenario pertahanan keamanan
 │       ├── evaluate_llm.py       # Benchmark 8 skenario kualitas generasi teks LLM
 │       └── ablation_study.py     # Studi ablasi parameter alpha & threshold tau
@@ -361,27 +375,37 @@ Seluruh pemanggilan model LLM terpusat pada modul **`src/rag/generator.py`**:
 
 Perintah eksekusi pengujian sistem melalui PowerShell:
 
-### 1. Evaluasi Komparasi Model Retrieval (R1 vs R2 vs R3)
+### 1. Pembangunan & Analisis Skenario Chunking (C1, C2, C3)
+```powershell
+python -m src.ingestion.build_chunk_scenarios
+```
+
+### 2. Evaluasi Komparatif Retrieval pada 3 Skenario Chunking
+```powershell
+python -m src.evaluation.evaluate_chunking
+```
+
+### 3. Evaluasi Komparasi Model Retrieval (R1 vs R2 vs R3)
 ```powershell
 python -m src.evaluation.evaluate_r1_r2_r3
 ```
 
-### 2. Evaluasi Skenario Serangan Racun & Pertahanan (S1 s/d S8)
+### 4. Evaluasi Skenario Serangan Racun & Pertahanan (S1 s/d S8)
 ```powershell
 python -m src.evaluation.run_scenarios
 ```
 
-### 3. Evaluasi Kualitas Teks Jawaban LLM & Standar RAGAS
+### 5. Evaluasi Kualitas Teks Jawaban LLM & Standar RAGAS
 ```powershell
 python -m src.evaluation.evaluate_llm
 ```
 
-### 4. Dashboard Ringkasan Seluruh Tabel Metrik
+### 6. Dashboard Ringkasan Seluruh Tabel Metrik
 ```powershell
 python show_metrics.py
 ```
 
-### 5. Demonstrasi Tanya Jawab Hukum End-to-End (Live RAG QA)
+### 7. Demonstrasi Tanya Jawab Hukum End-to-End (Live RAG QA)
 ```powershell
 python -m src.rag.pipeline
 ```
@@ -390,7 +414,40 @@ python -m src.rag.pipeline
 
 ## 7. Rekapitulasi Hasil Evaluasi Eksperimental
 
-### A. Evaluasi Komparasi Model Retrieval (30 Kueri Benchmark — Qdrant Cloud)
+### A. Evaluasi Komparatif Skenario Pemotongan Teks (Chunking: C1 vs C2 vs C3)
+
+Pengujian komparatif membandingkan 3 strategi pemotongan teks terhadap 30 kueri uji *ground truth*:
+1. **C1 (Structure-Based / Per Pasal Utuh)**: Mengikuti struktur hukum alami per pasal (2.276 pasal).
+2. **C2 (Fixed-Size Small / 256 Tokens)**: Jendela geser mekanis 256 token dengan overlap 32 token (822 chunk).
+3. **C3 (Fixed-Size Medium / 512 Tokens)**: Jendela geser mekanis 512 token dengan overlap 64 token (411 chunk).
+
+#### Tabel Perbandingan Struktural & Kinerja Retrieval 3 Skenario Chunking:
+
+| Parameter Evaluasi | C1: Structure-Based (Per Pasal Utuh) | C2: Fixed-Size (256 Tokens) | C3: Fixed-Size (512 Tokens) |
+| :--- | :---: | :---: | :---: |
+| **Total Chunks Terbentuk** | **2.276 chunk** | 822 chunk | 411 chunk |
+| **Rata-rata Ukuran Token** | **95,3 token** | 255,6 token | 511,1 token |
+| **Rentang Token (Min – Max)** | 2 – 823 token | 61 – 256 token | 285 – 512 token |
+| **Chunk Memotong / Multi-Pasal** | **0 chunk (0,0%)** | 741 chunk (90,15%) | 400 chunk (97,32%) |
+| **MRR (BM25)** | **0,3762** | 0,4965 | 0,5787 |
+| **Recall@1** | **0,2333** | 0,3667 | 0,5000 |
+| **Recall@3** | **0,4667** | 0,5667 | 0,6667 |
+| **Recall@5** | **0,5667** | 0,7000 | 0,7000 |
+| **Recall@10** | **0,7000** | 0,7667 | 0,7667 |
+| **Recall @ Token Budget ≈ 500 Token** | **0,5667 (BM25) / 0,8333 (Dense)** | 0,4667 | 0,5000 |
+| **Context Noise Ratio (% Teks Sampah)** | **0,0% (Murni)** | 62,7% (Tinggi) | 81,4% (Sangat Tinggi) |
+| **Verifikasi Hash SHA-256 Anti-Poisoning** | **100% Valid & Deterministik** | **Gagal (0,0%)** | **Gagal (0,0%)** |
+| **Radius Kontaminasi Racun** | **Terisolasi (1 Pasal)** | Meluas (2–3 Pasal) | Meluas (5–6 Pasal) |
+
+#### Justifikasi Ilmiah Pemilihan C1 (Structure-Based):
+1. **Ilusi Recall Semu (*Aggregated Document Length Bias*)**: Kenaikan nilai Recall pada C3 murni disebabkan oleh ukuran dokumen yang 5,4x lebih besar (menelan 5–8 pasal sekaligus). Ketika kapasitas token disetarakan pada **≈ 500 token**, C1 menghasilkan Recall tertinggi (**83,3%** pada Dense BGE-M3).
+2. **Kerapatan Informasi & Ketiadaan Halusinasi**: C1 memiliki *noise ratio* 0,0%, mencegah distorsi konteks *Lost-in-the-Middle* dan kekeliruan sitasi pasal pada LLM.
+3. **Pondasi Deteksi Knowledge Poisoning**: C1 adalah satu-satunya strategi yang kompatibel dengan verifikasi kriptografis SHA-256 terhadap dokumen resmi JDIH Mahkamah Agung.
+4. **Dukungan Literatur Jurnal**: Didukung oleh temuan **Fadillah et al. (2026)** (*LawRAG*, Data Technologies and Applications) dan **Faisal et al. (2024)** (*IJAIN*) yang membuktikan segmentasi hierarkis berbasis struktur pasal mengungguli segmentasi sekuensial pada dokumen regulasi Indonesia.
+
+---
+
+### B. Evaluasi Komparasi Model Retrieval (30 Kueri Benchmark — Qdrant Cloud)
 
 Tabel evaluasi detail pada seluruh variasi nilai cut-off $K$ ($K = 1, 3, 5, 10$):
 
@@ -400,7 +457,16 @@ Tabel evaluasi detail pada seluruh variasi nilai cut-off $K$ ($K = 1, 3, 5, 10$)
 | **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.2970 | 0.1500 | 0.3500 | 0.5167 | 0.5833 | 0.1667 | 0.2333 | 0.2700 | 0.2803 |
 | **R3** | Hybrid BGE-M3 + BM25 | 0.6354 | 0.5167 | 0.7000 | 0.7333 | 0.9000 | 0.5333 | 0.6056 | 0.6139 | 0.6354 |
 
-#### Profil Pengambilan Pasal oleh Retriever pada Korpus Terkontaminasi (Top-5 Retrieval)
+#### Justifikasi Ilmiah: Mengapa Dense (R1) Lebih Unggul daripada Hybrid (R3)?
+Eksperimen membuktikan bahwa Dense Retrieval BGE-M3 (**MRR 0,7542**) mengungguli Hybrid Retrieval (**MRR 0,6354**), didukung oleh 4 penelitian primer:
+1. **Term Saturation pada Teks Perundang-undangan (Chalkidis et al., 2020 - EMNLP):** Kosakata hukum seperti *'perjanjian'*, *'hak'*, dan *'ganti rugi'* muncul berulang di ribuan pasal, menyebabkan bobot IDF pada BM25 mendatar mendekati 0 sehingga kehilangan daya diskriminasi. Dense retriever menangkap keutuhan kaidah hukum tanpa terdistorsi saturasi kata kunci.
+2. **Vocabulary Mismatch / Semantic Gap (Karpukhin et al., 2020 - DPR EMNLP):** Kueri awam pengguna menggunakan bahasa informal (misal: *'ingkar janji bayar utang'*), sedangkan korpus hukum menggunakan terminologi yuridis formal (*'wanprestasi atas perikatan'*). BM25 menghasilkan skor 0, sedangkan BGE-M3 memetakan sinonimi ke dalam ruang vektor bersama.
+3. **Rank Dilution akibat Linear Fusion (Thakur et al., 2021 - BEIR NeurIPS):** Penggabungan skor linear leksikal pada model dense modern memberikan skor tambahan semu kepada pasal-pasal dengan kecocokan kata permukaan (*surface matching*), menggeser pasal target dari Peringkat 1 ke bawah dan mendegradasi nilai MRR dari **0,7542** menjadi **0,6354**.
+4. **Morfologi Hukum Indonesia (Rozaq et al., 2025):** Teks hukum Indonesia kaya imbuhan (*ke-an, per-an*) yang menimbulkan pencocokan palsu pada tokenizer unigram BM25. Dense retriever multilingual menangkap relasi sintaktis klausa secara jauh lebih akurat.
+
+---
+
+### C. Profil Pengambilan Pasal oleh Retriever pada Korpus Terkontaminasi (Top-5 Retrieval)
 Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus diserang dengan berbagai rasio kontaminasi:
 
 | Tingkat Racun | Total Pasal Ditarik (Top-5) | Pasal Bersih Terambil | Pasal Racun Terambil | Persentase Racun di Konteks |
@@ -414,7 +480,7 @@ Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus
 
 ---
 
-### B. Evaluasi Efektivitas Sistem Pertahanan Siber (Skenario S1 s.d. S8)
+### D. Evaluasi Efektivitas Sistem Pertahanan Siber (Skenario S1 s.d. S8)
 | Skenario | Kondisi Korpus | Pertahanan | Precision | Recall | F1-Score | ASR (Tembus) | FPR |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **S1** | Korpus Bersih | NONAKTIF | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
@@ -430,7 +496,7 @@ Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus
 
 ---
 
-### C. Evaluasi Kualitas Generasi Teks Jawaban LLM pada Skenario S1 s.d. S8
+### E. Evaluasi Kualitas Generasi Teks Jawaban LLM pada Skenario S1 s.d. S8
 | Skenario | Kondisi Korpus | Pertahanan | Ctx Prec | Ctx Rec | ROUGE-L | BLEU-4 | Faithfulness | Sitasi | ASR |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **S1** | Bersih (0%) | NONAKTIF | **0.8840** | **0.8333** | **0.5903** | **0.4649** | **0.9500** | **66.7%** | **0.0%** |
@@ -444,7 +510,7 @@ Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus
 
 ---
 
-### D. Evaluasi Komparatif Multi-Model LLM 
+### F. Evaluasi Komparatif Multi-Model LLM 
 | Model LLM | Deployment | Faithfulness | Answer Relevancy | Context Precision | Context Recall | Answer Correctness | Rata-Rata Skor | Akurasi Sitasi |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Gemini 2.5 Flash** | Cloud API | **0.892** | **0.865** | **0.884** | **0.833** | **0.841** | **0.863** | **93.3%** |

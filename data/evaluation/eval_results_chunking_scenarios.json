@@ -1,0 +1,29 @@
+{
+  "C1_Structure_Based": {
+    "mrr": 0.3762,
+    "recall": {
+      "Recall@1": 0.2333,
+      "Recall@3": 0.4667,
+      "Recall@5": 0.5667,
+      "Recall@10": 0.7
+    }
+  },
+  "C2_Fixed_256": {
+    "mrr": 0.4965,
+    "recall": {
+      "Recall@1": 0.3667,
+      "Recall@3": 0.5667,
+      "Recall@5": 0.7,
+      "Recall@10": 0.7667
+    }
+  },
+  "C3_Fixed_512": {
+    "mrr": 0.5787,
+    "recall": {
+      "Recall@1": 0.5,
+      "Recall@3": 0.6667,
+      "Recall@5": 0.7,
+      "Recall@10": 0.7667
+    }
+  }
+}

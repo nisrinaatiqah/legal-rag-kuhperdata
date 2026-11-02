@@ -1,0 +1,26 @@
+{
+  "C1_Structure_Based": {
+    "total_chunks": 2276,
+    "avg_tokens": 95.3,
+    "min_tokens": 2,
+    "max_tokens": 823,
+    "multi_article_chunks": 0,
+    "multi_article_ratio_pct": 0.0
+  },
+  "C2_Fixed_256": {
+    "total_chunks": 822,
+    "avg_tokens": 255.6,
+    "min_tokens": 61,
+    "max_tokens": 256,
+    "multi_article_chunks": 741,
+    "multi_article_ratio_pct": 90.15
+  },
+  "C3_Fixed_512": {
+    "total_chunks": 411,
+    "avg_tokens": 511.1,
+    "min_tokens": 285,
+    "max_tokens": 512,
+    "multi_article_chunks": 400,
+    "multi_article_ratio_pct": 97.32
+  }
+}

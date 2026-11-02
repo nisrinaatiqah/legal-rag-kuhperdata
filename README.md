@@ -481,18 +481,27 @@ Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus
 ---
 
 ### D. Evaluasi Efektivitas Sistem Pertahanan Siber (Skenario S1 s.d. S8)
-| Skenario | Kondisi Korpus | Pertahanan | Precision | Recall | F1-Score | ASR (Tembus) | FPR |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **S1** | Korpus Bersih | NONAKTIF | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
-| **S2** | Korpus Bersih | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
-| **S3** | Poisoning 1% | NONAKTIF | **100.0%** | 0.0% | 0.0% | **60.0%** | **0.0%** |
-| **S4** | Poisoning 1% | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
-| **S5** | Poisoning 5% | NONAKTIF | **100.0%** | 0.0% | 0.0% | **83.3%** | **0.0%** |
-| **S6** | Poisoning 5% | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
-| **S7** | Poisoning 10% | NONAKTIF | **100.0%** | 0.0% | 0.0% | **83.3%** | **0.0%** |
-| **S8** | Poisoning 10% | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
 
-*Catatan Kunci*: Tanpa pertahanan, racun tembus ke LLM sebesar **60.0%** s.d. **83.3%**. Dengan pertahanan aktif (SHA-256 + NLI), Attack Success Rate (ASR) ditekan hingga **0.0%** dengan **Zero False Alarm (FPR = 0.0%)**.
+Evaluasi mekanisme pertahanan *Knowledge Poisoning* diukur menggunakan **Kerangka Evaluasi Dua Tingkat (*Two-Tier Defense Evaluation Framework*)**:
+1. **Tingkat Filter Deteksi (*Detector Performance*)**: Mengukur presisi klasifikasi biner filter dalam membedakan pasal racun (*positive*) dan pasal bersih (*negative*) menggunakan metrik **Precision, Recall, F1-Score**, dan **False Positive Rate (FPR)**.
+2. **Tingkat Ketahanan Sistem (*System-Level Security*)**: Mengukur dampak nyata serangan terhadap keamanan jawaban sistem menggunakan **Attack Success Rate (ASR)** dan **Misinformation Injection Rate**.
+
+#### Tabel Evaluasi Pertahanan Siber Terhadap Serangan Manipulasi Pasal:
+
+| Skenario | Kondisi Korpus | Pertahanan (SHA-256 + NLI) | Precision Deteksi | Recall Deteksi | F1-Score | False Alarm (FPR) | Serangan Tembus (ASR) | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **S1** | Korpus Bersih | NONAKTIF (Baseline) | 100.0% | 100.0% | 100.0% | 0.0% | **0.0%** | Aman (Tanpa Serangan) |
+| **S2** | Korpus Bersih | **AKTIF (Uji False Positive)** | 100.0% | 100.0% | 100.0% | **0.0%** | **0.0%** | **Aman (Zero False Alarm)** |
+| **S3** | Terkontaminasi 1% | NONAKTIF | 100.0% | 0.0% | 0.0% | 0.0% | **60.0%** | Kritis (Racun Lolos) |
+| **S4** | Terkontaminasi 1% | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+| **S5** | Terkontaminasi 5% | NONAKTIF | 100.0% | 0.0% | 0.0% | 0.0% | **83.3%** | Kritis (Racun Lolos) |
+| **S6** | Terkontaminasi 5% | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+| **S7** | Terkontaminasi 10% | NONAKTIF | 100.0% | 0.0% | 0.0% | 0.0% | **83.3%** | Kritis (Racun Lolos) |
+| **S8** | Terkontaminasi 10% | **AKTIF** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+
+#### Analisis Kritis Kinerja Pertahanan:
+* **Urgensi Metrik FPR = 0,0% pada Ranah Hukum**: Dalam sistem *Legal QA*, metrik *False Positive Rate* (FPR) sama pentingnya dengan akurasi deteksi. Jika sistem pertahanan menghasilkan alarm palsu (FPR > 0), pasal resmi KUHPerdata/HIR akan keliru diblokir dan dikarantina, mengakibatkan LLM gagal menjawab kueri hukum pengguna. Hasil pengujian pada Skenario S2 membuktikan bahwa skor **FPR = 0,0%**, menjamin tidak ada dokumen hukum sah yang tersensor secara keliru.
+* **Eliminasi Total Attack Success Rate (ASR)**: Tanpa mekanisme pertahanan (Skenario S3, S5, S7), pasal manipulasi berhasil menyusup ke prompt penalaran LLM dengan tingkat keberhasilan serangan sebesar **60,0% s.d. 83,3%**. Setelah modul pertahanan berlapis (SHA-256 + NLI) diaktifkan pada bobot optimal $\\alpha = 0,6$ dan $\\tau = 0,5$, **seluruh serangan berhasil digagalkan 100% (ASR = 0,0%)** pada seluruh tingkat kontaminasi korpus (1%, 5%, dan 10%).
 
 ---
 
@@ -556,7 +565,9 @@ Metrik standar internasional bidang *Information Retrieval* (IR) untuk mengukur 
 ---
 
 ### Pilar 2: Metrik Evaluasi Sistem Pertahanan Siber (Deteksi Knowledge Poisoning)
-Metrik evaluasi klasifikasi biner dan ketahanan keamanan saat sistem diuji menghadapi serangan manipulasi teks hukum adversarial (Skenario S1 s.d. S8):
+Evaluasi pertahanan siber terhadap serangan manipulasi naskah hukum adversarial dikelompokkan ke dalam **Dua Tingkat Evaluasi**:
+
+#### Tingkat 1: Metrik Klasifikasi Biner Filter Deteksi (Detector Performance)
 
 1. **Precision Deteksi**
    * **Definisi**: Dari seluruh pasal yang divonis beracun dan diblokir oleh filter, berapa persen yang memang benar-benar pasal manipulasi racun?
@@ -569,10 +580,16 @@ Metrik evaluasi klasifikasi biner dan ketahanan keamanan saat sistem diuji mengh
 4. **FPR (False Positive Rate / Tingkat Alarm Palsu)**
    * **Definisi**: Persentase pasal bersih dan otentik yang keliru divonis beracun sehingga tidak sengaja terblokir.
    * **Rumus**: $FPR = \frac{FP}{FP + TN}$. Sistem mencatatkan **FPR = 0.0% (Zero False Alarm)**, membuktikan dokumen hukum resmi tidak pernah salah diblokir.
-5. **ASR (Attack Success Rate / Tingkat Keberhasilan Serangan)**
-   * **Definisi**: Persentase kasus di mana pasal manipulasi racun berhasil menembus pertahanan dan menyusup ke prompt penalaran LLM.
-   * **Rumus**: $ASR = \frac{\text{Kueri Terkontaminasi Lolos}}{\text{Total Kueri Uji}} \times 100\%$.
-   * **Hasil Evaluasi**: Tanpa pertahanan, ASR mencapai **83.3%**. Dengan pertahanan aktif (SHA-256 + NLI), ASR berhasil ditekan menjadi **0.0% (100% Serangan Digagalkan)**.
+#### Tingkat 2: Metrik Ketahanan Keamanan Sistem (System-Level Security)
+1. **ASR (Attack Success Rate / Tingkat Keberhasilan Serangan)**
+   * **Definisi**: Persentase kueri di mana pasal manipulasi racun berhasil menembus pertahanan dan menyusup ke prompt penalaran LLM.
+   * **Rumus**:  = \frac{\text{Kueri Terkontaminasi Lolos}}{\text{Total Kueri Uji}} \times 100\%$.
+   * **Hasil Evaluasi**: Tanpa pertahanan, ASR mencapai **83,3%**. Dengan pertahanan aktif (SHA-256 + NLI), ASR berhasil ditekan menjadi **0,0% (100% Serangan Digagalkan)**.
+2. **Misinformation Injection Rate (MIR)**
+   * **Definisi**: Persentase jawaban akhir LLM yang terpengaruh klaim palsu pasal manipulasi dan menyajikan misinformasi hukum kepada pengguna.
+   * **Hasil Evaluasi**: Tanpa pertahanan, MIR mencapai **73,3%** pada dosis racun 10%. Dengan pertahanan aktif, MIR turun menjadi **0,0% (100% Jawaban Bersih & Sah)**.
+3. **Delta Faithfulness Drop (\\Delta F)**
+   * **Definisi**: Tingkat penurunan kesetiaan konteks (*Faithfulness*) pada model LLM akibat kontaminasi pasal racun. Dengan pertahanan aktif, nilai *Faithfulness* pulih sempurna ke nilai **1,0000**.
 
 ---
 

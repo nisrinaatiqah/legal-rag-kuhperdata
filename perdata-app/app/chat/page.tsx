@@ -124,15 +124,15 @@ export default function ChatPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Editorial Page Header in DM Serif Display & DM Sans */}
+      {/* Floraverse-Style Page Header in Cyntho Next & Montserrat */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E8DEC9] pb-6">
         <div>
-          <span className="text-[11px] font-semibold tracking-widest uppercase text-[#75162D] font-sans">
+          <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
             Asistensi Penelusuran Naskah
           </span>
-          <h1 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#3B010B] mt-1">
+          <h1 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B] mt-1">
             Tanya Jawab{' '}
-            <span className="italic text-[#75162D] text-3xl md:text-4xl">
+            <span className="text-[#75162D]">
               KUHPerdata &amp; HIR
             </span>
           </h1>
@@ -140,11 +140,11 @@ export default function ChatPage() {
 
         {/* Essential Defense Toggle */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-sm bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A] font-sans">
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/90 border border-[#E8DEC9] shadow-sm text-xs font-semibold text-[#2A171A] font-montserrat">
             <span className="text-[11px]">Proteksi Naskah Asli:</span>
             <button
               onClick={() => setEnableDefense(!enableDefense)}
-              className={`px-2.5 py-0.5 rounded-sm text-xs font-semibold font-sans transition-all ${
+              className={`px-3 py-0.5 rounded-full text-xs font-bold font-montserrat transition-all ${
                 enableDefense
                   ? 'bg-[#15803d] text-white shadow-sm'
                   : 'bg-[#75162D] text-[#F2E5C6]'
@@ -156,7 +156,7 @@ export default function ChatPage() {
 
           <button
             onClick={() => setShowDemoOptions(!showDemoOptions)}
-            className="p-2 rounded-sm bg-white border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
+            className="p-2 rounded-full bg-white/90 border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
             title="Mode Basis Data"
           >
             <Sliders className="w-4 h-4" />
@@ -285,26 +285,26 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Editorial Search Bar (Crisp Rectangular Box) */}
+      {/* Floraverse Rounded-Full Search Bar */}
       <div className="sticky bottom-6 z-20">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(input);
           }}
-          className="relative flex items-center rounded-sm bg-white border border-[#E8DEC9] shadow-lg p-1.5 focus-within:border-[#75162D] transition-all"
+          className="relative flex items-center rounded-full bg-white/95 backdrop-blur-md border border-[#E8DEC9] shadow-lg shadow-[#75162D]/5 p-2 focus-within:border-[#75162D] transition-all"
         >
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ketik pertanyaan pasal perdata atau hukum acara..."
-            className="w-full px-4 py-3 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-body"
+            className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-montserrat"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="btn-burgundy-primary px-4 py-2.5 rounded-sm disabled:opacity-40 shrink-0 ml-1 text-xs font-semibold font-cinzel flex items-center gap-1"
+            className="btn-burgundy-primary px-5 py-2.5 rounded-full disabled:opacity-40 shrink-0 ml-1 text-xs font-bold font-montserrat flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
             title="Kirim Pertanyaan"
           >
             <span>Kirim</span>

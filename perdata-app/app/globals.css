@@ -1,4 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Didact+Gothic&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Rubik:ital,wght@0,400..900;1,400..900&display=swap');
+
+@font-face {
+  font-family: 'Cyntho Next';
+  src: url('/fonts/CynthoNextBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cyntho Next';
+  src: url('/fonts/CynthoNextSemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cyntho Next';
+  src: url('/fonts/CynthoNextRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @import "tailwindcss";
 
@@ -17,15 +41,16 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Bespoke Old Money Pairing: Bodoni Moda (Italian Editorial) + Didact Gothic (Clean Classical Sans) */
-  --font-serif: 'Bodoni Moda', Georgia, serif;
-  --font-editorial: 'Bodoni Moda', Georgia, serif;
-  --font-sans: 'Didact Gothic', system-ui, -apple-system, sans-serif;
-  --font-classic-serif: 'Libre Baskerville', Georgia, serif;
+  /* FloraVerse Benchmark Typography: Cyntho Next (Headlines) + Montserrat (UI/Body) */
+  --font-display: 'Cyntho Next', 'Montserrat', -apple-system, sans-serif;
+  --font-cyntho: 'Cyntho Next', 'Montserrat', sans-serif;
+  --font-serif: 'Cyntho Next', 'Montserrat', sans-serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-editorial: 'Cyntho Next', 'Montserrat', sans-serif;
 
-  /* Dynamic bindings for existing classes */
-  --font-cinzel: var(--font-serif);
-  --font-cormorant: var(--font-serif);
+  /* Aliases */
+  --font-cinzel: var(--font-display);
+  --font-cormorant: var(--font-display);
 }
 
 * {
@@ -43,19 +68,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Bespoke Old Money Atelier) */
+/* Typography Utility Classes (FloraVerse Inspired) */
 .font-display {
-  font-family: var(--font-serif);
-  letter-spacing: -0.015em;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
-.font-editorial {
-  font-family: var(--font-serif);
+.font-cyntho {
+  font-family: 'Cyntho Next', 'Montserrat', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-montserrat {
+  font-family: var(--font-sans);
 }
 
 .font-serif {
-  font-family: var(--font-serif);
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.font-editorial {
+  font-family: var(--font-display);
 }
 
 .font-body {
@@ -66,17 +100,73 @@ body {
   font-family: var(--font-sans);
 }
 
-.font-classic-serif {
-  font-family: var(--font-classic-serif);
-}
-
 .font-cinzel {
-  font-family: var(--font-serif);
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 .font-cormorant {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
+}
+
+/* Editorial Buttons with Burgundy & Dark Maroon (Floraverse Pill Style) */
+.btn-burgundy-primary {
+  background-color: var(--burgundy);
+  color: #FFFFFF;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn-burgundy-primary:hover {
+  background-color: var(--dark-maroon);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px -4px rgba(117, 22, 45, 0.35);
+}
+
+.btn-champagne-outline {
+  background-color: #FFFFFF;
+  color: var(--dark-maroon);
+  border: 1px solid var(--sand-gold);
+  transition: all 0.25s ease;
+}
+.btn-champagne-outline:hover {
+  background-color: var(--champagne-beige);
+  border-color: var(--sand-gold);
+  transform: translateY(-1px);
+}
+
+/* Clean Law Firm Cards (Floraverse Rounded-2xl Style) */
+.law-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px rgba(59, 1, 11, 0.03);
+}
+
+.law-card-hover {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.law-card-hover:hover {
+  border-color: var(--sand-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(59, 1, 11, 0.08);
+}
+
+/* Custom Scrollbar in Warm Sand */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sand-gold);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #deb770;
 }
 
 /* Editorial Buttons with Burgundy & Dark Maroon */

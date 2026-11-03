@@ -59,38 +59,38 @@ export default function DatabasePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Editorial Header in DM Serif Display & DM Sans */}
+      {/* Floraverse-Style Header in Cyntho Next & Montserrat */}
       <div className="flex flex-col gap-2 border-b border-[#E8DEC9] pb-6">
-        <span className="text-[11px] font-semibold tracking-widest uppercase text-[#75162D] font-sans">
+        <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
           Pangkalan Data Resmi
         </span>
-        <h1 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#3B010B]">
+        <h1 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B]">
           Katalog 2.276 Ketentuan{' '}
-          <span className="italic text-[#75162D] text-3xl md:text-4xl">
+          <span className="text-[#75162D]">
             KUHPerdata &amp; HIR
           </span>
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B5559] max-w-xl font-sans">
+        <p className="text-xs sm:text-sm text-[#6B5559] max-w-xl font-montserrat font-medium">
           Naskah resmi dari Lembaran Negara dan JDIH Nasional, terverifikasi utuh dan bebas dari distorsi data.
         </p>
       </div>
 
       {/* Clean Structured Search and Filter Controls */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Search Input: Crisp Rectangular Box */}
+        {/* Search Input: Floraverse Rounded-Full Style */}
         <form onSubmit={handleSearchSubmit} className="relative w-full md:max-w-md">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari nomor pasal atau kata kunci (contoh: 1320, ganti rugi, waris)..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-sm bg-white border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-sm font-body"
+            className="w-full pl-10 pr-4 py-2.5 rounded-full bg-white/95 border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-sm font-montserrat"
           />
-          <Search className="w-4 h-4 text-[#6B5559] absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-[#6B5559] absolute left-3.5 top-3" />
         </form>
 
-        {/* Source Filter Tabs: Crisp Rectangular (Image 2 Style) */}
-        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+        {/* Source Filter Tabs: Floraverse Rounded-Full Pills */}
+        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 font-montserrat">
           {SOURCE_OPTIONS.map((opt) => (
             <button
               key={opt.value}
@@ -98,10 +98,10 @@ export default function DatabasePage() {
                 setSelectedSource(opt.value);
                 setPage(0);
               }}
-              className={`px-4 py-2 rounded-sm text-xs font-semibold tracking-wider font-cinzel transition-all whitespace-nowrap ${
+              className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap ${
                 selectedSource === opt.value
                   ? 'bg-[#75162D] text-[#F2E5C6] shadow-sm'
-                  : 'bg-white text-[#560B18] hover:bg-[#F2E5C6]/50 border border-[#E8DEC9]'
+                  : 'bg-white/90 text-[#560B18] hover:bg-[#F2E5C6]/50 border border-[#E8DEC9]'
               }`}
             >
               {opt.label}

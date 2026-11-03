@@ -27,29 +27,29 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
   const isLong = article.content.length > 250;
 
   return (
-    <div className="bg-[#FFFFFF] border border-[#E8DEC9] rounded-sm p-5 md:p-6 transition-all hover:border-[#F2D9A0] font-body shadow-sm">
+    <div className="bg-white/95 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-5 md:p-6 transition-all hover:border-[#75162D] font-montserrat shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-serif text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
+            <span className="font-cyntho text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
               {article.source} Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-sm bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-sans">
+            <span className="text-[10px] uppercase tracking-wider font-bold px-3 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-montserrat">
               {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
             </span>
           </div>
           {article.bab_title && article.bab_title !== '-' && (
-            <p className="text-sm text-[#75162D] mt-1 italic font-serif">
+            <p className="text-xs text-[#75162D] mt-1 font-semibold font-montserrat">
               {article.bab_title}
             </p>
           )}
         </div>
 
-        {/* Copy Button: Crisp Rectangular (Image 2 Style) */}
+        {/* Copy Button: Rounded-Full Pill */}
         <button
           onClick={copyToClipboard}
-          className="p-2 rounded-sm bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-sans font-semibold"
+          className="px-3 py-1.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-montserrat font-bold"
           title="Salin Rujukan Hukum"
         >
           {copied ? (

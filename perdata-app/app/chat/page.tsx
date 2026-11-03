@@ -149,8 +149,8 @@ function ChatContent() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-6 pb-12 font-body">
-      {/* Compact Header in Hybrid B + D */}
-      <div className="flex items-center justify-between border-b border-[#E8DEC9] pb-4">
+      {/* Compact Header in Hybrid B + D with Direct Testing Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#E8DEC9] pb-4 gap-4">
         <div>
           <h1 className="font-bodoni text-2xl sm:text-3xl font-medium tracking-tight text-[#3B010B]">
             Chatbot{' '}
@@ -160,60 +160,67 @@ function ChatContent() {
           </h1>
         </div>
 
-        {/* Essential Defense Toggle */}
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-[#E8DEC9] shadow-xs text-xs font-semibold text-[#2A171A] font-sans">
-            <span className="text-[11px] text-[#6B5559]">Proteksi SHA-256:</span>
-            <button
-              onClick={() => setEnableDefense(!enableDefense)}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                enableDefense
-                  ? 'bg-[#15803d] text-white shadow-xs'
-                  : 'bg-[#75162D] text-[#F2E5C6]'
-              }`}
-            >
-              {enableDefense ? 'Aktif' : 'Nonaktif'}
-            </button>
+        {/* 2 Direct Testing Controls: Korpus (Poison/Non-Poison) & Proteksi (ON/OFF) */}
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+          {/* Korpus: Non-Poison vs Poison */}
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
+            <span className="text-[11px] text-[#6B5559] font-medium">Korpus:</span>
+            <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
+              <button
+                type="button"
+                onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
+                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                  corpusScenario === 'kuhperdata_hir_bgem3'
+                    ? 'bg-[#75162D] text-[#FAF6EE] shadow-2xs'
+                    : 'text-[#6B5559] hover:text-[#3B010B]'
+                }`}
+              >
+                Non-Poison
+              </button>
+              <button
+                type="button"
+                onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
+                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                  corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
+                    ? 'bg-[#c2410c] text-white shadow-2xs'
+                    : 'text-[#6B5559] hover:text-[#3B010B]'
+                }`}
+              >
+                Poison (1%)
+              </button>
+            </div>
           </div>
 
-          <button
-            onClick={() => setShowDemoOptions(!showDemoOptions)}
-            className="p-1.5 rounded-full bg-white/95 border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors shadow-xs"
-            title="Pengaturan Korpus Pengujian"
-          >
-            <Sliders className="w-4 h-4" />
-          </button>
+          {/* Proteksi: ON vs OFF */}
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
+            <span className="text-[11px] text-[#6B5559] font-medium">Proteksi:</span>
+            <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
+              <button
+                type="button"
+                onClick={() => setEnableDefense(true)}
+                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                  enableDefense
+                    ? 'bg-[#15803d] text-white shadow-2xs'
+                    : 'text-[#6B5559] hover:text-[#3B010B]'
+                }`}
+              >
+                ON
+              </button>
+              <button
+                type="button"
+                onClick={() => setEnableDefense(false)}
+                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                  !enableDefense
+                    ? 'bg-[#b91c1c] text-white shadow-2xs'
+                    : 'text-[#6B5559] hover:text-[#3B010B]'
+                }`}
+              >
+                OFF
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Hidden Collapsible Options for Evaluation / Attack Simulation */}
-      {showDemoOptions && (
-        <div className="p-3.5 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3 font-sans shadow-xs">
-          <span className="text-[#560B18] font-semibold">Korpus Pengujian (Knowledge Poisoning Test):</span>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                corpusScenario === 'kuhperdata_hir_bgem3'
-                  ? 'bg-[#75162D] text-white shadow-xs'
-                  : 'bg-white text-[#560B18] border border-[#E8DEC9]'
-              }`}
-            >
-              Korpus Asli (Clean)
-            </button>
-            <button
-              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
-                  ? 'bg-[#75162D] text-white shadow-xs'
-                  : 'bg-white text-[#560B18] border border-[#E8DEC9]'
-              }`}
-            >
-              Simulasi Serangan (1% Poisoned)
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Conversation Thread */}
       <div className="min-h-[360px] flex flex-col gap-6 font-sans">

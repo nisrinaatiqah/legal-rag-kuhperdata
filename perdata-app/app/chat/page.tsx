@@ -46,21 +46,13 @@ const SUGGESTED_QUERIES = [
   },
 ];
 
-const SCOPE_TABS = [
-  { label: 'Semua Regulasi (KUHPerdata & HIR)', value: '', badge: 'Terpadu' },
-  { label: 'KUHPerdata Saja', value: 'KUHPerdata', badge: 'Hukum Materiel' },
-  { label: 'HIR Saja', value: 'HIR', badge: 'Hukum Acara' },
-];
-
 function ChatContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
-  const initialSource = searchParams.get('source') || '';
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [sourceFilter, setSourceFilter] = useState<string>(initialSource);
 
   // Essential Anti-Poisoning Defense & Scenario
   const [enableDefense, setEnableDefense] = useState(true);
@@ -78,22 +70,20 @@ function ChatContent() {
   useEffect(() => {
     if (initialQuery && !hasAutoQueried.current) {
       hasAutoQueried.current = true;
-      handleSubmit(initialQuery, initialSource);
+      handleSubmit(initialQuery);
     }
-  }, [initialQuery, initialSource]);
+  }, [initialQuery]);
 
-  const handleSubmit = async (queryText: string, activeSourceOverride?: string) => {
+  const handleSubmit = async (queryText: string) => {
     const text = queryText.trim();
     if (!text || loading) return;
-
-    const currentFilter = activeSourceOverride !== undefined ? activeSourceOverride : sourceFilter;
 
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
       content: text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      scopeUsed: currentFilter || 'Semua Regulasi',
+      scopeUsed: 'KUHPerdata & HIR',
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -106,7 +96,7 @@ function ChatContent() {
         collection: corpusScenario,
         enable_defense: enableDefense,
         llm_model: 'gemini',
-        source_filter: currentFilter || null,
+        source_filter: null, // Terpadu: mencakup KUHPerdata & HIR sekaligus
         top_k: 5,
       };
 
@@ -129,7 +119,7 @@ function ChatContent() {
       }
 
       const data = await res.json();
-      handleServerSuccess(data, currentFilter);
+      handleServerSuccess(data);
     } catch (err: any) {
       const errorMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -144,7 +134,7 @@ function ChatContent() {
     }
   };
 
-  const handleServerSuccess = (data: any, filterUsed: string) => {
+  const handleServerSuccess = (data: any) => {
     const assistantMsg: ChatMessage = {
       id: (Date.now() + 1).toString(),
       role: 'assistant',
@@ -152,7 +142,7 @@ function ChatContent() {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       defenseStatus: data.defense_status,
       retrievedPasals: data.retrieved_pasals,
-      scopeUsed: filterUsed || 'Semua Regulasi',
+      scopeUsed: 'KUHPerdata & HIR',
     };
     setMessages((prev) => [...prev, assistantMsg]);
   };
@@ -200,32 +190,6 @@ function ChatContent() {
             >
               <Sliders className="w-4 h-4" />
             </button>
-          </div>
-        </div>
-
-        {/* Unified vs Targeted Scope Pill Switcher */}
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#FAF6EE] font-montserrat">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B5559]">
-            Cakupan Analisis:
-          </span>
-          <div className="inline-flex items-center gap-1.5 p-1 bg-white/90 backdrop-blur-md rounded-full border border-[#E8DEC9] text-xs">
-            {SCOPE_TABS.map((tab) => {
-              const isSelected = sourceFilter === tab.value;
-              return (
-                <button
-                  key={tab.value}
-                  type="button"
-                  onClick={() => setSourceFilter(tab.value)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1 ${
-                    isSelected
-                      ? 'bg-[#75162D] text-[#F2E5C6] shadow-xs'
-                      : 'text-[#6B5559] hover:text-[#3B010B]'
-                  }`}
-                >
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>

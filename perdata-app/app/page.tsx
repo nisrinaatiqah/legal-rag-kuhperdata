@@ -11,30 +11,22 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-const CHANNELS = [
+const SERVICES = [
   {
-    icon: <BookOpen className="w-5 h-5" />,
-    title: 'Naskah Lengkap KUHPerdata & HIR',
-    desc: 'Jelajahi kodifikasi 1.993 pasal materiel dan 283 ketentuan acara sidang berdasarkan bab naskah resmi.',
+    icon: <MessageSquare className="w-6 h-6" />,
+    title: 'Tanya Jawab AI Terpadu',
+    desc: 'Konsultasikan persoalan perdata Anda secara menyeluruh. Asisten AI menganalisis ketentuan hukum materiil (KUHPerdata) sekaligus tata cara persidangan (HIR) dalam satu ruang diskusi.',
+    href: '/chat',
+    tag: 'Asisten Cerdas',
+    actionText: 'Mulai Tanya Jawab',
+  },
+  {
+    icon: <BookOpen className="w-6 h-6" />,
+    title: 'Katalog Naskah Lengkap',
+    desc: 'Telusuri pangkalan data otentik 1.993 pasal KUHPerdata dan 283 pasal HIR secara mandiri, lengkap dengan pencarian kata kunci dan navigasi terstruktur per bab naskah.',
     href: '/database',
-    tag: 'Pustaka Hukum',
-    actionText: 'Buka Pustaka',
-  },
-  {
-    icon: <MessageSquare className="w-5 h-5" />,
-    title: 'Interaksi Hukum Perdata',
-    desc: 'Bahas perikatan, keabsahan kontrak, wanprestasi, PMH, dan hak kebendaan bersama asisten cerdas.',
-    href: '/chat?source=KUHPerdata',
-    tag: 'Hukum Materiel',
-    actionText: 'Mulai Diskusi',
-  },
-  {
-    icon: <Scale className="w-5 h-5" />,
-    title: 'Panduan Beracara HIR',
-    desc: 'Pelajari tata cara gugatan, mekanisme sita jaminan, mediasi, hingga kekuatan pembuktian di persidangan.',
-    href: '/chat?source=HIR',
-    tag: 'Hukum Acara',
-    actionText: 'Pelajari Alur',
+    tag: 'Pustaka Resmi',
+    actionText: 'Buka Katalog Naskah',
   },
 ];
 
@@ -99,44 +91,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Main Channels Section */}
+      {/* Main Services Section — 2 Unified Pathways */}
       <section className="max-w-6xl mx-auto px-6 w-full">
         <div className="mb-8">
           <p className="text-xs font-bold uppercase tracking-widest text-[#75162D] font-montserrat mb-1.5">
             Layanan Utama
           </p>
           <h2 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B]">
-            Tiga Jalur Penelusuran Mandiri
+            Pusat Penelusuran Regulasi
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {CHANNELS.map((item, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {SERVICES.map((item, i) => (
             <Link
               key={i}
               href={item.href}
-              className="group p-7 rounded-2xl bg-white border border-[#E8DEC9] hover:border-[#75162D] hover:shadow-md transition-all flex flex-col justify-between shadow-xs"
+              className="group p-8 rounded-2xl bg-white border border-[#E8DEC9] hover:border-[#75162D] hover:shadow-md transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#F2E5C6] text-[#75162D] group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#F2E5C6] text-[#75162D] group-hover:scale-105 transition-transform">
                     {item.icon}
                   </div>
-                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FAF6EE] text-[#75162D] border border-[#E8DEC9] font-montserrat">
+                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAF6EE] text-[#75162D] border border-[#E8DEC9] font-montserrat">
                     {item.tag}
                   </span>
                 </div>
-                <h3 className="font-cyntho text-lg font-bold text-[#3B010B] mb-2 group-hover:text-[#75162D] transition-colors">
+                <h3 className="font-cyntho text-xl font-bold text-[#3B010B] mb-2.5 group-hover:text-[#75162D] transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-xs text-[#6B5559] leading-relaxed font-sans mb-6">
+                <p className="text-xs sm:text-sm text-[#6B5559] leading-relaxed font-sans mb-6">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[#75162D] font-sans group-hover:gap-2 transition-all">
+              <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#75162D] font-sans group-hover:gap-2.5 transition-all">
                 <span>{item.actionText}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </div>
             </Link>
           ))}

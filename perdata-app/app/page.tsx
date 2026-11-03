@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowUpRight, Search, FileText, CheckCircle2 } from 'lucide-react';
+import { ArrowUpRight, Search, FileText, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -33,6 +33,39 @@ const REGULATION_SCOPES = [
     subject: 'Reglemen Indonesia yang Diperbaharui',
     description:
       'Pedoman beracara di pengadilan: tata cara pendaftaran gugatan, sita jaminan (conservatoir beslag), dan kekuatan alat bukti.',
+  },
+];
+
+const POPULAR_TOPICS = [
+  {
+    tag: 'Pasal 1320 KUHPerdata',
+    title: 'Syarat Sah Perjanjian',
+    query: 'Apa 4 syarat sahnya perjanjian menurut Pasal 1320 KUHPerdata dan akibat hukum bila tidak dipenuhi?',
+  },
+  {
+    tag: 'Pasal 1365 KUHPerdata',
+    title: 'Perbuatan Melawan Hukum (PMH)',
+    query: 'Bagaimana unsur-unsur Perbuatan Melawan Hukum (PMH) menurut Pasal 1365 KUHPerdata?',
+  },
+  {
+    tag: 'Pasal 1243 KUHPerdata',
+    title: 'Gugatan Wanprestasi & Ganti Rugi',
+    query: 'Kapan debitur dinyatakan wanprestasi dan apa saja bentuk ganti rugi menurut Pasal 1243 KUHPerdata?',
+  },
+  {
+    tag: 'Pasal 1250 KUHPerdata',
+    title: 'Bunga Moratoir (Kelalaian Uang)',
+    query: 'Bagaimana ketentuan ganti rugi bunga moratoir atas kelalaian pembayaran uang menurut KUHPerdata?',
+  },
+  {
+    tag: 'Pasal 227 HIR',
+    title: 'Sita Jaminan (Conservatoir Beslag)',
+    query: 'Bagaimana tata cara dan syarat permohonan sita jaminan (conservatoir beslag) menurut HIR?',
+  },
+  {
+    tag: 'Pasal 164 HIR',
+    title: 'Kekuatan Alat Bukti Persidangan',
+    query: 'Apa saja 5 alat bukti sah dalam hukum acara perdata menurut Pasal 164 HIR?',
   },
 ];
 
@@ -254,6 +287,125 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Editorial Information: Standar Keaslian & Integritas Penelusuran (Enclosed 3-Column Division) */}
+      <section className="max-w-6xl mx-auto px-6 w-full">
+        <div className="border-b border-[#E8DEC9] pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] font-semibold tracking-widest uppercase text-[#75162D] font-sans">
+              Standar &amp; Informasi Sistem
+            </span>
+            <h2 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#3B010B] mt-1">
+              Transparansi &amp; Integritas Penelusuran
+            </h2>
+          </div>
+          <p className="text-xs text-[#6B5559] max-w-md font-sans">
+            Bagaimana CiviLex AI menjaga keaslian setiap pasal dan menyajikan rujukan hukum secara terpercaya.
+          </p>
+        </div>
+
+        <div className="bg-[#FFFFFF] border border-[#E8DEC9] rounded-sm grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#E8DEC9]">
+          {/* Pillar 1 */}
+          <div className="p-7 flex flex-col justify-between">
+            <div>
+              <div className="w-9 h-9 rounded-sm bg-[#F2E5C6] text-[#75162D] flex items-center justify-center font-serif text-sm font-bold mb-4">
+                01
+              </div>
+              <h3 className="font-serif text-lg font-bold tracking-tight text-[#3B010B]">
+                2.276 Ketentuan Terkodifikasi
+              </h3>
+              <p className="text-xs text-[#6B5559] mt-3 leading-relaxed font-sans">
+                Memproses naskah resmi KUHPerdata (Buku I–IV) dan HIR secara granular per ketentuan pasal mandiri dari sumber primer JDIH Nasional guna mengeliminasi informasi bising (*zero context noise*).
+              </p>
+            </div>
+            <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center gap-2 text-xs font-semibold text-[#15803d]">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Sumber Terkodifikasi Otentik</span>
+            </div>
+          </div>
+
+          {/* Pillar 2 */}
+          <div className="p-7 flex flex-col justify-between">
+            <div>
+              <div className="w-9 h-9 rounded-sm bg-[#F2E5C6] text-[#75162D] flex items-center justify-center font-serif text-sm font-bold mb-4">
+                02
+              </div>
+              <h3 className="font-serif text-lg font-bold tracking-tight text-[#3B010B]">
+                Verifikasi Sidik Jari Kriptografis
+              </h3>
+              <p className="text-xs text-[#6B5559] mt-3 leading-relaxed font-sans">
+                Setiap pasal divalidasi terhadap sidik jari hash kriptografis resmi sebelum dianalisis, mencegah penyusupan kutipan palsu, pasal kedaluwarsa, atau manipulasi redaksi undang-undang.
+              </p>
+            </div>
+            <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center gap-2 text-xs font-semibold text-[#75162D]">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Proteksi Naskah Berlapis</span>
+            </div>
+          </div>
+
+          {/* Pillar 3 */}
+          <div className="p-7 flex flex-col justify-between">
+            <div>
+              <div className="w-9 h-9 rounded-sm bg-[#F2E5C6] text-[#75162D] flex items-center justify-center font-serif text-sm font-bold mb-4">
+                03
+              </div>
+              <h3 className="font-serif text-lg font-bold tracking-tight text-[#3B010B]">
+                Rujukan Semantik Presisi
+              </h3>
+              <p className="text-xs text-[#6B5559] mt-3 leading-relaxed font-sans">
+                Pengguna dapat memasukkan kronologi atau pertanyaan sehari-hari; AI mencocokkan substansi hukum dengan pasal yang relevan dan menyertakan kutipan naskah aslinya secara utuh.
+              </p>
+            </div>
+            <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center gap-2 text-xs font-semibold text-[#560B18]">
+              <Scale className="w-3.5 h-3.5" />
+              <span>Analisis Berbasis Hukum Positif</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Civil Legal Topics (Direct Quick Search Guides) */}
+      <section className="max-w-6xl mx-auto px-6 w-full">
+        <div className="border-b border-[#E8DEC9] pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] font-semibold tracking-widest uppercase text-[#75162D] font-sans">
+              Topik Regulasi Populer
+            </span>
+            <h2 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#3B010B] mt-1">
+              Pertanyaan yang Kerap Ditelusuri
+            </h2>
+          </div>
+          <p className="text-xs text-[#6B5559] max-w-md font-sans">
+            Pilih topik berikut untuk langsung membuka penelusuran naskah dan analisis ketentuan hukumnya.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {POPULAR_TOPICS.map((topic, idx) => (
+            <Link
+              key={idx}
+              href={`/chat?q=${encodeURIComponent(topic.query)}`}
+              className="group p-5 bg-white border border-[#E8DEC9] rounded-sm hover:border-[#75162D] transition-all flex flex-col justify-between gap-3 shadow-xs"
+            >
+              <div>
+                <span className="text-[10px] font-semibold tracking-wider uppercase text-[#75162D] font-sans">
+                  {topic.tag}
+                </span>
+                <h4 className="font-serif text-sm font-bold text-[#3B010B] mt-1 group-hover:text-[#75162D] transition-colors">
+                  {topic.title}
+                </h4>
+                <p className="text-xs text-[#6B5559] mt-1 leading-relaxed font-sans line-clamp-2">
+                  {topic.query}
+                </p>
+              </div>
+              <div className="flex items-center gap-1 text-[11px] font-semibold text-[#75162D] pt-2 border-t border-[#FAF6EE]">
+                <span>Tinjau Naskah Pasal</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </Link>
           ))}
         </div>
       </section>

@@ -9,7 +9,6 @@ const navLinks = [
   { href: '/', label: 'Beranda' },
   { href: '/chat', label: 'Tanya Jawab Naskah' },
   { href: '/database', label: 'Katalog 2.276 Ketentuan' },
-  { href: '/evaluasi', label: 'Keandalan Sistem' },
 ];
 
 export default function Navbar() {

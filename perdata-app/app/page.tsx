@@ -1,9 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowUpRight, Search, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { ArrowUpRight, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
 
 const REGULATION_SCOPES = [
   {
@@ -74,18 +72,6 @@ const POPULAR_TOPICS = [
 ];
 
 export default function HomePage() {
-  const router = useRouter();
-  const [quickQuery, setQuickQuery] = useState('');
-
-  const handleQuickSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (quickQuery.trim()) {
-      router.push(`/chat?q=${encodeURIComponent(quickQuery.trim())}`);
-    } else {
-      router.push('/chat');
-    }
-  };
-
   return (
     <div className="flex flex-col gap-24 pb-20 font-body">
       {/* Editorial Hero Section with Faded Law Emblem Background (Inspired by fe-kuhp-kuhap-chatbot) */}
@@ -127,53 +113,22 @@ export default function HomePage() {
               Asisten berbasis kecerdasan buatan untuk membantu penelusuran naskah resmi KUHPerdata dan HIR secara terstruktur, cepat, dan terverifikasi dari sumber pangkalan data JDIH Nasional.
             </p>
 
-            {/* Direct Query Search Input */}
-            <form onSubmit={handleQuickSearch} className="mt-6 w-full max-w-xl">
-              <div className="relative flex items-center">
-                <input
-                  type="text"
-                  value={quickQuery}
-                  onChange={(e) => setQuickQuery(e.target.value)}
-                  placeholder="Ketik kata kunci atau pasal (contoh: 1320, ganti rugi, waris)..."
-                  className="w-full pl-5 pr-28 py-3.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full shadow-sm font-sans transition-all focus:ring-2 focus:ring-[#75162D]/10"
-                />
-                <button
-                  type="submit"
-                  className="btn-burgundy-primary absolute right-1.5 px-5 py-2 rounded-full text-xs font-bold font-sans flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
-                  title="Mulai Penelusuran"
-                >
-                  <span>Cari</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </form>
-
             {/* Primary Action Buttons in Hero */}
-            <div className="flex flex-wrap items-center gap-3 mt-4">
+            <div className="flex flex-wrap items-center gap-3 mt-8">
               <Link
                 href="/chat"
-                className="btn-burgundy-primary px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"
+                className="btn-burgundy-primary px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"
               >
                 <span>Mulai Penelusuran AI</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
               <Link
                 href="/database"
-                className="px-5 py-2.5 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
+                className="px-6 py-3 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
               >
                 <span>Katalog Database</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
-            </div>
-
-            {/* Editorial Principle Quote in Bellefair (Opsi D) */}
-            <div className="mt-6 pt-4 border-t border-[#E8DEC9] w-full max-w-xl">
-              <p className="font-bellefair text-2xl md:text-3xl text-[#3B010B] leading-snug">
-                &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
-              </p>
-              <p className="text-[10px] text-[#6B5559] mt-1.5 uppercase tracking-widest font-bold font-sans">
-                Prinsip Fundamental KUHPerdata &amp; HIR
-              </p>
             </div>
           </div>
         </div>

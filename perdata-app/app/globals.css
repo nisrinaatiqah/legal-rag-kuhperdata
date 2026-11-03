@@ -1,18 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 @import "tailwindcss";
 
 :root {
-  --bg-cream: #faf7f2;
-  --bg-sand: #f4eee5;
-  --bg-card: #ffffff;
-  --color-burgundy: #7a1827;
-  --color-burgundy-hover: #63121e;
-  --color-charcoal: #1c1917;
-  --color-charcoal-soft: #292524;
-  --color-warm-border: #e7dfd5;
+  /* Exact Color Palette from User's Swatch */
+  --champagne-beige: #F2E5C6;
+  --sand-gold: #F2D9A0;
+  --burgundy: #75162D;
+  --dark-maroon: #560B18;
+  --deep-wine: #3B010B;
+
+  /* UI Canvas & Surfaces */
+  --bg-page: #FAF6EE;
+  --bg-surface: #FFFFFF;
+  --border-subtle: #E8DEC9;
+  --text-main: #2A171A;
+  --text-muted: #6B5559;
+
+  /* Font Families */
   --font-serif: 'Playfair Display', Georgia, serif;
-  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
@@ -26,62 +32,75 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-cream);
-  color: var(--color-charcoal);
+  background-color: var(--bg-page);
+  color: var(--text-main);
   -webkit-font-smoothing: antialiased;
 }
 
-.font-editorial-title {
+/* Typography Utility Classes */
+.font-display {
   font-family: var(--font-serif);
 }
 
-.font-editorial-display {
-  font-family: var(--font-cormorant);
+.font-body {
+  font-family: var(--font-sans);
 }
 
-/* Warm Editorial Cards */
-.editorial-card {
-  background-color: #ffffff;
-  border: 1px solid var(--color-warm-border);
-  box-shadow: 0 4px 20px -2px rgba(41, 37, 36, 0.04);
+/* Editorial Buttons with Burgundy & Dark Maroon */
+.btn-burgundy-primary {
+  background-color: var(--burgundy);
+  color: #FFFFFF;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn-burgundy-primary:hover {
+  background-color: var(--dark-maroon);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -4px rgba(117, 22, 45, 0.35);
 }
 
-.editorial-card-hover {
+.btn-champagne-outline {
+  background-color: #FFFFFF;
+  color: var(--dark-maroon);
+  border: 1px solid var(--sand-gold);
+  transition: all 0.25s ease;
+}
+.btn-champagne-outline:hover {
+  background-color: var(--champagne-beige);
+  border-color: var(--sand-gold);
+  transform: translateY(-1px);
+}
+
+/* Clean Law Firm Cards */
+.law-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px -2px rgba(59, 1, 11, 0.03);
+}
+
+.law-card-hover {
   transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.editorial-card-hover:hover {
-  border-color: #d1c4b2;
+.law-card-hover:hover {
+  border-color: var(--sand-gold);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -4px rgba(41, 37, 36, 0.08);
+  box-shadow: 0 12px 30px -4px rgba(59, 1, 11, 0.08);
 }
 
-/* Primary Burgundy Action Button */
-.btn-burgundy {
-  background-color: var(--color-burgundy);
-  color: #ffffff;
-  transition: all 0.2s ease-in-out;
-}
-.btn-burgundy:hover {
-  background-color: var(--color-burgundy-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px -2px rgba(122, 24, 39, 0.3);
-}
-
-/* Scrollbars */
+/* Custom Scrollbar in Warm Sand */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f4eee5;
+  background: var(--bg-page);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d6ccbe;
+  background: var(--sand-gold);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b8ac9c;
+  background: #deb770;
 }

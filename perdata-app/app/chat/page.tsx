@@ -3,13 +3,11 @@
 import { useState, useRef, useEffect } from 'react';
 import {
   ArrowUpRight,
-  Send,
   Scale,
   ShieldCheck,
   ShieldAlert,
   Bot,
   User,
-  Sparkles,
   RefreshCw,
   FileText,
   Sliders,
@@ -78,7 +76,6 @@ export default function ChatPage() {
       });
 
       if (!res.ok) {
-        // Fallback directly to localhost:8000
         const fallbackRes = await fetch('http://127.0.0.1:8000/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -128,28 +125,28 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12">
+    <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
       {/* Editorial Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#e7dfd5] pb-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E8DEC9] pb-6">
         <div>
-          <span className="text-xs font-semibold tracking-widest uppercase text-[#7a1827]">
+          <span className="text-xs font-semibold tracking-widest uppercase text-[#75162D]">
             Konsultasi Hukum AI
           </span>
-          <h1 className="font-editorial-title text-3xl md:text-4xl font-bold text-[#1c1917] mt-1">
-            Tanya Jawab KUHPerdata &amp; HIR
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-[#3B010B] mt-1">
+            Tanya Jawab <span className="italic font-normal text-[#75162D]">KUHPerdata &amp; HIR</span>
           </h1>
         </div>
 
         {/* Essential Defense Toggle for Demo */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#e2d7c9] shadow-sm text-xs font-medium text-[#44403c]">
+          <div className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A]">
             <span>Proteksi Naskah Asli:</span>
             <button
               onClick={() => setEnableDefense(!enableDefense)}
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
                 enableDefense
-                  ? 'bg-[#15803d] text-white'
-                  : 'bg-[#991b1b] text-white'
+                  ? 'bg-[#15803d] text-white shadow-sm'
+                  : 'bg-[#75162D] text-[#F2E5C6]'
               }`}
             >
               {enableDefense ? 'Aktif' : 'Nonaktif'}
@@ -158,25 +155,25 @@ export default function ChatPage() {
 
           <button
             onClick={() => setShowDemoOptions(!showDemoOptions)}
-            className="p-2 rounded-full bg-white border border-[#e2d7c9] text-[#78716c] hover:text-[#1c1917] transition-colors"
-            title="Pilihan Skenario Uji"
+            className="p-2 rounded-full bg-white border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
+            title="Pilihan Skenario Uji Sidang"
           >
             <Sliders className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* Hidden Collapsible Demo Options (Only for Thesis Simulation) */}
+      {/* Hidden Collapsible Demo Options (For Thesis Simulation) */}
       {showDemoOptions && (
-        <div className="p-4 rounded-2xl bg-[#f4eee5] border border-[#e2d7c9] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-[#57534e] font-medium">Pilihan Skenario Korpus untuk Sidang:</span>
+        <div className="p-4 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span className="text-[#560B18] font-semibold">Pilihan Skenario Korpus untuk Uji Sidang:</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
               className={`px-3 py-1.5 rounded-full font-medium ${
                 corpusScenario === 'kuhperdata_hir_bgem3'
-                  ? 'bg-[#7a1827] text-white'
-                  : 'bg-white text-[#57534e] border border-[#dcd2c4]'
+                  ? 'bg-[#75162D] text-white'
+                  : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
               Korpus Bersih (Resmi)
@@ -185,8 +182,8 @@ export default function ChatPage() {
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
               className={`px-3 py-1.5 rounded-full font-medium ${
                 corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
-                  ? 'bg-[#7a1827] text-white'
-                  : 'bg-white text-[#57534e] border border-[#dcd2c4]'
+                  ? 'bg-[#75162D] text-white'
+                  : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
               Uji Racun 1% (Simulasi Manipulasi)
@@ -199,23 +196,23 @@ export default function ChatPage() {
       <div className="min-h-[380px] flex flex-col gap-6">
         {messages.length === 0 && (
           <div className="my-auto py-12 text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-[#f4eee5] border border-[#e2d7c9] flex items-center justify-center text-[#7a1827] mb-4">
+            <div className="w-12 h-12 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4">
               <Scale className="w-6 h-6" />
             </div>
-            <h2 className="font-editorial-title text-2xl font-bold text-[#1c1917]">
-              Mulai Konsultasi Permasalahan Hukum
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-[#3B010B]">
+              Mulai Konsultasi <span className="italic font-normal text-[#75162D]">Permasalahan Hukum</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#78716c] max-w-md mt-1.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#6B5559] max-w-md mt-1.5 leading-relaxed">
               Ajukan pertanyaan mengenai perjanjian, wanprestasi, ganti rugi perbuatan melawan hukum, maupun prosedur gugatan di persidangan.
             </p>
 
-            {/* Clean, Non-Noisy Suggested Question Pills */}
+            {/* Clean Suggested Question Pills */}
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 max-w-2xl mt-8">
               {SUGGESTED_QUERIES.map((q, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSubmit(q)}
-                  className="px-4 py-2.5 rounded-full bg-white hover:bg-[#f5efe6] border border-[#e2d7c9] text-xs font-medium text-[#44403c] transition-all text-left shadow-sm"
+                  className="px-4 py-2.5 rounded-full bg-white hover:bg-[#F2E5C6]/60 border border-[#E8DEC9] text-xs font-medium text-[#2A171A] transition-all text-left shadow-sm hover:border-[#F2D9A0]"
                 >
                   {q}
                 </button>
@@ -232,15 +229,15 @@ export default function ChatPage() {
               msg.role === 'user' ? 'items-end' : 'items-start'
             }`}
           >
-            <span className="text-[11px] text-[#8a847c] px-1 font-medium">
+            <span className="text-[11px] text-[#6B5559] px-1 font-medium">
               {msg.role === 'user' ? 'Pertanyaan Anda' : 'Pertimbangan Hukum LexPerdata'} • {msg.timestamp}
             </span>
 
             <div
               className={`rounded-2xl p-6 leading-relaxed max-w-2xl ${
                 msg.role === 'user'
-                  ? 'bg-[#1c1917] text-white shadow-md'
-                  : 'editorial-card text-[#292524]'
+                  ? 'bg-[#3B010B] text-[#FAF6EE] shadow-md'
+                  : 'law-card text-[#2A171A]'
               }`}
             >
               {/* Security Badge */}
@@ -253,8 +250,8 @@ export default function ChatPage() {
 
               {/* Cited Articles Shelf */}
               {msg.retrievedPasals && msg.retrievedPasals.length > 0 && (
-                <div className="mt-6 pt-5 border-t border-[#f0ebe1] flex flex-col gap-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#7a1827] flex items-center gap-1.5">
+                <div className="mt-6 pt-5 border-t border-[#E8DEC9] flex flex-col gap-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#75162D] flex items-center gap-1.5">
                     <FileText className="w-3.5 h-3.5" />
                     Pasal Rujukan Resmi ({msg.retrievedPasals.length} Pasal Terverifikasi):
                   </span>
@@ -272,9 +269,9 @@ export default function ChatPage() {
 
         {/* Loading Spinner */}
         {loading && (
-          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#e2d7c9] max-w-xs shadow-sm">
-            <RefreshCw className="w-4 h-4 text-[#7a1827] animate-spin" />
-            <span className="text-xs font-medium text-[#57534e]">
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#E8DEC9] max-w-xs shadow-sm">
+            <RefreshCw className="w-4 h-4 text-[#75162D] animate-spin" />
+            <span className="text-xs font-medium text-[#6B5559]">
               Sedang menelaah pasal rujukan resmi...
             </span>
           </div>
@@ -283,32 +280,32 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Minimalist Question Input Bar */}
+      {/* Question Input Bar */}
       <div className="sticky bottom-6 z-20">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(input);
           }}
-          className="relative flex items-center rounded-full bg-white border border-[#dcd2c4] shadow-xl shadow-black/5 p-1.5 focus-within:border-[#7a1827] transition-all"
+          className="relative flex items-center rounded-full bg-white border border-[#E8DEC9] shadow-xl shadow-black/5 p-1.5 focus-within:border-[#75162D] transition-all"
         >
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Tuliskan pertanyaan hukum perdata atau hukum acara..."
-            className="w-full px-5 py-3 text-xs sm:text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none bg-transparent"
+            className="w-full px-5 py-3 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="btn-burgundy p-3 rounded-full disabled:opacity-40 shrink-0 ml-1"
+            className="btn-burgundy-primary p-3 rounded-full disabled:opacity-40 shrink-0 ml-1"
             title="Kirim Pertanyaan"
           >
             <ArrowUpRight className="w-4 h-4" />
           </button>
         </form>
-        <p className="text-[11px] text-center text-[#8a847c] mt-2 font-normal">
+        <p className="text-[11px] text-center text-[#6B5559] mt-2 font-normal">
           Seluruh jawaban dirumuskan berdasarkan ketentuan KUHPerdata &amp; HIR resmi dari JDIH Nasional.
         </p>
       </div>

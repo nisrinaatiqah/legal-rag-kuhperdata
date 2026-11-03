@@ -27,20 +27,20 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
   const isLong = article.content.length > 250;
 
   return (
-    <div className="editorial-card editorial-card-hover rounded-2xl p-5 md:p-6 transition-all">
+    <div className="law-card law-card-hover rounded-2xl p-5 md:p-6 transition-all font-body">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-editorial-title text-base md:text-lg font-bold text-[#1c1917]">
+            <span className="font-display text-lg md:text-xl font-bold text-[#3B010B]">
               {article.source} Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-[#f4eee5] text-[#7a1827] border border-[#e2d7c9]">
+            <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0]">
               {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
             </span>
           </div>
           {article.bab_title && article.bab_title !== '-' && (
-            <p className="text-xs text-[#78716c] mt-1 italic font-editorial-display text-sm">
+            <p className="text-xs text-[#75162D] mt-1 italic font-display">
               {article.bab_title}
             </p>
           )}
@@ -49,18 +49,18 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
         {/* Copy Button */}
         <button
           onClick={copyToClipboard}
-          className="p-2 rounded-xl bg-[#faf7f2] hover:bg-[#f0ebe1] text-[#57534e] hover:text-[#1c1917] border border-[#e7dfd5] transition-all shrink-0 flex items-center gap-1.5 text-xs"
+          className="p-2 rounded-xl bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs"
           title="Salin Rujukan Hukum"
         >
           {copied ? (
             <>
               <Check className="w-3.5 h-3.5 text-[#15803d]" />
-              <span className="text-[11px] text-[#15803d] font-medium">Tersalin</span>
+              <span className="text-[11px] text-[#15803d] font-semibold">Tersalin</span>
             </>
           ) : (
             <>
               <Copy className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline text-[11px]">Salin</span>
+              <span className="hidden sm:inline text-[11px] font-medium">Salin</span>
             </>
           )}
         </button>
@@ -69,7 +69,7 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
       {/* Content Text */}
       <div className="relative mt-2">
         <p
-          className={`text-xs sm:text-sm text-[#44403c] leading-relaxed font-normal ${
+          className={`text-xs sm:text-sm text-[#2A171A] leading-relaxed font-normal ${
             !expanded && isLong ? 'line-clamp-3' : ''
           }`}
         >
@@ -79,7 +79,7 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
         {isLong && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-xs text-[#7a1827] hover:underline font-semibold mt-2 inline-flex items-center gap-1"
+            className="text-xs text-[#75162D] hover:underline font-semibold mt-2 inline-flex items-center gap-1"
           >
             {expanded ? (
               <>
@@ -95,12 +95,12 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
       </div>
 
       {/* Subtle Integrity Badge */}
-      <div className="mt-4 pt-3 border-t border-[#f2ede4] flex items-center justify-between text-[11px] text-[#8a847c]">
-        <div className="flex items-center gap-1.5 text-[#15803d] font-medium">
+      <div className="mt-4 pt-3 border-t border-[#FAF6EE] flex items-center justify-between text-[11px] text-[#6B5559]">
+        <div className="flex items-center gap-1.5 text-[#15803d] font-semibold">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>Naskah Resmi Terverifikasi</span>
         </div>
-        <span className="text-[10px] text-[#a8a29e] uppercase tracking-wider font-mono">
+        <span className="text-[10px] text-[#8C7A7C] uppercase tracking-wider font-mono">
           JDIH Valid
         </span>
       </div>

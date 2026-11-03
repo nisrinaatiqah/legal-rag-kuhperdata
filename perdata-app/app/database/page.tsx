@@ -59,13 +59,16 @@ export default function DatabasePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Editorial Header */}
+      {/* Editorial Header in Cinzel & Cormorant */}
       <div className="flex flex-col gap-2 border-b border-[#E8DEC9] pb-6">
-        <span className="text-xs font-semibold tracking-widest uppercase text-[#75162D]">
+        <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-cinzel">
           Basis Data Kodifikasi
         </span>
-        <h1 className="font-display text-3xl md:text-4xl font-bold text-[#3B010B]">
-          Katalog 2.276 Pasal <span className="italic font-normal text-[#75162D]">KUHPerdata &amp; HIR</span>
+        <h1 className="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-[#3B010B]">
+          Katalog 2.276 Pasal{' '}
+          <span className="font-cormorant italic font-normal text-[#75162D] text-3xl md:text-4xl normal-case">
+            KUHPerdata &amp; HIR
+          </span>
         </h1>
         <p className="text-xs sm:text-sm text-[#6B5559] max-w-xl">
           Naskah resmi dari Lembaran Negara dan JDIH Nasional, terverifikasi utuh dan bebas dari distorsi data.
@@ -81,12 +84,12 @@ export default function DatabasePage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari nomor pasal atau kata kunci (contoh: 1320, ganti rugi, waris)..."
-            className="w-full pl-11 pr-5 py-3 rounded-full bg-white border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-sm"
+            className="w-full pl-11 pr-5 py-3 rounded-full bg-white border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-sm font-body"
           />
           <Search className="w-4 h-4 text-[#6B5559] absolute left-4 top-3.5" />
         </form>
 
-        {/* Source Pills */}
+        {/* Source Pills in Cinzel */}
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
           {SOURCE_OPTIONS.map((opt) => (
             <button
@@ -95,7 +98,7 @@ export default function DatabasePage() {
                 setSelectedSource(opt.value);
                 setPage(0);
               }}
-              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+              className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider font-cinzel transition-all whitespace-nowrap ${
                 selectedSource === opt.value
                   ? 'bg-[#75162D] text-[#F2E5C6] shadow-sm'
                   : 'bg-white text-[#560B18] hover:bg-[#F2E5C6]/50 border border-[#E8DEC9]'
@@ -108,7 +111,7 @@ export default function DatabasePage() {
       </div>
 
       {/* Counter */}
-      <div className="text-xs text-[#6B5559] px-1 font-medium">
+      <div className="text-xs text-[#6B5559] px-1 font-medium font-body">
         Menampilkan {articles.length} dari <strong className="text-[#3B010B]">{total}</strong> pasal ditemukan
       </div>
 
@@ -121,7 +124,7 @@ export default function DatabasePage() {
       ) : articles.length === 0 ? (
         <div className="py-16 text-center law-card rounded-2xl p-8">
           <Scale className="w-8 h-8 text-[#8C7A7C] mx-auto mb-2" />
-          <p className="text-sm font-semibold text-[#3B010B]">Tidak ada pasal yang cocok</p>
+          <p className="text-sm font-semibold text-[#3B010B] font-cinzel">Tidak ada pasal yang cocok</p>
           <p className="text-xs text-[#6B5559] mt-1">Coba gunakan kata kunci atau nomor pasal lain.</p>
         </div>
       ) : (
@@ -142,20 +145,20 @@ export default function DatabasePage() {
           <button
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0 || loading}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#F2E5C6]/50 disabled:opacity-30 border border-[#E8DEC9] text-[#560B18] transition-all font-medium"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#F2E5C6]/50 disabled:opacity-30 border border-[#E8DEC9] text-[#560B18] transition-all font-cinzel font-semibold"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Sebelumnya</span>
           </button>
 
-          <span className="text-[#6B5559] font-medium">
+          <span className="text-[#6B5559] font-medium font-body">
             Halaman {page + 1} dari {totalPages}
           </span>
 
           <button
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1 || loading}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#F2E5C6]/50 disabled:opacity-30 border border-[#E8DEC9] text-[#560B18] transition-all font-medium"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#F2E5C6]/50 disabled:opacity-30 border border-[#E8DEC9] text-[#560B18] transition-all font-cinzel font-semibold"
           >
             <span>Selanjutnya</span>
             <ChevronRight className="w-4 h-4" />

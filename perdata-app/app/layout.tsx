@@ -23,8 +23,8 @@ export default function RootLayout({
         <footer className="border-t border-[#E8DEC9] bg-[#F2E5C6]/40 py-12 px-6 text-[#6B5559]">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex flex-col gap-1">
-              <span className="font-display text-2xl font-bold text-[#3B010B]">
-                Civil<span className="text-[#75162D]">.AI</span>
+              <span className="font-cinzel text-xl font-bold tracking-wider text-[#3B010B]">
+                CIVIL<span className="text-[#75162D]">.AI</span>
               </span>
               <p className="text-xs text-[#6B5559] max-w-sm leading-relaxed">
                 Sistem Tanya Jawab Cerdas Hukum Perdata Material (KUHPerdata) dan Formil (HIR) dengan Perlindungan Integritas Naskah Resmi.

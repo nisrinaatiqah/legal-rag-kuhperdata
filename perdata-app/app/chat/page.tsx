@@ -126,14 +126,17 @@ export default function ChatPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Editorial Page Header */}
+      {/* Editorial Page Header in Cinzel & Cormorant */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E8DEC9] pb-6">
         <div>
-          <span className="text-xs font-semibold tracking-widest uppercase text-[#75162D]">
+          <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-cinzel">
             Konsultasi Hukum AI
           </span>
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-[#3B010B] mt-1">
-            Tanya Jawab <span className="italic font-normal text-[#75162D]">KUHPerdata &amp; HIR</span>
+          <h1 className="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-[#3B010B] mt-1">
+            Tanya Jawab{' '}
+            <span className="font-cormorant italic font-normal text-[#75162D] text-3xl md:text-4xl normal-case">
+              KUHPerdata &amp; HIR
+            </span>
           </h1>
         </div>
 
@@ -199,8 +202,11 @@ export default function ChatPage() {
             <div className="w-12 h-12 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4">
               <Scale className="w-6 h-6" />
             </div>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-[#3B010B]">
-              Mulai Konsultasi <span className="italic font-normal text-[#75162D]">Permasalahan Hukum</span>
+            <h2 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
+              Mulai Konsultasi{' '}
+              <span className="font-cormorant italic font-normal text-[#75162D] text-2xl md:text-3xl normal-case">
+                Permasalahan Hukum
+              </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#6B5559] max-w-md mt-1.5 leading-relaxed">
               Ajukan pertanyaan mengenai perjanjian, wanprestasi, ganti rugi perbuatan melawan hukum, maupun prosedur gugatan di persidangan.
@@ -251,7 +257,7 @@ export default function ChatPage() {
               {/* Cited Articles Shelf */}
               {msg.retrievedPasals && msg.retrievedPasals.length > 0 && (
                 <div className="mt-6 pt-5 border-t border-[#E8DEC9] flex flex-col gap-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#75162D] flex items-center gap-1.5">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#75162D] flex items-center gap-1.5 font-cinzel">
                     <FileText className="w-3.5 h-3.5" />
                     Pasal Rujukan Resmi ({msg.retrievedPasals.length} Pasal Terverifikasi):
                   </span>

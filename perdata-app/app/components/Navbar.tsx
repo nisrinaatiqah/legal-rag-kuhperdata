@@ -19,30 +19,30 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAF6EE]/90 backdrop-blur-md border-b border-[#E8DEC9]">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Brand / Logo */}
+        {/* Brand / Logo in Roman Cinzel */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-full bg-[#75162D] text-[#F2E5C6] flex items-center justify-center font-display text-lg font-bold group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-full bg-[#75162D] text-[#F2E5C6] flex items-center justify-center font-cinzel text-sm font-bold group-hover:scale-105 transition-transform">
             §
           </div>
           <div className="flex flex-col">
-            <span className="font-display text-2xl font-bold tracking-tight text-[#3B010B]">
-              Civil<span className="text-[#75162D]">.AI</span>
+            <span className="font-cinzel text-xl font-bold tracking-wider text-[#3B010B]">
+              CIVIL<span className="text-[#75162D]">.AI</span>
             </span>
-            <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-1 font-body">
+            <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-0.5 font-body">
               Hukum Perdata &amp; Acara • KUHPerdata &amp; HIR
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* Desktop Navigation in Inter */}
+        <nav className="hidden md:flex items-center gap-8 font-body">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium tracking-wide transition-colors relative py-1 font-body ${
+                className={`text-sm font-medium tracking-wide transition-colors relative py-1 ${
                   isActive
                     ? 'text-[#75162D] font-bold'
                     : 'text-[#6B5559] hover:text-[#3B010B]'

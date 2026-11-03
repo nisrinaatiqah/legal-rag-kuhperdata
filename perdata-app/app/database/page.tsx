@@ -114,12 +114,12 @@ function DatabaseContent() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 flex flex-col gap-8 pb-12 font-sans">
-      {/* Header in Luxury Legal Editorial Style (Cormorant Garamond) */}
+      {/* Header in Bold & Authoritative Legal Style (DM Serif Display - Opsi 2) */}
       <div className="flex flex-col gap-2 border-b border-[#E8DEC9] pb-6">
         <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-sans">
           Pangkalan Data Naskah Resmi
         </span>
-        <h1 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#3B010B]">
+        <h1 className="font-dm-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-[#3B010B]">
           Katalog Ketentuan{' '}
           <span className="text-[#75162D] italic normal-case text-3xl sm:text-4xl md:text-5xl block sm:inline">
             KUHPerdata &amp; HIR

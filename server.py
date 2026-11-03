@@ -1,5 +1,5 @@
 """
-FastAPI Backend Server: LexPerdata AI
+FastAPI Backend Server: Civil AI
 Sistem Legal Question Answering Hukum Perdata (KUHPerdata & HIR)
 dengan Mekanisme Deteksi Knowledge Poisoning (SHA-256 + NLI)
 
@@ -31,7 +31,7 @@ logger = logging.getLogger("lexperdata-server")
 
 # Inisialisasi FastAPI
 app = FastAPI(
-    title="LexPerdata AI — Legal QA Backend API",
+    title="Civil AI — Legal QA Backend API",
     description="API Sistem Legal Question Answering Hukum Perdata (KUHPerdata & HIR) dengan Pertahanan Knowledge Poisoning",
     version="1.0.0",
 )
@@ -171,7 +171,7 @@ class ChatResponse(BaseModel):
 def health_check():
     return {
         "status": "healthy",
-        "service": "LexPerdata AI — Legal RAG Backend",
+        "service": "Civil AI — Legal RAG Backend",
         "version": "1.0.0",
         "docs": "/docs",
     }

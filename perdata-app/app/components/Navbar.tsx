@@ -26,10 +26,10 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-display text-2xl font-bold tracking-tight text-[#3B010B]">
-              LexPerdata<span className="text-[#75162D]">.</span>
+              Civil<span className="text-[#75162D]">.AI</span>
             </span>
             <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-1 font-body">
-              KUHPerdata &amp; HIR
+              Hukum Perdata &amp; Acara • KUHPerdata &amp; HIR
             </span>
           </div>
         </Link>

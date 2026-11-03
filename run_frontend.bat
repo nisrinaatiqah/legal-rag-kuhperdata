@@ -1,7 +1,7 @@
 @echo off
 echo ========================================================
-echo  Menjalankan Frontend Next.js: LexPerdata AI
-echo  Next.js 16 (App Router) + Tailwind CSS + Lucide Icons
+echo  Menjalankan Frontend Next.js: Civil AI
+echo  Next.js 16 (App Router) + Tailwind CSS + Playfair Display
 echo  URL: http://localhost:3000
 echo ========================================================
 cd perdata-app

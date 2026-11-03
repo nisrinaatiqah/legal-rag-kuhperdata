@@ -230,7 +230,7 @@ export default function ChatPage() {
             }`}
           >
             <span className="text-[11px] text-[#6B5559] px-1 font-medium">
-              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Pertimbangan Hukum LexPerdata'} • {msg.timestamp}
+              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Pertimbangan Hukum Civil AI'} • {msg.timestamp}
             </span>
 
             <div

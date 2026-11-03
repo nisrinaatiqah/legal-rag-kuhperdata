@@ -3,7 +3,7 @@ import './globals.css';
 import Navbar from './components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'LexPerdata — Sistem Tanya Jawab Hukum Perdata & Acara Perdata Indonesia',
+  title: 'Civil AI — Sistem Tanya Jawab Hukum Perdata & Acara Perdata Indonesia',
   description:
     'Sistem konsultasi cerdas berbasis KUHPerdata dan HIR dengan jaminan keaslian naskah hukum resmi JDIH.',
 };
@@ -24,7 +24,7 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex flex-col gap-1">
               <span className="font-display text-2xl font-bold text-[#3B010B]">
-                LexPerdata<span className="text-[#75162D]">.</span>
+                Civil<span className="text-[#75162D]">.AI</span>
               </span>
               <p className="text-xs text-[#6B5559] max-w-sm leading-relaxed">
                 Sistem Tanya Jawab Cerdas Hukum Perdata Material (KUHPerdata) dan Formil (HIR) dengan Perlindungan Integritas Naskah Resmi.

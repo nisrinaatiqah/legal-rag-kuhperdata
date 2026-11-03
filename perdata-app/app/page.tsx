@@ -89,13 +89,13 @@ export default function HomePage() {
         {/* Soft Faded Background Law Emblem Watermark */}
         <div
           aria-hidden="true"
-          className="absolute right-0 md:right-8 lg:right-20 top-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] lg:w-[560px] h-[340px] sm:h-[460px] lg:h-[560px] pointer-events-none select-none z-0 opacity-15 md:opacity-20 transition-opacity"
+          className="absolute right-0 md:right-8 lg:right-16 top-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] lg:w-[600px] h-[340px] sm:h-[460px] lg:h-[600px] pointer-events-none select-none z-0 opacity-20 md:opacity-25 transition-opacity"
           style={{
             backgroundImage: "url('/law-emblem.png')",
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             backgroundSize: 'contain',
-            filter: 'contrast(1.1) sepia(0.2)',
+            filter: 'contrast(1.05) sepia(0.15)',
           }}
         />
 
@@ -110,9 +110,7 @@ export default function HomePage() {
 
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left Column (60%): Headline, Context, & Action */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
+          <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
             {/* Minimalist Section Eyebrow */}
             <div className="flex items-center gap-3 mb-6">
               <span className="w-6 h-[2px] bg-[#75162D] rounded-full"></span>
@@ -134,13 +132,33 @@ export default function HomePage() {
               Asisten berbasis kecerdasan buatan untuk membantu penelusuran naskah resmi KUHPerdata dan HIR secara terstruktur, cepat, dan terverifikasi dari sumber pangkalan data JDIH Nasional.
             </p>
 
+            {/* Direct Query Search Input - Floraverse Floating Pill */}
+            <form onSubmit={handleQuickSearch} className="mt-8 w-full max-w-xl">
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={quickQuery}
+                  onChange={(e) => setQuickQuery(e.target.value)}
+                  placeholder="Ketik kata kunci atau pasal (contoh: 1320, ganti rugi, waris)..."
+                  className="w-full pl-5 pr-12 py-3.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full shadow-sm font-montserrat transition-all focus:ring-2 focus:ring-[#75162D]/10"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-2 p-2.5 rounded-full bg-[#75162D] text-white hover:bg-[#560B18] transition-colors shadow-sm"
+                  title="Cari Naskah"
+                >
+                  <Search className="w-4 h-4" />
+                </button>
+              </div>
+            </form>
+
             {/* Actions: Floraverse Rounded-Full Pill Buttons */}
-            <div className="flex flex-wrap items-center gap-6 mt-8 pt-2">
+            <div className="flex flex-wrap items-center gap-6 mt-6">
               <Link
                 href="/chat"
                 className="btn-burgundy-primary px-7 py-3.5 rounded-full text-xs font-bold tracking-wide uppercase font-montserrat flex items-center gap-2 shadow-md hover:scale-[1.02] transition-transform"
               >
-                <span>Mulai Penelusuran</span>
+                <span>Mulai Penelusuran AI</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
 
@@ -154,7 +172,7 @@ export default function HomePage() {
             </div>
 
             {/* Editorial Principle Quote in Italiana */}
-            <div className="mt-12 pt-6 border-t border-[#E8DEC9] w-full">
+            <div className="mt-12 pt-6 border-t border-[#E8DEC9] w-full max-w-xl">
               <p className="font-italiana text-2xl md:text-3xl text-[#3B010B] leading-snug">
                 &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
               </p>
@@ -163,79 +181,8 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-
-          {/* Right Column (40%): Structured Regulatory Index Box (Floraverse Rounded-2xl Style) */}
-          <div className="lg:col-span-5 w-full">
-            <div className="bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E8DEC9] p-7 rounded-2xl shadow-sm flex flex-col gap-6">
-              <div className="border-b border-[#E8DEC9] pb-4 flex items-center justify-between">
-                <span className="font-cyntho text-xs font-bold tracking-widest uppercase text-[#3B010B]">
-                  Pustaka Peraturan Resmi
-                </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-3 py-1 bg-[#F2E5C6] text-[#560B18] rounded-full font-montserrat">
-                  Terkodifikasi
-                </span>
-              </div>
-
-              {/* Scope Breakdown */}
-              <div className="flex flex-col divide-y divide-[#FAF6EE] text-xs font-montserrat">
-                <div className="py-3 flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-bold text-[#3B010B]">KUHPerdata (BW)</p>
-                    <p className="text-[#6B5559] text-[11px] mt-0.5">Buku I s/d Buku IV (Hukum Materiel)</p>
-                  </div>
-                  <span className="font-cyntho text-[#75162D] font-bold text-sm shrink-0">
-                    1.993 Pasal
-                  </span>
-                </div>
-
-                <div className="py-3 flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-bold text-[#3B010B]">HIR (Reglemen Indonesia)</p>
-                    <p className="text-[#6B5559] text-[11px] mt-0.5">Hukum Acara Perdata di Persidangan</p>
-                  </div>
-                  <span className="font-cyntho text-[#75162D] font-bold text-sm shrink-0">
-                    283 Pasal
-                  </span>
-                </div>
-
-                <div className="py-3 flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-bold text-[#3B010B]">Standar Verifikasi</p>
-                    <p className="text-[#6B5559] text-[11px] mt-0.5">Integritas Naskah Asli JDIH</p>
-                  </div>
-                  <span className="text-[#15803d] font-bold text-xs shrink-0 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> 100% Valid
-                  </span>
-                </div>
-              </div>
-
-              {/* Direct Query Search Input inside Box */}
-              <form onSubmit={handleQuickSearch} className="mt-2 pt-4 border-t border-[#E8DEC9] flex flex-col gap-2">
-                <label className="text-[11px] font-bold text-[#6B5559] uppercase tracking-wider font-montserrat">
-                  Pencarian Langsung Naskah:
-                </label>
-                <div className="relative flex items-center">
-                  <input
-                    type="text"
-                    value={quickQuery}
-                    onChange={(e) => setQuickQuery(e.target.value)}
-                    placeholder="Contoh: Pasal 1320, ganti rugi, sita jaminan..."
-                    className="w-full pl-3 pr-10 py-2.5 bg-[#FAF6EE] border border-[#E8DEC9] text-xs text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full font-montserrat"
-                  />
-                  <button
-                    type="submit"
-                    className="absolute right-2.5 p-1.5 text-[#75162D] hover:text-[#3B010B]"
-                    title="Cari"
-                  >
-                    <Search className="w-4 h-4" />
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Structured Competences Section (Floraverse Rounded-2xl Connected Panels) */}
       <section className="max-w-6xl mx-auto px-6 w-full">

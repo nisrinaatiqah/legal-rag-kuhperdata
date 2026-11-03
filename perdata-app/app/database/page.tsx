@@ -2,24 +2,55 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale, X, Layers, Filter } from 'lucide-react';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
 
 const SOURCE_OPTIONS = [
-  { label: 'Semua Koleksi (2.276)', value: '', desc: 'KUHPerdata & HIR' },
-  { label: 'KUHPerdata (1.993)', value: 'KUHPerdata', desc: 'Hukum Materiel' },
-  { label: 'HIR — Acara Perdata (283)', value: 'HIR', desc: 'Hukum Formil Persidangan' },
+  { label: 'Semua Koleksi (2.276)', value: '', desc: 'KUHPerdata & HIR Terpadu' },
+  { label: 'KUHPerdata (1.993)', value: 'KUHPerdata', desc: 'Hukum Perdata Materiel' },
+  { label: 'HIR — Acara Perdata (283)', value: 'HIR', desc: 'Hukum Acara Formil di Pengadilan' },
+];
+
+const KUHPERDATA_CATEGORIES = [
+  { label: 'Semua Buku (1.993)', value: '', count: '1.993' },
+  { label: 'Buku I: Orang & Keluarga', value: 'BUKU KESATU', count: '547', desc: 'Subjek Hukum, Perkawinan, Status Sipil' },
+  { label: 'Buku II: Kebendaan & Waris', value: 'BUKU KEDUA', count: '741', desc: 'Hak Milik, Jaminan Kebendaan, Kewarisan' },
+  { label: 'Buku III: Perikatan & Perjanjian', value: 'BUKU KETIGA', count: '709', desc: 'Syarat Sah Perjanjian (1320), Wanprestasi, PMH (1365)' },
+  { label: 'Buku IV: Pembuktian & Daluwarsa', value: 'BUKU KEEMPAT', count: '130', desc: 'Alat Bukti Materiel, Kedaluwarsa Hak' },
+];
+
+const HIR_CATEGORIES = [
+  { label: 'Semua Bagian (283)', value: '', count: '283' },
+  { label: 'Bagian 1: Pemeriksaan & Gugatan', value: 'Bagian 1', count: '51', desc: 'Surat Gugatan, Pemanggilan, Sidang Perdamaian' },
+  { label: 'Bagian 2: Alat Bukti Persidangan', value: 'Bagian 2', count: '15', desc: '5 Alat Bukti Sah di Persidangan (Pasal 164 HIR)' },
+  { label: 'Bagian 3: Musyawarah & Putusan', value: 'Bagian 3', count: '10', desc: 'Putusan Hakim, Putusan Verstek, Kontradiktoir' },
+  { label: 'Bagian 4: Upaya Hukum Banding', value: 'Bagian 4', count: '9', desc: 'Pernyataan Banding ke Pengadilan Tinggi' },
+  { label: 'Bagian 5: Eksekusi & Sita Jaminan', value: 'Bagian 5', count: '35', desc: 'Conservatoir Beslag (227), Revindicatoir, Lelang' },
+  { label: 'Bagian 6 & Bab XV: Acara Istimewa', value: 'Bagian 6', count: '30', desc: 'Perkara Khusus dan Berbagai Peraturan' },
+];
+
+const UNIFIED_QUICK_CATEGORIES = [
+  { label: 'Semua Subjek (2.276)', source: '', category: '' },
+  { label: 'Perikatan & Perjanjian', source: 'KUHPerdata', category: 'BUKU KETIGA' },
+  { label: 'Kebendaan & Waris', source: 'KUHPerdata', category: 'BUKU KEDUA' },
+  { label: 'Sita Jaminan & Eksekusi', source: 'HIR', category: 'Bagian 5' },
+  { label: 'Alat Bukti Persidangan', source: 'HIR', category: 'Bagian 2' },
+  { label: 'Orang & Keluarga', source: 'KUHPerdata', category: 'BUKU KESATU' },
+  { label: 'Pembuktian Materiel', source: 'KUHPerdata', category: 'BUKU KEEMPAT' },
+  { label: 'Pemeriksaan Gugatan', source: 'HIR', category: 'Bagian 1' },
 ];
 
 function DatabaseContent() {
   const searchParams = useSearchParams();
   const initialSource = searchParams.get('source') || '';
   const initialQuery = searchParams.get('q') || '';
+  const initialCategory = searchParams.get('category') || '';
 
   const [articles, setArticles] = useState<ArticleDoc[]>([]);
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [selectedSource, setSelectedSource] = useState(initialSource);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [page, setPage] = useState(0);
   const [limit] = useState(12);
   const [loading, setLoading] = useState(false);
@@ -28,16 +59,19 @@ function DatabaseContent() {
   useEffect(() => {
     const s = searchParams.get('source');
     const q = searchParams.get('q');
+    const c = searchParams.get('category');
     if (s !== null) setSelectedSource(s);
     if (q !== null) setSearchQuery(q);
+    if (c !== null) setSelectedCategory(c);
   }, [searchParams]);
 
-  const fetchArticles = async (q: string, source: string, pageNum: number) => {
+  const fetchArticles = async (q: string, source: string, category: string, pageNum: number) => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
       if (q.trim()) params.append('q', q.trim());
       if (source) params.append('source', source);
+      if (category) params.append('category', category);
       params.append('limit', limit.toString());
       params.append('offset', (pageNum * limit).toString());
 
@@ -59,13 +93,20 @@ function DatabaseContent() {
   };
 
   useEffect(() => {
-    fetchArticles(searchQuery, selectedSource, page);
-  }, [page, selectedSource]);
+    fetchArticles(searchQuery, selectedSource, selectedCategory, page);
+  }, [page, selectedSource, selectedCategory]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPage(0);
-    fetchArticles(searchQuery, selectedSource, 0);
+    fetchArticles(searchQuery, selectedSource, selectedCategory, 0);
+  };
+
+  const resetAllFilters = () => {
+    setSelectedSource('');
+    setSelectedCategory('');
+    setSearchQuery('');
+    setPage(0);
   };
 
   const totalPages = Math.ceil(total / limit);
@@ -84,11 +125,11 @@ function DatabaseContent() {
           </span>
         </h1>
         <p className="text-xs sm:text-sm text-[#6B5559] max-w-2xl font-montserrat font-medium mt-1 leading-relaxed">
-          Pustaka terpadu naskah resmi Lembaran Negara dan JDIH Nasional. Telusuri seluruh ketentuan hukum materiel maupun hukum acara secara terstruktur dalam satu pangkalan data.
+          Pustaka terpadu naskah resmi Lembaran Negara dan JDIH Nasional. Saring pasal berdasarkan klasifikasi buku materiel maupun tahapan hukum acara persidangan.
         </p>
       </div>
 
-      {/* Clean Structured Search and Tab Filter Controls */}
+      {/* Primary Level Filter: Search & Source Tabs */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
         {/* Search Input: Floraverse Rounded-Full Style */}
         <form onSubmit={handleSearchSubmit} className="relative w-full lg:max-w-md">
@@ -111,6 +152,7 @@ function DatabaseContent() {
                 key={opt.value}
                 onClick={() => {
                   setSelectedSource(opt.value);
+                  setSelectedCategory(''); // Reset sub-kategori saat ganti sumber
                   setPage(0);
                 }}
                 className={`px-4 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap flex items-center gap-1.5 ${
@@ -126,25 +168,123 @@ function DatabaseContent() {
         </div>
       </div>
 
+      {/* Secondary Level Filter: Granular Sub-Category Chips */}
+      <div className="bg-white/80 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-xs font-montserrat">
+        <div className="flex items-center justify-between gap-2 border-b border-[#FAF6EE] pb-2.5">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#75162D]">
+            <Layers className="w-3.5 h-3.5" />
+            <span>
+              {selectedSource === 'KUHPerdata'
+                ? 'Kategori 4 Buku KUHPerdata (Hukum Materiel)'
+                : selectedSource === 'HIR'
+                ? 'Kategori Bagian HIR (Hukum Acara Persidangan)'
+                : 'Klasifikasi Subjek Regulasi Populer'}
+            </span>
+          </div>
+
+          {(selectedSource || selectedCategory || searchQuery) && (
+            <button
+              onClick={resetAllFilters}
+              className="text-[11px] font-semibold text-[#8C7A7C] hover:text-[#75162D] flex items-center gap-1 transition-colors"
+              title="Reset Semua Filter"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Reset Filter</span>
+            </button>
+          )}
+        </div>
+
+        {/* Category Chips Container */}
+        <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
+          {selectedSource === 'KUHPerdata' ? (
+            KUHPERDATA_CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.value;
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => {
+                    setSelectedCategory(cat.value);
+                    setPage(0);
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs'
+                      : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
+                  }`}
+                  title={cat.desc || cat.label}
+                >
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })
+          ) : selectedSource === 'HIR' ? (
+            HIR_CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.value;
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => {
+                    setSelectedCategory(cat.value);
+                    setPage(0);
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs'
+                      : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
+                  }`}
+                  title={cat.desc || cat.label}
+                >
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })
+          ) : (
+            UNIFIED_QUICK_CATEGORIES.map((cat, idx) => {
+              const isSelected = selectedSource === cat.source && selectedCategory === cat.category;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setSelectedSource(cat.source);
+                    setSelectedCategory(cat.category);
+                    setPage(0);
+                  }}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs'
+                      : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })
+          )}
+        </div>
+      </div>
+
       {/* Counter & Active Scope Info */}
-      <div className="flex items-center justify-between text-xs text-[#6B5559] px-1 font-montserrat">
-        <div>
-          Menampilkan {articles.length} dari <strong className="text-[#3B010B]">{total}</strong> ketentuan ditemukan
+      <div className="flex flex-wrap items-center justify-between text-xs text-[#6B5559] px-1 font-montserrat gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span>Menampilkan {articles.length} dari <strong className="text-[#3B010B]">{total}</strong> ketentuan ditemukan</span>
           {selectedSource && (
-            <span className="ml-2 px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] text-[10px] font-bold uppercase">
-              Filter: {selectedSource}
+            <span className="px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] text-[10px] font-bold uppercase">
+              Sumber: {selectedSource}
+            </span>
+          )}
+          {selectedCategory && (
+            <span className="px-2.5 py-0.5 rounded-full bg-[#75162D] text-[#F2E5C6] text-[10px] font-bold">
+              Kategori: {selectedCategory}
             </span>
           )}
         </div>
-        {selectedSource && (
+
+        {(selectedSource || selectedCategory || searchQuery) && (
           <button
-            onClick={() => {
-              setSelectedSource('');
-              setPage(0);
-            }}
+            onClick={resetAllFilters}
             className="text-[11px] font-semibold text-[#75162D] hover:underline"
           >
-            Tampilkan Semua Regulasi
+            Hapus Semua Filter
           </button>
         )}
       </div>
@@ -153,13 +293,19 @@ function DatabaseContent() {
       {loading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3 text-[#6B5559] font-montserrat">
           <RefreshCw className="w-5 h-5 animate-spin text-[#75162D]" />
-          <p className="text-xs font-medium">Memuat naskah resmi...</p>
+          <p className="text-xs font-medium">Memuat naskah resmi terverifikasi...</p>
         </div>
       ) : articles.length === 0 ? (
         <div className="py-16 text-center bg-white/95 border border-[#E8DEC9] rounded-2xl p-8 shadow-xs font-montserrat">
           <Scale className="w-8 h-8 text-[#8C7A7C] mx-auto mb-2" />
           <p className="text-sm font-bold text-[#3B010B]">Tidak ada pasal yang cocok</p>
-          <p className="text-xs text-[#6B5559] mt-1">Coba gunakan kata kunci atau nomor pasal lain.</p>
+          <p className="text-xs text-[#6B5559] mt-1">Coba sesuaikan kata kunci atau pilih kategori buku/bagian lainnya.</p>
+          <button
+            onClick={resetAllFilters}
+            className="mt-4 px-4 py-2 rounded-full bg-[#75162D] text-[#FAF6EE] text-xs font-bold font-montserrat hover:bg-[#560B18] transition-colors"
+          >
+            Tampilkan Seluruh 2.276 Ketentuan
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -6,6 +6,9 @@ import { Copy, Check, ChevronDown, ChevronUp } from 'lucide-react';
 export interface ArticleDoc {
   pasal: string;
   source: string;
+  buku?: string;
+  bab?: string;
+  bagian?: string;
   bab_title?: string;
   content: string;
   score?: number;
@@ -32,12 +35,22 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-cyntho text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
+            <span className="font-marcellus text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
               {article.source} Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-bold px-3 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-montserrat">
+            <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-montserrat">
               {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
             </span>
+            {article.buku && (
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-montserrat">
+                {article.buku}
+              </span>
+            )}
+            {article.bagian && (
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-montserrat" title={article.bagian}>
+                {article.bagian.split('.')[0] || article.bagian}
+              </span>
+            )}
           </div>
           {article.bab_title && article.bab_title !== '-' && (
             <p className="text-xs text-[#75162D] mt-1 font-semibold font-montserrat">

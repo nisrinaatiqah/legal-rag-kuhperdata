@@ -363,6 +363,7 @@ def handle_chat(req: ChatRequest):
 def get_articles(
     q: Optional[str] = Query(None, description="Pencarian kata kunci atau nomor pasal"),
     source: Optional[str] = Query(None, description="Filter sumber: KUHPerdata atau HIR"),
+    category: Optional[str] = Query(None, description="Filter kategori: Buku (KUHPerdata) atau Bagian (HIR)"),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
@@ -372,6 +373,16 @@ def get_articles(
     if source:
         filtered = [c for c in filtered if c.get("source", "").lower() == source.lower()]
 
+    if category:
+        cat_lower = category.strip().lower()
+        filtered = [
+            c
+            for c in filtered
+            if cat_lower in str(c.get("buku", "")).lower()
+            or cat_lower in str(c.get("bagian", "")).lower()
+            or cat_lower in str(c.get("bab", "")).lower()
+        ]
+
     if q:
         q_lower = q.strip().lower()
         filtered = [
@@ -380,6 +391,8 @@ def get_articles(
             if q_lower in str(c.get("pasal", "")).lower()
             or q_lower in c.get("content", "").lower()
             or q_lower in str(c.get("bab_title", "")).lower()
+            or q_lower in str(c.get("buku", "")).lower()
+            or q_lower in str(c.get("bagian", "")).lower()
         ]
 
     total_matches = len(filtered)
@@ -393,7 +406,9 @@ def get_articles(
             {
                 "pasal": str(c.get("pasal", "-")),
                 "source": c.get("source", "KUHPerdata"),
+                "buku": c.get("buku", ""),
                 "bab": c.get("bab", "-"),
+                "bagian": c.get("bagian", ""),
                 "bab_title": c.get("bab_title", "-"),
                 "content": c.get("content", ""),
                 "sha256": c.get("sha256", c.get("content_sha256", "-")),

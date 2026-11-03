@@ -30,7 +30,7 @@ const HIR_CATEGORIES = [
 ];
 
 const UNIFIED_QUICK_CATEGORIES = [
-  { label: 'Semua Subjek (2.276)', source: '', category: '' },
+  { label: 'Semua Subjek Database', source: '', category: '' },
   { label: 'Perikatan & Perjanjian', source: 'KUHPerdata', category: 'BUKU KETIGA' },
   { label: 'Kebendaan & Waris', source: 'KUHPerdata', category: 'BUKU KEDUA' },
   { label: 'Sita Jaminan & Eksekusi', source: 'HIR', category: 'Bagian 5' },
@@ -304,7 +304,7 @@ function DatabaseContent() {
             onClick={resetAllFilters}
             className="mt-4 px-4 py-2 rounded-full bg-[#75162D] text-[#FAF6EE] text-xs font-bold font-montserrat hover:bg-[#560B18] transition-colors"
           >
-            Tampilkan Seluruh 2.276 Ketentuan
+            Tampilkan Seluruh Database
           </button>
         </div>
       ) : (

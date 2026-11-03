@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Beranda' },
+  { href: '/chat', label: 'Tanya Jawab' },
   { href: '/database', label: 'Database' },
 ];
 
@@ -55,21 +56,6 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Action Button: Rounded-full Pill like Floraverse */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/chat"
-            className={`px-5 py-2 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 shadow-sm transition-all ${
-              pathname === '/chat'
-                ? 'bg-[#560B18] text-[#FAF6EE] shadow-md ring-2 ring-[#75162D]/30'
-                : 'btn-burgundy-primary hover:scale-[1.02]'
-            }`}
-          >
-            <span>Mulai Penelusuran</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
         {/* Mobile menu trigger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -98,14 +84,6 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <Link
-            href="/chat"
-            onClick={() => setMobileMenuOpen(false)}
-            className="btn-burgundy-primary mt-2 py-3 rounded-full text-center text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-1.5"
-          >
-            <span>Mulai Penelusuran</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
         </div>
       )}
     </div>

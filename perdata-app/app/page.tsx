@@ -93,15 +93,14 @@ export default function HomePage() {
         {/* Soft Faded Background Law Emblem Watermark - Grounded at bottom right */}
         <div
           aria-hidden="true"
-          className="absolute right-0 md:right-4 lg:right-8 bottom-0 w-[420px] sm:w-[560px] lg:w-[700px] h-[480px] sm:h-[600px] lg:h-[720px] pointer-events-none select-none z-0 opacity-25 md:opacity-30 transition-opacity"
-          style={{
-            backgroundImage: "url('/law-emblem.png')",
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'bottom right',
-            backgroundSize: 'contain',
-            filter: 'contrast(1.05) sepia(0.15)',
-          }}
-        />
+          className="absolute right-0 md:right-4 lg:right-8 bottom-0 w-[380px] sm:w-[480px] lg:w-[600px] h-[380px] sm:h-[480px] lg:h-[600px] pointer-events-none select-none z-0 opacity-25 md:opacity-35 transition-opacity flex items-end justify-end"
+        >
+          <img
+            src="/law-emblem.png"
+            alt=""
+            className="w-full h-full object-contain object-bottom filter contrast-[1.05] sepia-[0.15]"
+          />
+        </div>
 
         {/* Subtle Ambient Radial Glow */}
         <div
@@ -116,20 +115,20 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
             {/* Asymmetric Typography Headline in Marcellus + Italiana */}
-            <h1 className="font-marcellus text-3xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-normal tracking-wide text-[#3B010B] leading-[1.1]">
+            <h1 className="font-marcellus text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-normal tracking-wide text-[#3B010B] leading-[1.12]">
               Penelusuran Cerdas{' '}
-              <span className="font-italiana text-[#75162D] block mt-1 normal-case text-4xl sm:text-6xl md:text-7xl">
+              <span className="font-italiana text-[#75162D] block mt-1 normal-case text-3xl sm:text-5xl md:text-6xl">
                 Hukum Perdata Indonesia
               </span>
             </h1>
 
             {/* Lead Copy */}
-            <p className="text-sm sm:text-base text-[#6B5559] mt-6 leading-relaxed max-w-xl font-medium font-montserrat">
+            <p className="text-xs sm:text-sm md:text-base text-[#6B5559] mt-4 leading-relaxed max-w-xl font-medium font-montserrat">
               Asisten berbasis kecerdasan buatan untuk membantu penelusuran naskah resmi KUHPerdata dan HIR secara terstruktur, cepat, dan terverifikasi dari sumber pangkalan data JDIH Nasional.
             </p>
 
-            {/* Direct Query Search Input - Sole Interaction Point in Hero (No Duplicates) */}
-            <form onSubmit={handleQuickSearch} className="mt-8 w-full max-w-xl">
+            {/* Direct Query Search Input */}
+            <form onSubmit={handleQuickSearch} className="mt-6 w-full max-w-xl">
               <div className="relative flex items-center">
                 <input
                   type="text"
@@ -149,12 +148,30 @@ export default function HomePage() {
               </div>
             </form>
 
+            {/* Primary Action Buttons in Hero */}
+            <div className="flex flex-wrap items-center gap-3 mt-4">
+              <Link
+                href="/chat"
+                className="btn-burgundy-primary px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-montserrat"
+              >
+                <span>Mulai Penelusuran AI</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/database"
+                className="px-5 py-2.5 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-montserrat"
+              >
+                <span>Katalog Database</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
             {/* Editorial Principle Quote in Italiana */}
-            <div className="mt-8 pt-5 border-t border-[#E8DEC9] w-full max-w-xl">
+            <div className="mt-6 pt-4 border-t border-[#E8DEC9] w-full max-w-xl">
               <p className="font-italiana text-2xl md:text-3xl text-[#3B010B] leading-snug">
                 &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
               </p>
-              <p className="text-[10px] text-[#6B5559] mt-2 uppercase tracking-widest font-bold font-montserrat">
+              <p className="text-[10px] text-[#6B5559] mt-1.5 uppercase tracking-widest font-bold font-montserrat">
                 Prinsip Fundamental KUHPerdata &amp; HIR
               </p>
             </div>

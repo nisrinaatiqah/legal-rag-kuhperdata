@@ -5,23 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale, X, Layers } from 'lucide-react';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
 
-const SOURCE_OPTIONS = [
-  {
-    id: 'KUHPerdata' as const,
-    label: 'KUHPerdata',
-    badge: 'Hukum Materiel',
-    count: '1.993 Ketentuan',
-    desc: 'Buku I s/d IV — Orang, Benda, Perikatan, & Pembuktian',
-  },
-  {
-    id: 'HIR' as const,
-    label: 'HIR — Acara Perdata',
-    badge: 'Hukum Formil',
-    count: '283 Ketentuan',
-    desc: 'Bagian 1 s/d 6 — Sidang, Sita Jaminan, & Pembuktian',
-  },
-];
-
 const KUHPERDATA_CATEGORIES = [
   { label: 'Semua Buku (1.993)', value: '', count: '1.993' },
   { label: 'Buku I: Orang & Keluarga', value: 'BUKU KESATU', count: '547', desc: 'Subjek Hukum, Perkawinan, Status Sipil' },
@@ -132,68 +115,21 @@ function DatabaseContent() {
         </p>
       </div>
 
-      {/* Primary Category Switcher: Directly Divided into KUHPerdata vs HIR (No "Semua Koleksi") */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-        {/* Source Toggle Tabs */}
-        <div className="inline-flex p-1.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] rounded-2xl shadow-xs font-sans">
-          {SOURCE_OPTIONS.map((opt) => {
-            const isSelected = selectedSource === opt.id;
-            return (
-              <button
-                key={opt.id}
-                onClick={() => {
-                  setSelectedSource(opt.id);
-                  setSelectedCategory(''); // Reset subkategori saat berganti undang-undang
-                  setPage(0);
-                }}
-                className={`px-5 sm:px-7 py-3 rounded-xl transition-all flex items-center gap-3 text-left ${
-                  isSelected
-                    ? 'bg-[#75162D] text-[#FAF6EE] shadow-sm'
-                    : 'text-[#6B5559] hover:text-[#3B010B] hover:bg-[#F2E5C6]/40'
-                }`}
-              >
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-xs sm:text-sm">{opt.label}</span>
-                    <span
-                      className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
-                        isSelected
-                          ? 'bg-[#560B18] text-[#F2E5C6]'
-                          : 'bg-[#E8DEC9]/70 text-[#6B5559]'
-                      }`}
-                    >
-                      {opt.count}
-                    </span>
-                  </div>
-                  <span
-                    className={`text-[9px] uppercase tracking-wider font-semibold mt-0.5 ${
-                      isSelected ? 'text-[#F2D9A0]' : 'text-[#8C7A7C]'
-                    }`}
-                  >
-                    {opt.badge}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Search Input Specific to Active Law */}
-        <form onSubmit={handleSearchSubmit} className="relative w-full lg:max-w-md">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={
-              selectedSource === 'HIR'
-                ? 'Cari di HIR... (contoh: 164 alat bukti, 227 sita)'
-                : 'Cari di KUHPerdata... (contoh: 1320, 1365, waris)'
-            }
-            className="w-full pl-10 pr-4 py-3.5 rounded-full bg-white/95 border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-xs font-sans transition-all focus:ring-2 focus:ring-[#75162D]/10"
-          />
-          <Search className="w-4 h-4 text-[#6B5559] absolute left-3.5 top-4" />
-        </form>
-      </div>
+      {/* Search Input Specific to Active Law */}
+      <form onSubmit={handleSearchSubmit} className="relative w-full">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={
+            selectedSource === 'HIR'
+              ? 'Cari di ketentuan HIR... (contoh: 164 alat bukti, 227 sita jaminan, putusan)'
+              : 'Cari di ketentuan KUHPerdata... (contoh: 1320 syarat sah, 1365 PMH, waris)'
+          }
+          className="w-full pl-11 pr-4 py-3.5 rounded-full bg-white/95 border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-xs font-sans transition-all focus:ring-2 focus:ring-[#75162D]/10"
+        />
+        <Search className="w-4 h-4 text-[#6B5559] absolute left-4 top-4" />
+      </form>
 
       {/* Sub-Category Chips for the Selected Law */}
       <div className="bg-white/80 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-xs font-sans">

@@ -6,12 +6,9 @@ import {
   Scale,
   ShieldCheck,
   ShieldAlert,
-  Bot,
-  User,
   RefreshCw,
   FileText,
   Sliders,
-  AlertCircle,
 } from 'lucide-react';
 import SecurityBadge, { DefenseStatusProps } from '../components/SecurityBadge';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
@@ -143,11 +140,11 @@ export default function ChatPage() {
 
         {/* Essential Defense Toggle */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A]">
-            <span>Proteksi Naskah Asli:</span>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-sm bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A]">
+            <span className="text-[11px]">Proteksi Naskah Asli:</span>
             <button
               onClick={() => setEnableDefense(!enableDefense)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+              className={`px-2.5 py-0.5 rounded-sm text-xs font-semibold font-cinzel transition-all ${
                 enableDefense
                   ? 'bg-[#15803d] text-white shadow-sm'
                   : 'bg-[#75162D] text-[#F2E5C6]'
@@ -159,7 +156,7 @@ export default function ChatPage() {
 
           <button
             onClick={() => setShowDemoOptions(!showDemoOptions)}
-            className="p-2 rounded-full bg-white border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
+            className="p-2 rounded-sm bg-white border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
             title="Mode Basis Data"
           >
             <Sliders className="w-4 h-4" />
@@ -169,12 +166,12 @@ export default function ChatPage() {
 
       {/* Hidden Collapsible Options */}
       {showDemoOptions && (
-        <div className="p-4 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="p-4 rounded-sm bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
           <span className="text-[#560B18] font-semibold">Mode Pangkalan Data:</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
-              className={`px-3 py-1.5 rounded-full font-medium ${
+              className={`px-3 py-1.5 rounded-sm font-medium ${
                 corpusScenario === 'kuhperdata_hir_bgem3'
                   ? 'bg-[#75162D] text-white'
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
@@ -184,7 +181,7 @@ export default function ChatPage() {
             </button>
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
-              className={`px-3 py-1.5 rounded-full font-medium ${
+              className={`px-3 py-1.5 rounded-sm font-medium ${
                 corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
                   ? 'bg-[#75162D] text-white'
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
@@ -200,7 +197,7 @@ export default function ChatPage() {
       <div className="min-h-[380px] flex flex-col gap-6">
         {messages.length === 0 && (
           <div className="my-auto py-12 text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4">
+            <div className="w-12 h-12 rounded-sm bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4">
               <Scale className="w-6 h-6" />
             </div>
             <h2 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
@@ -213,15 +210,16 @@ export default function ChatPage() {
               Ajukan pertanyaan mengenai bunyi pasal perjanjian, ketentuan wanprestasi, pasal perbuatan melawan hukum, maupun aturan beracara di persidangan.
             </p>
 
-            {/* Clean Suggested Question Pills */}
-            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 max-w-2xl mt-8">
+            {/* Clean Editorial Suggested Question Panels */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-2xl mt-8 w-full text-left">
               {SUGGESTED_QUERIES.map((q, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSubmit(q)}
-                  className="px-4 py-2.5 rounded-full bg-white hover:bg-[#F2E5C6]/60 border border-[#E8DEC9] text-xs font-medium text-[#2A171A] transition-all text-left shadow-sm hover:border-[#F2D9A0]"
+                  className="p-3.5 rounded-sm bg-white hover:bg-[#FAF6EE] border border-[#E8DEC9] text-xs font-normal text-[#2A171A] transition-all shadow-sm hover:border-[#75162D] flex items-start justify-between gap-2 group"
                 >
-                  {q}
+                  <span className="line-clamp-2">{q}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#8C7A7C] group-hover:text-[#75162D] shrink-0 mt-0.5" />
                 </button>
               ))}
             </div>
@@ -236,15 +234,15 @@ export default function ChatPage() {
               msg.role === 'user' ? 'items-end' : 'items-start'
             }`}
           >
-            <span className="text-[11px] text-[#6B5559] px-1 font-medium">
-              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Hasil Penelusuran CiviLex AI'} • {msg.timestamp}
+            <span className="text-[11px] text-[#6B5559] px-1 font-medium font-cinzel">
+              {msg.role === 'user' ? 'Kueri Pengguna' : 'Hasil Penelusuran CiviLex AI'} • {msg.timestamp}
             </span>
 
             <div
-              className={`rounded-2xl p-6 leading-relaxed max-w-2xl ${
+              className={`rounded-sm p-6 leading-relaxed max-w-2xl border ${
                 msg.role === 'user'
-                  ? 'bg-[#3B010B] text-[#FAF6EE] shadow-md'
-                  : 'law-card text-[#2A171A]'
+                  ? 'bg-[#3B010B] text-[#FAF6EE] border-[#3B010B] shadow-sm'
+                  : 'bg-[#FFFFFF] text-[#2A171A] border-[#E8DEC9] shadow-sm'
               }`}
             >
               {/* Security Badge */}
@@ -276,7 +274,7 @@ export default function ChatPage() {
 
         {/* Loading Spinner */}
         {loading && (
-          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#E8DEC9] max-w-xs shadow-sm">
+          <div className="flex items-center gap-3 p-4 rounded-sm bg-white border border-[#E8DEC9] max-w-xs shadow-sm">
             <RefreshCw className="w-4 h-4 text-[#75162D] animate-spin" />
             <span className="text-xs font-medium text-[#6B5559]">
               Sedang menelaah pasal rujukan resmi...
@@ -287,29 +285,30 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Question Input Bar */}
+      {/* Editorial Search Bar (Crisp Rectangular Box) */}
       <div className="sticky bottom-6 z-20">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(input);
           }}
-          className="relative flex items-center rounded-full bg-white border border-[#E8DEC9] shadow-xl shadow-black/5 p-1.5 focus-within:border-[#75162D] transition-all"
+          className="relative flex items-center rounded-sm bg-white border border-[#E8DEC9] shadow-lg p-1.5 focus-within:border-[#75162D] transition-all"
         >
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Tuliskan pertanyaan pasal perdata atau hukum acara..."
-            className="w-full px-5 py-3 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent"
+            placeholder="Ketik pertanyaan pasal perdata atau hukum acara..."
+            className="w-full px-4 py-3 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-body"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="btn-burgundy-primary p-3 rounded-full disabled:opacity-40 shrink-0 ml-1"
+            className="btn-burgundy-primary px-4 py-2.5 rounded-sm disabled:opacity-40 shrink-0 ml-1 text-xs font-semibold font-cinzel flex items-center gap-1"
             title="Kirim Pertanyaan"
           >
-            <ArrowUpRight className="w-4 h-4" />
+            <span>Kirim</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
         </form>
 

@@ -27,7 +27,7 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
   const isLong = article.content.length > 250;
 
   return (
-    <div className="law-card law-card-hover rounded-2xl p-5 md:p-6 transition-all font-body">
+    <div className="bg-[#FFFFFF] border border-[#E8DEC9] rounded-sm p-5 md:p-6 transition-all hover:border-[#F2D9A0] font-body shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
@@ -35,7 +35,7 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
             <span className="font-cinzel text-base md:text-lg font-bold tracking-wide text-[#3B010B]">
               {article.source} Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-cinzel">
+            <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-sm bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-cinzel">
               {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
             </span>
           </div>
@@ -46,10 +46,10 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
           )}
         </div>
 
-        {/* Copy Button */}
+        {/* Copy Button: Crisp Rectangular (Image 2 Style) */}
         <button
           onClick={copyToClipboard}
-          className="p-2 rounded-xl bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-cinzel font-semibold"
+          className="p-2 rounded-sm bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-cinzel font-semibold"
           title="Salin Rujukan Hukum"
         >
           {copied ? (

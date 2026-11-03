@@ -1,39 +1,80 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  BookOpen,
-  MessageSquare,
-  Scale,
-  Search,
-  ArrowRight,
-  Sparkles,
-  ShieldCheck,
-} from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
 
-const SERVICES = [
+const REGULATION_SCOPES = [
   {
-    icon: <MessageSquare className="w-6 h-6" />,
-    title: 'Tanya Jawab AI Terpadu',
-    desc: 'Konsultasikan persoalan perdata Anda secara menyeluruh. Asisten AI menganalisis ketentuan hukum materiil (KUHPerdata) sekaligus tata cara persidangan (HIR) dalam satu ruang diskusi.',
-    href: '/chat',
-    tag: 'Asisten Cerdas',
-    actionText: 'Mulai Tanya Jawab',
+    code: '01',
+    title: 'Hukum Perikatan & Perjanjian',
+    subject: 'KUHPerdata Buku III',
+    description:
+      'Syarat sah perjanjian (Pasal 1320), wanprestasi, tuntutan ganti rugi, dan pembatalan perikatan.',
+    href: '/database?source=KUHPerdata&q=perikatan',
   },
   {
-    icon: <BookOpen className="w-6 h-6" />,
-    title: 'Katalog Naskah Lengkap',
-    desc: 'Telusuri pangkalan data otentik 1.993 pasal KUHPerdata dan 283 pasal HIR secara mandiri, lengkap dengan pencarian kata kunci dan navigasi terstruktur per bab naskah.',
-    href: '/database',
-    tag: 'Pustaka Resmi',
-    actionText: 'Buka Katalog Naskah',
+    code: '02',
+    title: 'Perbuatan Melawan Hukum (PMH)',
+    subject: 'KUHPerdata Pasal 1365',
+    description:
+      'Unsur kesalahan, kerugian materiil-imateriil, dan hubungan kausalitas gugatan perdata.',
+    href: '/database?source=KUHPerdata&q=1365',
+  },
+  {
+    code: '03',
+    title: 'Kebendaan & Kewarisan',
+    subject: 'KUHPerdata Buku II',
+    description:
+      'Hak milik, jaminan kebendaan, pembagian waris, dan hak mutlak ahli waris.',
+    href: '/database?source=KUHPerdata&q=waris',
+  },
+  {
+    code: '04',
+    title: 'Hukum Acara Perdata (HIR)',
+    subject: 'Reglemen Indonesia yang Diperbaharui',
+    description:
+      'Tata cara sidang, pendaftaran gugatan, sita jaminan, dan kekuatan alat bukti.',
+    href: '/database?source=HIR',
+  },
+];
+
+const POPULAR_TOPICS = [
+  {
+    tag: 'Pasal 1320 KUHPerdata',
+    title: 'Syarat Sah Perjanjian',
+    query: 'Apa 4 syarat sah perjanjian menurut Pasal 1320 KUHPerdata dan akibat hukumnya jika tidak dipenuhi?',
+  },
+  {
+    tag: 'Pasal 1365 KUHPerdata',
+    title: 'Perbuatan Melawan Hukum (PMH)',
+    query: 'Apa saja 5 unsur Perbuatan Melawan Hukum (PMH) yang wajib dibuktikan dalam Pasal 1365 KUHPerdata?',
+  },
+  {
+    tag: 'Pasal 1243 KUHPerdata',
+    title: 'Wanprestasi & Ganti Rugi',
+    query: 'Kapan debitur dinyatakan wanprestasi dan apa saja bentuk ganti ruginya menurut KUHPerdata?',
+  },
+  {
+    tag: 'Pasal 1250 KUHPerdata',
+    title: 'Bunga Moratoir',
+    query: 'Bagaimana aturan ganti rugi bunga moratoir atas kelambatan bayar menurut Pasal 1250 KUHPerdata?',
+  },
+  {
+    tag: 'Pasal 227 HIR',
+    title: 'Sita Jaminan (Conservatoir Beslag)',
+    query: 'Apa syarat dan tata cara permohonan sita jaminan (conservatoir beslag) menurut Pasal 227 HIR?',
+  },
+  {
+    tag: 'Pasal 164 HIR',
+    title: 'Alat Bukti Persidangan',
+    query: 'Apa saja 5 alat bukti sah dalam sidang perdata menurut Pasal 164 HIR?',
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-24 pb-12 font-body">
-      {/* Hero Section — Minimalist & Direct */}
+    <div className="flex flex-col gap-24 pb-20 font-body">
+      {/* Editorial Hero Section with Faded Law Emblem Background */}
       <section className="relative overflow-hidden w-full min-h-[calc(100vh-7rem)] flex flex-col justify-center py-8 md:py-12">
         {/* Soft Faded Background Law Emblem Watermark */}
         <div
@@ -59,185 +100,210 @@ export default function HomePage() {
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full my-auto">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
-            <h1 className="font-bodoni text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-[#3B010B] mb-5">
-              Navigasi Perdata
-              <br />
-              <span className="font-bellefair text-[#75162D] italic font-normal">
-                Jernih &amp; Terpercaya
+            {/* Hybrid B + D: Bodoni Moda (High Didone) + Bellefair (Slender Aristocratic) */}
+            <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl lg:text-[3.85rem] font-medium tracking-tight text-[#3B010B] leading-[1.08]">
+              Penelusuran Cerdas{' '}
+              <span className="font-bellefair text-[#75162D] block mt-1.5 italic font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[4.25rem] tracking-wide">
+                Hukum Perdata Indonesia
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg text-[#6B5559] leading-relaxed mb-8 max-w-xl font-normal font-sans">
-              Temukan rujukan pasal perikatan, keabsahan perjanjian, tuntutan ganti rugi, hingga tata tertib sidang perdata secara instan berbantuan AI.
+            {/* Lead Copy — Ringkas & dari Sumber Terpercaya */}
+            <p className="text-xs sm:text-sm md:text-base text-[#6B5559] mt-4 leading-relaxed max-w-xl font-normal font-sans">
+              Asisten AI untuk penelusuran naskah resmi KUHPerdata dan HIR secara cepat, terstruktur, dan terverifikasi dari sumber terpercaya.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Primary Action Buttons in Hero */}
+            <div className="flex flex-wrap items-center gap-3 mt-8">
               <Link
                 href="/chat"
-                className="btn-burgundy-primary px-6 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"
+                className="btn-burgundy-primary px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"
               >
-                <span>Mulai Konsultasi AI</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Mulai Penelusuran AI</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
               <Link
                 href="/database"
-                className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-[#75162D] bg-white/90 border border-[#E8DEC9] hover:bg-[#F2E5C6]/40 transition-all flex items-center gap-2 font-sans shadow-xs"
+                className="px-6 py-3 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
               >
-                <Search className="w-4 h-4" />
-                <span>Katalog Naskah</span>
+                <span>Katalog Database</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Services Section — 2 Unified Pathways */}
+      {/* Structured Competences Section (4 Connected Panels) */}
       <section className="max-w-6xl mx-auto px-6 w-full">
-        <div className="mb-8">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#75162D] font-montserrat mb-1.5">
-            Layanan Utama
+        {/* Section Header */}
+        <div className="border-b border-[#E8DEC9] pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
+              Kompilasi Ruang Lingkup
+            </span>
+            <h2 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B] mt-1">
+              Empat Pilar Pengaturan Perdata
+            </h2>
+          </div>
+          <p className="text-xs text-[#6B5559] max-w-md font-montserrat font-medium">
+            Klasifikasi naskah hukum yang terindeks dan dapat ditelusuri langsung.
           </p>
-          <h2 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B]">
-            Pusat Penelusuran Regulasi
-          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {SERVICES.map((item, i) => (
-            <Link
-              key={i}
-              href={item.href}
-              className="group p-8 rounded-2xl bg-white border border-[#E8DEC9] hover:border-[#75162D] hover:shadow-md transition-all flex flex-col justify-between shadow-xs"
-            >
+        {/* 4 Connected Panels */}
+        <div className="bg-[#FFFFFF]/95 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#E8DEC9] overflow-hidden shadow-xs">
+          {REGULATION_SCOPES.map((scope) => (
+            <div key={scope.code} className="p-6 flex flex-col justify-between min-h-[220px]">
               <div>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#F2E5C6] text-[#75162D] group-hover:scale-105 transition-transform">
-                    {item.icon}
-                  </div>
-                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAF6EE] text-[#75162D] border border-[#E8DEC9] font-montserrat">
-                    {item.tag}
+                <div className="flex items-baseline justify-between">
+                  <span className="font-cyntho text-2xl font-bold text-[#75162D]">
+                    {scope.code}
+                  </span>
+                  <span className="text-[10px] font-bold text-[#8C7A7C] uppercase tracking-wider font-montserrat">
+                    {scope.subject}
                   </span>
                 </div>
-                <h3 className="font-cyntho text-xl font-bold text-[#3B010B] mb-2.5 group-hover:text-[#75162D] transition-colors">
-                  {item.title}
+
+                <h3 className="font-cyntho text-base font-bold tracking-tight text-[#3B010B] mt-3 leading-snug">
+                  {scope.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#6B5559] leading-relaxed font-sans mb-6">
-                  {item.desc}
+
+                <p className="text-xs text-[#6B5559] mt-2 leading-relaxed font-sans">
+                  {scope.description}
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#75162D] font-sans group-hover:gap-2.5 transition-all">
-                <span>{item.actionText}</span>
-                <ArrowRight className="w-4 h-4" />
+              <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center justify-between text-xs font-montserrat">
+                <Link
+                  href={scope.href}
+                  className="text-xs font-bold text-[#75162D] hover:underline flex items-center gap-1"
+                >
+                  <span>Lihat Ketentuan</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Value Pillars Section */}
+      {/* Editorial Information: Standar Keaslian & Integritas Penelusuran (3 Connected Panels) */}
       <section className="max-w-6xl mx-auto px-6 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Left Column — Heading */}
-          <div className="lg:col-span-5">
-            <h2 className="font-bodoni text-3xl md:text-4xl lg:text-5xl leading-tight text-[#3B010B] mb-4">
-              Menjembatani Teks Hukum dengan Kebutuhan Riil.
+        <div className="border-b border-[#E8DEC9] pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
+              Standar Sistem
+            </span>
+            <h2 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B] mt-1">
+              Transparansi &amp; Integritas Penelusuran
             </h2>
-            <p className="text-xs sm:text-sm text-[#6B5559] leading-relaxed font-sans">
-              CiviLex AI mengurai kerumitan pasal perdata menjadi rujukan yang terang, terarah, dan berpijak pada naskah otentik.
-            </p>
+          </div>
+          <p className="text-xs text-[#6B5559] max-w-md font-montserrat font-medium">
+            Cara CiviLex AI menjaga keaslian pasal dan menyajikan rujukan hukum terpercaya.
+          </p>
+        </div>
+
+        <div className="bg-[#FFFFFF]/95 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#E8DEC9] overflow-hidden shadow-xs">
+          {/* Pillar 1 */}
+          <div className="p-7 flex flex-col justify-between">
+            <div>
+              <div className="w-9 h-9 rounded-full bg-[#F2E5C6] text-[#75162D] flex items-center justify-center font-cyntho text-sm font-bold mb-4">
+                01
+              </div>
+              <h3 className="font-cyntho text-lg font-bold tracking-tight text-[#3B010B]">
+                Database Terkodifikasi
+              </h3>
+              <p className="text-xs text-[#6B5559] mt-2.5 leading-relaxed font-sans">
+                Memproses naskah resmi KUHPerdata (Buku I–IV) dan HIR per pasal dari sumber terpercaya tanpa distorsi konteks.
+              </p>
+            </div>
+            <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center gap-2 text-xs font-bold text-[#15803d] font-montserrat">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Naskah Terpercaya</span>
+            </div>
           </div>
 
-          {/* Right Column — Bento Grid */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Card 1 */}
-            <div className="p-7 rounded-2xl bg-white border border-[#E8DEC9] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#F2E5C6] text-[#75162D] flex items-center justify-center mb-4">
-                <Scale className="w-5 h-5" />
+          {/* Pillar 2 */}
+          <div className="p-7 flex flex-col justify-between">
+            <div>
+              <div className="w-9 h-9 rounded-full bg-[#F2E5C6] text-[#75162D] flex items-center justify-center font-cyntho text-sm font-bold mb-4">
+                02
               </div>
-              <h3 className="font-cyntho text-base font-bold text-[#3B010B] mb-2">
-                Harmonisasi Materiel &amp; Formil
+              <h3 className="font-cyntho text-lg font-bold tracking-tight text-[#3B010B]">
+                Verifikasi Sidik Jari Kriptografis
               </h3>
-              <p className="text-xs text-[#6B5559] leading-relaxed font-sans">
-                Menghubungkan hak substantif Anda (KUHPerdata) dengan langkah penegakannya di ruang sidang (HIR).
+              <p className="text-xs text-[#6B5559] mt-2.5 leading-relaxed font-sans">
+                Tiap pasal divalidasi dengan hash kriptografis untuk mencegah kutipan palsu atau manipulasi isi pasal.
               </p>
             </div>
+            <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center gap-2 text-xs font-bold text-[#75162D] font-montserrat">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Proteksi Berlapis</span>
+            </div>
+          </div>
 
-            {/* Card 2 */}
-            <div className="p-7 rounded-2xl bg-white border border-[#E8DEC9] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#F2E5C6] text-[#75162D] flex items-center justify-center mb-4">
-                <Sparkles className="w-5 h-5" />
+          {/* Pillar 3 */}
+          <div className="p-7 flex flex-col justify-between">
+            <div>
+              <div className="w-9 h-9 rounded-full bg-[#F2E5C6] text-[#75162D] flex items-center justify-center font-cyntho text-sm font-bold mb-4">
+                03
               </div>
-              <h3 className="font-cyntho text-base font-bold text-[#3B010B] mb-2">
-                Uraian Terang &amp; Runtut
+              <h3 className="font-cyntho text-lg font-bold tracking-tight text-[#3B010B]">
+                Rujukan Semantik Presisi
               </h3>
-              <p className="text-xs text-[#6B5559] leading-relaxed font-sans">
-                Menyajikan intisari aturan hukum secara runtut dan mudah dipahami tanpa mengurangi bobot yuridisnya.
+              <p className="text-xs text-[#6B5559] mt-2.5 leading-relaxed font-sans">
+                Ajukan pertanyaan dengan bahasa sehari-hari; AI mencocokkan substansi hukum dan menyertakan kutipan naskah aslinya.
               </p>
             </div>
-
-            {/* Card 3 — Wide */}
-            <div className="md:col-span-2 p-7 rounded-2xl bg-white border border-[#E8DEC9] shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-[#F2E5C6] text-[#75162D] flex items-center justify-center mb-4">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <h3 className="font-cyntho text-base font-bold text-[#3B010B] mb-1.5">
-                  Transparansi Nomor &amp; Petikan Pasal
-                </h3>
-                <p className="text-xs text-[#6B5559] leading-relaxed font-sans max-w-md">
-                  Tiap simpulan selalu menyandingkan nomor pasal dan kutipan bunyi aslinya agar dapat ditinjau ulang kapan saja.
-                </p>
-              </div>
-              <Link
-                href="/chat"
-                className="btn-burgundy-primary px-5 py-2.5 rounded-xl text-xs font-bold font-sans flex items-center gap-1.5 shrink-0"
-              >
-                <span>Eksplorasi Sekarang</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+            <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center gap-2 text-xs font-bold text-[#560B18] font-montserrat">
+              <Scale className="w-3.5 h-3.5" />
+              <span>Kutipan Otentik</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Band — Burgundy Gradient Card */}
+      {/* Popular Civil Legal Topics (6 Cards) */}
       <section className="max-w-6xl mx-auto px-6 w-full">
-        <div className="relative overflow-hidden rounded-3xl px-8 py-14 text-center bg-gradient-to-r from-[#560B18] via-[#75162D] to-[#8C1D38] text-white shadow-md">
-          <div
-            className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #FAF6EE 1px, transparent 1px)',
-              backgroundSize: '24px 24px',
-            }}
-          />
-          <div className="relative z-10 max-w-xl mx-auto">
-            <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 backdrop-blur-xs">
-              <Scale className="w-6 h-6 text-[#F2D9A0]" />
-            </div>
-            <h2 className="font-bodoni text-2xl sm:text-3xl md:text-4xl text-white mb-3">
-              Punya Persoalan Seputar Kasus Perdata?
+        <div className="border-b border-[#E8DEC9] pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
+              Topik Populer
+            </span>
+            <h2 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B] mt-1">
+              Pertanyaan yang Kerap Ditelusuri
             </h2>
-            <p className="text-xs sm:text-sm text-white/80 font-sans mb-8 leading-relaxed">
-              Diskusikan kronologi persoalan Anda atau cari pasal terkait untuk memperoleh analisis awal berbasis rujukan terpercaya.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Link
-                href="/chat"
-                className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold bg-[#FAF6EE] text-[#560B18] hover:bg-white transition-all shadow-sm flex items-center gap-2"
-              >
-                <span>Mulai Konsultasi AI</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/database"
-                className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2"
-              >
-                <Search className="w-4 h-4" />
-                <span>Katalog Naskah</span>
-              </Link>
-            </div>
           </div>
+          <p className="text-xs text-[#6B5559] max-w-md font-montserrat font-medium">
+            Pilih pertanyaan di bawah untuk langsung membuka analisis pasalnya.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {POPULAR_TOPICS.map((topic, idx) => (
+            <Link
+              key={idx}
+              href={`/chat?q=${encodeURIComponent(topic.query)}`}
+              className="group p-5 bg-white/90 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl hover:border-[#75162D] hover:shadow-md transition-all flex flex-col justify-between gap-3 shadow-xs"
+            >
+              <div>
+                <span className="text-[10px] font-bold tracking-wider uppercase text-[#75162D] font-montserrat">
+                  {topic.tag}
+                </span>
+                <h4 className="font-cyntho text-sm font-bold text-[#3B010B] mt-1 group-hover:text-[#75162D] transition-colors">
+                  {topic.title}
+                </h4>
+                <p className="text-xs text-[#6B5559] mt-1 leading-relaxed font-sans line-clamp-2">
+                  {topic.query}
+                </p>
+              </div>
+              <div className="flex items-center gap-1 text-[11px] font-bold text-[#75162D] pt-2 border-t border-[#FAF6EE] font-montserrat">
+                <span>Tinjau Naskah Pasal</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>

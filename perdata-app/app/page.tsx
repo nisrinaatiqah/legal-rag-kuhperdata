@@ -79,7 +79,7 @@ export default function HomePage() {
         {/* Soft Faded Background Law Emblem Watermark */}
         <div
           aria-hidden="true"
-          className="absolute right-2 sm:right-6 md:right-10 lg:right-14 top-1/2 -translate-y-1/2 w-[300px] sm:w-[380px] md:w-[460px] lg:w-[520px] max-w-[45vw] max-h-[72vh] aspect-square pointer-events-none select-none z-0 opacity-25 md:opacity-35 transition-opacity flex items-center justify-center"
+          className="absolute right-2 sm:right-6 md:right-10 lg:right-14 top-1/2 -translate-y-1/2 w-[300px] sm:w-[380px] md:w-[460px] lg:w-[520px] max-w-[45vw] max-h-[72vh] aspect-square pointer-events-none select-none z-0 opacity-25 md:opacity-35 transition-opacity flex items-center justify-center animate-float-slow"
         >
           <img
             src="/law-emblem.png"
@@ -91,7 +91,7 @@ export default function HomePage() {
         {/* Subtle Ambient Radial Glow */}
         <div
           aria-hidden="true"
-          className="absolute top-1/2 right-16 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none select-none z-0 opacity-20"
+          className="absolute top-1/2 right-16 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none select-none z-0 opacity-20 animate-pulse-subtle"
           style={{
             background: 'radial-gradient(circle, #F2D9A0 0%, transparent 70%)',
           }}
@@ -102,19 +102,30 @@ export default function HomePage() {
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
             {/* Hybrid B + D: Bodoni Moda (High Didone) + Bellefair (Slender Aristocratic) */}
             <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl lg:text-[3.85rem] font-medium tracking-tight text-[#3B010B] leading-[1.08]">
-              Penelusuran Cerdas{' '}
-              <span className="font-bellefair text-[#75162D] block mt-1.5 italic font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[4.25rem] tracking-wide">
+              <span className="block animate-fade-up" style={{ animationDelay: '0.05s' }}>
+                Penelusuran Cerdas
+              </span>
+              <span
+                className="font-bellefair text-[#75162D] block mt-1.5 italic font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[4.25rem] tracking-wide animate-fade-up"
+                style={{ animationDelay: '0.2s' }}
+              >
                 Hukum Perdata Indonesia
               </span>
             </h1>
 
             {/* Lead Copy — Ringkas & dari Sumber Terpercaya */}
-            <p className="text-xs sm:text-sm md:text-base text-[#6B5559] mt-4 leading-relaxed max-w-xl font-normal font-sans">
+            <p
+              className="text-xs sm:text-sm md:text-base text-[#6B5559] mt-4 leading-relaxed max-w-xl font-normal font-sans animate-fade-up"
+              style={{ animationDelay: '0.35s' }}
+            >
               Asisten AI untuk penelusuran naskah resmi KUHPerdata dan HIR secara cepat, terstruktur, dan terverifikasi dari sumber terpercaya.
             </p>
 
             {/* Primary Action Buttons in Hero */}
-            <div className="flex flex-wrap items-center gap-3 mt-8">
+            <div
+              className="flex flex-wrap items-center gap-3 mt-8 animate-fade-up"
+              style={{ animationDelay: '0.5s' }}
+            >
               <Link
                 href="/chat"
                 className="btn-burgundy-primary px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"

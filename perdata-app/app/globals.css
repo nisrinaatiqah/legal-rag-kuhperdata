@@ -230,61 +230,59 @@ body {
   background: #deb770;
 }
 
-/* Editorial Buttons with Burgundy & Dark Maroon */
-.btn-burgundy-primary {
-  background-color: var(--burgundy);
-  color: #FFFFFF;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.btn-burgundy-primary:hover {
-  background-color: var(--dark-maroon);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px -4px rgba(117, 22, 45, 0.35);
-}
-
-.btn-champagne-outline {
-  background-color: #FFFFFF;
-  color: var(--dark-maroon);
-  border: 1px solid var(--sand-gold);
-  transition: all 0.25s ease;
-}
-.btn-champagne-outline:hover {
-  background-color: var(--champagne-beige);
-  border-color: var(--sand-gold);
-  transform: translateY(-1px);
+/* Editorial Motion & Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Clean Law Firm Cards */
-.law-card {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 20px -2px rgba(59, 1, 11, 0.03);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.law-card-hover {
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.law-card-hover:hover {
-  border-color: var(--sand-gold);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -4px rgba(59, 1, 11, 0.08);
-}
-
-/* Custom Scrollbar in Warm Sand */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateY(-50%) translateY(-10px);
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-page);
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.32;
+    transform: translateY(-50%) scale(1.06);
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--sand-gold);
-  border-radius: 9999px;
+.animate-fade-up {
+  animation: fadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #deb770;
+.animate-fade-in {
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 5s ease-in-out infinite;
 }

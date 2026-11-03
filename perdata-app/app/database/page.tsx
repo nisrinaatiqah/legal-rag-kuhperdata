@@ -103,7 +103,7 @@ function DatabaseContent() {
           Pangkalan Data Naskah Resmi
         </span>
         <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl font-medium tracking-normal text-[#3B010B]">
-          Katalog Ketentuan{' '}
+          Database Ketentuan{' '}
           <span className="font-bellefair text-[#75162D] italic normal-case text-3xl sm:text-4xl md:text-5xl block sm:inline tracking-wide">
             {selectedSource === 'HIR' ? 'HIR' : 'KUHPerdata'}
           </span>
@@ -290,7 +290,7 @@ export default function DatabasePage() {
     <Suspense
       fallback={
         <div className="max-w-6xl mx-auto px-6 py-20 flex justify-center text-xs text-[#6B5559] font-sans">
-          Memuat katalog naskah...
+          Memuat database naskah...
         </div>
       }
     >

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Rubik:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Marcellus&family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap');
 
 @font-face {
   font-family: 'Cyntho Next';
@@ -41,16 +41,17 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* FloraVerse Benchmark Typography: Cyntho Next (Headlines) + Montserrat (UI/Body) */
-  --font-display: 'Cyntho Next', 'Montserrat', -apple-system, sans-serif;
-  --font-cyntho: 'Cyntho Next', 'Montserrat', sans-serif;
-  --font-serif: 'Cyntho Next', 'Montserrat', sans-serif;
+  /* Opsi 3: Roman Imperial Monograph (Marcellus + Italiana + Montserrat) */
+  --font-display: 'Marcellus', Georgia, serif;
+  --font-cyntho: 'Marcellus', Georgia, serif;
+  --font-serif: 'Marcellus', Georgia, serif;
+  --font-editorial: 'Italiana', Georgia, serif;
+  --font-accent: 'Italiana', Georgia, serif;
   --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
-  --font-editorial: 'Cyntho Next', 'Montserrat', sans-serif;
 
   /* Aliases */
   --font-cinzel: var(--font-display);
-  --font-cormorant: var(--font-display);
+  --font-cormorant: var(--font-editorial);
 }
 
 * {
@@ -68,15 +69,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (FloraVerse Inspired) */
+/* Typography Utility Classes (Opsi 3: Marcellus + Italiana + Montserrat) */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
+}
+
+.font-marcellus {
+  font-family: 'Marcellus', Georgia, serif;
+  letter-spacing: 0.01em;
+}
+
+.font-italiana {
+  font-family: 'Italiana', Georgia, serif;
 }
 
 .font-cyntho {
-  font-family: 'Cyntho Next', 'Montserrat', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: 'Marcellus', Georgia, serif;
+  letter-spacing: 0.01em;
+}
+
+.font-editorial {
+  font-family: 'Italiana', Georgia, serif;
 }
 
 .font-montserrat {
@@ -85,11 +99,7 @@ body {
 
 .font-serif {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
-}
-
-.font-editorial {
-  font-family: var(--font-display);
+  letter-spacing: 0.01em;
 }
 
 .font-body {
@@ -102,11 +112,11 @@ body {
 
 .font-cinzel {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
 }
 
 .font-cormorant {
-  font-family: var(--font-display);
+  font-family: var(--font-editorial);
 }
 
 /* Editorial Buttons with Burgundy & Dark Maroon (Floraverse Pill Style) */

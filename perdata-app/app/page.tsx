@@ -121,10 +121,10 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* Asymmetric Typography Headline in Cyntho Next */}
-            <h1 className="font-cyntho text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold tracking-tight text-[#3B010B] leading-[1.05]">
+            {/* Asymmetric Typography Headline in Marcellus + Italiana */}
+            <h1 className="font-marcellus text-3xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-normal tracking-wide text-[#3B010B] leading-[1.1]">
               Penelusuran Cerdas{' '}
-              <span className="text-[#75162D] block mt-1">
+              <span className="font-italiana text-[#75162D] block mt-1 normal-case text-4xl sm:text-6xl md:text-7xl">
                 Hukum Perdata Indonesia
               </span>
             </h1>
@@ -153,9 +153,9 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Editorial Principle Quote in Cyntho Next */}
+            {/* Editorial Principle Quote in Italiana */}
             <div className="mt-12 pt-6 border-t border-[#E8DEC9] w-full">
-              <p className="font-cyntho text-xl md:text-2xl font-bold text-[#3B010B] leading-snug">
+              <p className="font-italiana text-2xl md:text-3xl text-[#3B010B] leading-snug">
                 &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
               </p>
               <p className="text-[10px] text-[#6B5559] mt-2 uppercase tracking-widest font-bold font-montserrat">

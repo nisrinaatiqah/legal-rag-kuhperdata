@@ -41,12 +41,12 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Opsi 2: Bold & Authoritative Legal Editorial (DM Serif Display + Plus Jakarta Sans) */
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-cyntho: 'DM Serif Display', Georgia, serif;
-  --font-serif: 'DM Serif Display', Georgia, serif;
-  --font-editorial: 'DM Serif Display', Georgia, serif;
-  --font-accent: 'DM Serif Display', Georgia, serif;
+  /* Opsi A: Roman Forum Monograph (Forum + Plus Jakarta Sans) */
+  --font-display: 'Forum', Georgia, serif;
+  --font-cyntho: 'Forum', Georgia, serif;
+  --font-serif: 'Forum', Georgia, serif;
+  --font-editorial: 'Forum', Georgia, serif;
+  --font-accent: 'Forum', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Aliases */
@@ -54,6 +54,7 @@
   --font-cormorant: var(--font-display);
   --font-marcellus: var(--font-display);
   --font-dm-serif: var(--font-display);
+  --font-forum: var(--font-display);
   --font-montserrat: var(--font-sans);
   --font-jakarta: var(--font-sans);
 }
@@ -73,34 +74,45 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Opsi 2: DM Serif Display + Plus Jakarta Sans) */
+/* Typography Utility Classes (Opsi A: Forum + Plus Jakarta Sans) */
 .font-display {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-marcellus {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-italiana {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-style: italic;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-cyntho {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-editorial {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-cormorant {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-dm-serif {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
+}
+
+.font-forum {
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-montserrat {
@@ -108,7 +120,8 @@ body {
 }
 
 .font-serif {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-body {
@@ -120,7 +133,8 @@ body {
 }
 
 .font-cinzel {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: 'Forum', Georgia, serif;
+  letter-spacing: 0.02em;
 }
 
 .font-jakarta {

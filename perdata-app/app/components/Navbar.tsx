@@ -1,19 +1,34 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useState, Suspense } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { href: '/', label: 'Beranda' },
-  { href: '/chat', label: 'Tanya Jawab' },
-  { href: '/database', label: 'Database' },
+  { href: '/', label: 'Beranda', id: 'home' },
+  { href: '/chat', label: 'Tanya Jawab', id: 'chat' },
+  { href: '/database?source=KUHPerdata', label: 'KUHPerdata', id: 'kuhperdata' },
+  { href: '/database?source=HIR', label: 'HIR', id: 'hir' },
 ];
 
-export default function Navbar() {
+function NavbarContent() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const sourceParam = searchParams.get('source');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const checkIsActive = (link: (typeof navLinks)[0]) => {
+    if (link.id === 'home') return pathname === '/';
+    if (link.id === 'chat') return pathname === '/chat';
+    if (link.id === 'kuhperdata') {
+      return pathname === '/database' && (sourceParam === 'KUHPerdata' || !sourceParam);
+    }
+    if (link.id === 'hir') {
+      return pathname === '/database' && sourceParam === 'HIR';
+    }
+    return false;
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full px-4 md:px-8 py-4 z-50 flex justify-center pointer-events-none">
@@ -36,10 +51,10 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8 font-bold text-sm">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = checkIsActive(link);
             return (
               <Link
-                key={link.href}
+                key={link.id}
                 href={link.href}
                 className={`relative py-1 transition-colors ${
                   isActive
@@ -70,10 +85,10 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="pointer-events-auto absolute top-20 inset-x-4 max-w-lg mx-auto bg-white/95 backdrop-blur-md rounded-2xl border border-[#E8DEC9] p-5 shadow-xl flex flex-col gap-3 font-montserrat">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = checkIsActive(link);
             return (
               <Link
-                key={link.href}
+                key={link.id}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`text-sm font-semibold py-2 px-3 rounded-lg transition-colors ${
@@ -87,5 +102,19 @@ export default function Navbar() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function Navbar() {
+  return (
+    <Suspense
+      fallback={
+        <div className="fixed top-0 left-0 w-full px-4 md:px-8 py-4 z-50 flex justify-center pointer-events-none">
+          <nav className="pointer-events-auto flex items-center justify-between px-6 md:px-8 py-3 bg-white/95 backdrop-blur-md w-full max-w-5xl rounded-full border border-[#E8DEC9]" />
+        </div>
+      }
+    >
+      <NavbarContent />
+    </Suspense>
   );
 }

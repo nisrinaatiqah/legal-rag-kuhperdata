@@ -122,11 +122,13 @@ function DatabaseContent() {
         <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl font-medium tracking-normal text-[#3B010B]">
           Katalog Ketentuan{' '}
           <span className="font-bellefair text-[#75162D] italic normal-case text-3xl sm:text-4xl md:text-5xl block sm:inline tracking-wide">
-            KUHPerdata &amp; HIR
+            {selectedSource === 'HIR' ? 'HIR' : 'KUHPerdata'}
           </span>
         </h1>
         <p className="text-xs sm:text-sm text-[#6B5559] max-w-2xl font-sans font-normal mt-1 leading-relaxed">
-          Pustaka naskah resmi Lembaran Negara dan JDIH Nasional. Telusuri ketentuan hukum materiil (<strong>KUHPerdata</strong>) atau hukum acara perdata di pengadilan (<strong>HIR</strong>) berdasarkan sistematika buku dan bagian secara terstruktur.
+          {selectedSource === 'HIR'
+            ? 'Pustaka 283 ketentuan hukum acara perdata dari sumber terpercaya. Telusuri tata cara sidang, sita jaminan, dan pembuktian.'
+            : 'Pustaka 1.993 pasal hukum perdata materiil dari sumber terpercaya. Telusuri ketentuan orang, kebendaan, perikatan, dan pembuktian.'}
         </p>
       </div>
 

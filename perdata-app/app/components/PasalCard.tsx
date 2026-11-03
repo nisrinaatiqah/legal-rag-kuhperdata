@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
+import { Copy, Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 export interface ArticleDoc {
   pasal: string;
@@ -92,17 +92,6 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
             )}
           </button>
         )}
-      </div>
-
-      {/* Subtle Integrity Badge */}
-      <div className="mt-4 pt-3 border-t border-[#FAF6EE] flex items-center justify-between text-[11px] text-[#6B5559]">
-        <div className="flex items-center gap-1.5 text-[#15803d] font-semibold">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Naskah Resmi Terverifikasi</span>
-        </div>
-        <span className="text-[10px] text-[#8C7A7C] uppercase tracking-wider font-mono">
-          JDIH Valid
-        </span>
       </div>
     </div>
   );

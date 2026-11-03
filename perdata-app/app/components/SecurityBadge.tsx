@@ -1,6 +1,6 @@
 'use client';
 
-import { ShieldCheck, ShieldAlert, AlertTriangle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldAlert, AlertTriangle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 
 export interface BlockedPasal {
@@ -31,19 +31,8 @@ export default function SecurityBadge({ defense }: { defense: DefenseStatusProps
   const isDanger = defense.status_badge === 'DANGER_PENETRATED';
 
   return (
-    <div className="w-full my-3">
-      {isAuthentic && (
-        <div className="rounded-xl px-4 py-2.5 bg-[#f0fdf4] border border-[#bbf7d0] text-[#166534] flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#16a34a] shrink-0" />
-            <span className="font-semibold">Naskah Resmi Terverifikasi</span>
-            <span className="text-[#15803d] hidden sm:inline">• Bebas dari manipulasi informasi</span>
-          </div>
-          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#dcfce7] text-[#15803d]">
-            JDIH Valid
-          </span>
-        </div>
-      )}
+    <div className="w-full">
+      {/* Alert only shown if manipulation/poison attempt is actively detected and quarantined */}
 
       {isBlocked && (
         <div className="rounded-xl p-4 bg-[#fef2f2] border border-[#fecaca] text-[#991b1b] flex flex-col gap-2">

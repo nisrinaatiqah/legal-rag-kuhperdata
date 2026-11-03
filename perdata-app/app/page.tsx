@@ -75,16 +75,16 @@ export default function HomePage() {
   return (
     <div className="flex flex-col gap-24 pb-20 font-body">
       {/* Editorial Hero Section with Faded Law Emblem Background (Inspired by fe-kuhp-kuhap-chatbot) */}
-      <section className="relative overflow-hidden w-full pt-4 pb-12">
-        {/* Soft Faded Background Law Emblem Watermark - Grounded at bottom right */}
+      <section className="relative overflow-hidden w-full min-h-[calc(100vh-7rem)] flex flex-col justify-center py-8 md:py-12">
+        {/* Soft Faded Background Law Emblem Watermark - Precisely centered & padded to prevent any edge clipping */}
         <div
           aria-hidden="true"
-          className="absolute right-0 md:right-4 lg:right-8 bottom-0 w-[380px] sm:w-[480px] lg:w-[600px] h-[380px] sm:h-[480px] lg:h-[600px] pointer-events-none select-none z-0 opacity-25 md:opacity-35 transition-opacity flex items-end justify-end"
+          className="absolute right-2 sm:right-6 md:right-10 lg:right-14 top-1/2 -translate-y-1/2 w-[300px] sm:w-[380px] md:w-[460px] lg:w-[520px] max-w-[45vw] max-h-[72vh] aspect-square pointer-events-none select-none z-0 opacity-25 md:opacity-35 transition-opacity flex items-center justify-center"
         >
           <img
             src="/law-emblem.png"
             alt=""
-            className="w-full h-full object-contain object-bottom filter contrast-[1.05] sepia-[0.15]"
+            className="w-full h-full object-contain filter contrast-[1.05] sepia-[0.15]"
           />
         </div>
 
@@ -98,7 +98,7 @@ export default function HomePage() {
         />
 
         {/* Content Container */}
-        <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 w-full my-auto">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
             {/* Hybrid B + D: Bodoni Moda (High Didone) + Bellefair (Slender Aristocratic) */}
             <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl lg:text-[3.85rem] font-medium tracking-tight text-[#3B010B] leading-[1.08]">

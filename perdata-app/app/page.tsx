@@ -115,14 +115,6 @@ export default function HomePage() {
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
-            {/* Minimalist Section Eyebrow */}
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-6 h-[2px] bg-[#75162D] rounded-full"></span>
-              <span className="text-[11px] font-bold tracking-widest uppercase font-montserrat text-[#75162D]">
-                Platform Penelusuran Regulasi Perdata
-              </span>
-            </div>
-
             {/* Asymmetric Typography Headline in Marcellus + Italiana */}
             <h1 className="font-marcellus text-3xl sm:text-5xl md:text-6xl lg:text-[3.75rem] font-normal tracking-wide text-[#3B010B] leading-[1.1]">
               Penelusuran Cerdas{' '}

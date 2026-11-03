@@ -26,23 +26,23 @@ interface ChatMessage {
 const SUGGESTED_QUERIES = [
   {
     tag: 'KUHPerdata Buku III',
-    title: 'Syarat Sah Perjanjian & Akibat Batal',
-    query: 'Apa 4 syarat sahnya perjanjian menurut Pasal 1320 KUHPerdata dan apa akibat hukumnya jika syarat subjektif atau objektif tidak terpenuhi?',
+    title: 'Syarat Sah Perjanjian (1320)',
+    query: 'Apa 4 syarat sah perjanjian menurut Pasal 1320 KUHPerdata dan akibat hukum bila tidak terpenuhi?',
   },
   {
     tag: 'KUHPerdata Pasal 1365',
-    title: 'Gugatan Perbuatan Melawan Hukum (PMH)',
-    query: 'Apa saja 5 unsur Perbuatan Melawan Hukum (PMH) menurut Pasal 1365 KUHPerdata yang wajib dibuktikan oleh penggugat?',
+    title: 'Perbuatan Melawan Hukum (PMH)',
+    query: 'Apa saja 5 unsur Perbuatan Melawan Hukum (PMH) menurut Pasal 1365 KUHPerdata?',
   },
   {
     tag: 'HIR Pasal 227',
-    title: 'Sita Jaminan (Conservatoir Beslag)',
-    query: 'Bagaimana tata cara dan syarat permohonan sita jaminan (conservatoir beslag) menurut Pasal 227 HIR agar aset tergugat tidak dipindahtangankan?',
+    title: 'Sita Jaminan (Beslag)',
+    query: 'Bagaimana syarat dan tata cara permohonan sita jaminan menurut Pasal 227 HIR?',
   },
   {
     tag: 'HIR Pasal 164',
-    title: 'Hierarki 5 Alat Bukti Persidangan',
-    query: 'Sebutkan dan jelaskan kekuatan pembuktian 5 alat bukti yang sah dalam persidangan perdata menurut Pasal 164 HIR!',
+    title: 'Alat Bukti Persidangan',
+    query: 'Apa saja 5 alat bukti yang sah dalam persidangan perdata menurut Pasal 164 HIR?',
   },
 ];
 
@@ -148,55 +148,47 @@ function ChatContent() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Header with Marcellus & Italiana Typography */}
-      <div className="flex flex-col gap-4 border-b border-[#E8DEC9] pb-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
-              Asistensi Penelusuran Cerdas
+    <div className="max-w-4xl mx-auto px-6 flex flex-col gap-6 pb-12 font-body">
+      {/* Compact Header in Hybrid B + D */}
+      <div className="flex items-center justify-between border-b border-[#E8DEC9] pb-4">
+        <div>
+          <h1 className="font-bodoni text-2xl sm:text-3xl font-medium tracking-tight text-[#3B010B]">
+            Tanya Jawab{' '}
+            <span className="font-bellefair text-[#75162D] italic font-normal text-3xl sm:text-4xl">
+              KUHPerdata &amp; HIR
             </span>
-            <h1 className="font-marcellus text-3xl sm:text-4xl font-normal tracking-wide text-[#3B010B] mt-1">
-              Konsultasi Naskah{' '}
-              <span className="font-italiana text-[#75162D] normal-case text-4xl sm:text-5xl block sm:inline">
-                KUHPerdata &amp; HIR
-              </span>
-            </h1>
-            <p className="text-xs sm:text-sm text-[#6B5559] mt-1 font-montserrat font-medium max-w-xl">
-              Satu asisten terpadu untuk menelaah hukum materiel (perjanjian &amp; ganti rugi) sekaligus hukum formil persidangan (sita jaminan &amp; pembuktian).
-            </p>
-          </div>
+          </h1>
+        </div>
 
-          {/* Essential Defense Toggle */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E8DEC9] shadow-xs text-xs font-semibold text-[#2A171A] font-montserrat">
-              <span className="text-[11px] text-[#6B5559]">Proteksi SHA-256 + NLI:</span>
-              <button
-                onClick={() => setEnableDefense(!enableDefense)}
-                className={`px-3 py-0.5 rounded-full text-[11px] font-bold transition-all ${
-                  enableDefense
-                    ? 'bg-[#15803d] text-white shadow-xs'
-                    : 'bg-[#75162D] text-[#F2E5C6]'
-                }`}
-              >
-                {enableDefense ? 'Aktif' : 'Nonaktif'}
-              </button>
-            </div>
-
+        {/* Essential Defense Toggle */}
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-[#E8DEC9] shadow-xs text-xs font-semibold text-[#2A171A] font-sans">
+            <span className="text-[11px] text-[#6B5559]">Proteksi SHA-256:</span>
             <button
-              onClick={() => setShowDemoOptions(!showDemoOptions)}
-              className="p-2 rounded-full bg-white/95 border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors shadow-xs"
-              title="Pengaturan Korpus Pengujian"
+              onClick={() => setEnableDefense(!enableDefense)}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                enableDefense
+                  ? 'bg-[#15803d] text-white shadow-xs'
+                  : 'bg-[#75162D] text-[#F2E5C6]'
+              }`}
             >
-              <Sliders className="w-4 h-4" />
+              {enableDefense ? 'Aktif' : 'Nonaktif'}
             </button>
           </div>
+
+          <button
+            onClick={() => setShowDemoOptions(!showDemoOptions)}
+            className="p-1.5 rounded-full bg-white/95 border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors shadow-xs"
+            title="Pengaturan Korpus Pengujian"
+          >
+            <Sliders className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
       {/* Hidden Collapsible Options for Evaluation / Attack Simulation */}
       {showDemoOptions && (
-        <div className="p-4 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3 font-montserrat shadow-xs">
+        <div className="p-3.5 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3 font-sans shadow-xs">
           <span className="text-[#560B18] font-semibold">Korpus Pengujian (Knowledge Poisoning Test):</span>
           <div className="flex items-center gap-2">
             <button
@@ -207,7 +199,7 @@ function ChatContent() {
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
-              Korpus Asli JDIH (Clean)
+              Korpus Asli (Clean)
             </button>
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
@@ -217,52 +209,43 @@ function ChatContent() {
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
-              Simulasi Serangan Racun (1% Poisoned)
+              Simulasi Serangan (1% Poisoned)
             </button>
           </div>
         </div>
       )}
 
       {/* Conversation Thread */}
-      <div className="min-h-[380px] flex flex-col gap-6 font-montserrat">
+      <div className="min-h-[360px] flex flex-col gap-6 font-sans">
         {messages.length === 0 && (
-          <div className="my-auto py-10 text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4 shadow-xs">
-              <Scale className="w-6 h-6" />
+          <div className="my-auto py-8 text-center flex flex-col items-center max-w-xl mx-auto">
+            <div className="w-11 h-11 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-3 shadow-xs">
+              <Scale className="w-5 h-5" />
             </div>
-            <h2 className="font-marcellus text-2xl md:text-3xl font-normal tracking-wide text-[#3B010B]">
-              Mulai Penelusuran{' '}
-              <span className="font-italiana text-[#75162D] normal-case text-3xl md:text-4xl">
-                Ketentuan Hukum
-              </span>
+            <h2 className="font-bodoni text-xl sm:text-2xl font-medium tracking-tight text-[#3B010B]">
+              Konsultasi Hukum Perdata
             </h2>
-            <p className="text-xs sm:text-sm text-[#6B5559] max-w-md mt-2 leading-relaxed font-medium">
-              Ajukan kronologi sengketa, syarat perjanjian, dasar ganti rugi wanprestasi/PMH, maupun tata cara sita jaminan dan alat bukti di persidangan.
+            <p className="text-xs text-[#6B5559] mt-1 mb-6 font-sans">
+              Pilih contoh pertanyaan di bawah atau ketik langsung pertanyaan Anda:
             </p>
 
-            {/* Suggested Question Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mt-8 w-full text-left">
+            {/* Suggested Question Pills (Clean & compact 2-col) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full text-left">
               {SUGGESTED_QUERIES.map((q, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSubmit(q.query)}
-                  className="p-4 rounded-2xl bg-white/95 hover:bg-white border border-[#E8DEC9] text-xs text-[#2A171A] transition-all shadow-xs hover:border-[#75162D] hover:shadow-md flex flex-col justify-between gap-2 group text-left"
+                  className="p-3.5 rounded-xl bg-white border border-[#E8DEC9] text-xs text-[#2A171A] transition-all shadow-2xs hover:border-[#75162D] hover:shadow-xs flex items-center justify-between gap-3 group text-left"
                 >
-                  <div>
-                    <span className="text-[10px] font-bold tracking-wider uppercase text-[#75162D]">
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#75162D] block font-sans">
                       {q.tag}
                     </span>
-                    <h4 className="font-bold text-[#3B010B] mt-0.5 group-hover:text-[#75162D] transition-colors">
+                    <span className="text-xs font-semibold text-[#3B010B] group-hover:text-[#75162D] transition-colors line-clamp-1 font-sans">
                       {q.title}
-                    </h4>
-                    <p className="text-[11px] text-[#6B5559] mt-1 line-clamp-2 leading-relaxed">
-                      {q.query}
-                    </p>
+                    </span>
                   </div>
-                  <div className="flex items-center gap-1 text-[11px] font-bold text-[#75162D] pt-2 border-t border-[#FAF6EE]">
-                    <span>Ajukan Pertanyaan Ini</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-[#75162D] shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
               ))}
             </div>
@@ -351,24 +334,19 @@ function ChatContent() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Tanyakan persoalan hukum perdata (KUHPerdata & HIR dianalisis bersamaan)..."
-            className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-montserrat"
+            placeholder="Ketik pertanyaan pasal atau persoalan perdata..."
+            className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-sans"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="btn-burgundy-primary px-6 py-2.5 rounded-full disabled:opacity-40 shrink-0 ml-1 text-xs font-bold font-montserrat flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
+            className="btn-burgundy-primary px-6 py-2.5 rounded-full disabled:opacity-40 shrink-0 ml-1 text-xs font-bold font-sans flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
             title="Kirim Pertanyaan"
           >
             <span>Kirim</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
         </form>
-
-        {/* Legal Disclaimer Pill */}
-        <p className="text-[10px] text-center text-[#8C7A7C] mt-2 font-normal leading-relaxed font-montserrat">
-          CiviLex AI menyajikan kutipan naskah otentik KUHPerdata &amp; HIR untuk tujuan edukasi dan asistensi penelitian hukum. Bukan merupakan nasihat atau konsultasi hukum berlisensi.
-        </p>
       </div>
     </div>
   );
@@ -378,7 +356,7 @@ export default function ChatPage() {
   return (
     <Suspense
       fallback={
-        <div className="max-w-4xl mx-auto px-6 py-20 flex justify-center text-xs text-[#6B5559] font-montserrat">
+        <div className="max-w-4xl mx-auto px-6 py-20 flex justify-center text-xs text-[#6B5559] font-sans">
           Memuat ruang konsultasi naskah...
         </div>
       }

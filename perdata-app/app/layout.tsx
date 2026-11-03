@@ -39,7 +39,7 @@ export default function RootLayout({
             {/* Official Legal Disclaimer Box */}
             <div className="pt-6 border-t border-[#E8DEC9]/60 text-[11px] text-[#7A6B6E] leading-relaxed">
               <p>
-                <strong>Penafian Hukum (Disclaimer):</strong> CiviLex AI dikembangkan sebagai sarana edukasi dan alat bantu penelusuran referensi naskah hukum resmi. Informasi dan hasil pencarian yang disajikan oleh sistem ini <u>bukan merupakan nasihat, pendapat hukum, atau pengganti jasa konsultasi hukum profesional</u> dari advokat/penasihat hukum berlisensi. Untuk penanganan perkara konkret atau keputusan hukum resmi, selalu rujuk naskah asli Lembaran Negara dan konsultasikan kepada praktisi hukum yang berwenang.
+                <strong>Disclaimer:</strong> CiviLex AI dikembangkan sebagai sarana edukasi dan alat bantu penelusuran referensi naskah hukum resmi. Informasi dan hasil pencarian yang disajikan oleh sistem ini <u>bukan merupakan nasihat, pendapat hukum, atau pengganti jasa konsultasi hukum profesional</u> dari advokat/penasihat hukum berlisensi. Untuk penanganan perkara konkret atau keputusan hukum resmi, selalu rujuk naskah asli Lembaran Negara dan konsultasikan kepada praktisi hukum yang berwenang.
               </p>
             </div>
           </div>

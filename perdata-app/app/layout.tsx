@@ -26,23 +26,14 @@ export default function RootLayout({
         {/* Real-World Professional Product Footer attached directly to the bottom */}
         <footer className="w-full border-t border-[#E8DEC9] bg-[#F2E5C6]/40 py-10 px-6 text-[#6B5559] font-montserrat mt-auto">
           <div className="max-w-6xl mx-auto flex flex-col gap-6">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="flex flex-col gap-1.5">
-                <span className="font-marcellus text-xl font-bold tracking-wide text-[#3B010B]">
-                  CiviLex<span className="text-[#75162D]">.AI</span>
-                </span>
-                <p className="text-xs text-[#6B5559] max-w-sm leading-relaxed font-montserrat font-medium">
-                  Platform Asistensi Penelusuran dan Analisis Naskah Resmi KUHPerdata dan HIR Berbasis Kecerdasan Buatan.
-                </p>
-              </div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <span className="font-marcellus text-xl font-bold tracking-wide text-[#3B010B]">
+                CiviLex<span className="text-[#75162D]">.AI</span>
+              </span>
 
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-semibold text-[#6B5559]">
-                <span className="px-3 py-1 rounded-full bg-[#F2E5C6] text-[#560B18]">2.276 Ketentuan</span>
-                <span>•</span>
-                <span className="px-3 py-1 rounded-full bg-[#F2E5C6] text-[#560B18]">Naskah Resmi JDIH</span>
-                <span>•</span>
-                <span className="text-[#8C7A7C]">© 2026 CiviLex AI • Hak Cipta Dilindungi</span>
-              </div>
+              <p className="text-xs text-[#6B5559] font-montserrat">
+                Made by <span className="font-semibold text-[#3B010B]">Nisrina Atiqah Dwiputri Ridzki (5027231075)</span>
+              </p>
             </div>
 
             {/* Official Legal Disclaimer Box */}

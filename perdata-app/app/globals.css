@@ -41,12 +41,12 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Opsi A: Roman Forum Monograph (Forum + Plus Jakarta Sans) */
-  --font-display: 'Forum', Georgia, serif;
-  --font-cyntho: 'Forum', Georgia, serif;
-  --font-serif: 'Forum', Georgia, serif;
-  --font-editorial: 'Forum', Georgia, serif;
-  --font-accent: 'Forum', Georgia, serif;
+  /* Opsi B: High-Fashion Editorial Chic (Bodoni Moda + Plus Jakarta Sans) */
+  --font-display: 'Bodoni Moda', Georgia, serif;
+  --font-cyntho: 'Bodoni Moda', Georgia, serif;
+  --font-serif: 'Bodoni Moda', Georgia, serif;
+  --font-editorial: 'Bodoni Moda', Georgia, serif;
+  --font-accent: 'Bodoni Moda', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Aliases */
@@ -55,6 +55,8 @@
   --font-marcellus: var(--font-display);
   --font-dm-serif: var(--font-display);
   --font-forum: var(--font-display);
+  --font-bodoni: var(--font-display);
+  --font-prata: var(--font-display);
   --font-montserrat: var(--font-sans);
   --font-jakarta: var(--font-sans);
 }
@@ -74,45 +76,42 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Opsi A: Forum + Plus Jakarta Sans) */
+/* Typography Utility Classes (Opsi B: Bodoni Moda + Plus Jakarta Sans) */
 .font-display {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-marcellus {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-italiana {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-style: italic;
 }
 
 .font-cyntho {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-editorial {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-cormorant {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-dm-serif {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-forum {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
+}
+
+.font-bodoni {
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-montserrat {
@@ -120,8 +119,7 @@ body {
 }
 
 .font-serif {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-body {
@@ -133,8 +131,7 @@ body {
 }
 
 .font-cinzel {
-  font-family: 'Forum', Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-jakarta {

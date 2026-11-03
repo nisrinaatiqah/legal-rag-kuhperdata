@@ -7,38 +7,41 @@ import {
   Scale,
   Search,
   ArrowRight,
-  Languages,
+  Sparkles,
   ShieldCheck,
 } from 'lucide-react';
 
-const FEATURES = [
+const CHANNELS = [
   {
     icon: <BookOpen className="w-5 h-5" />,
-    title: 'Database Pasal',
-    desc: 'Akses lengkap 1.993 pasal KUHPerdata & 283 pasal HIR dengan pencarian cepat.',
+    title: 'Naskah Lengkap KUHPerdata & HIR',
+    desc: 'Jelajahi kodifikasi 1.993 pasal materiel dan 283 ketentuan acara sidang berdasarkan bab naskah resmi.',
     href: '/database',
-    tag: 'Referensi',
+    tag: 'Pustaka Hukum',
+    actionText: 'Buka Pustaka',
   },
   {
     icon: <MessageSquare className="w-5 h-5" />,
-    title: 'Chatbot KUHPerdata',
-    desc: 'Tanyakan syarat sah perjanjian, wanprestasi, ganti rugi, hingga waris secara interaktif.',
+    title: 'Interaksi Hukum Perdata',
+    desc: 'Bahas perikatan, keabsahan kontrak, wanprestasi, PMH, dan hak kebendaan bersama asisten cerdas.',
     href: '/chat?source=KUHPerdata',
     tag: 'Hukum Materiel',
+    actionText: 'Mulai Diskusi',
   },
   {
     icon: <Scale className="w-5 h-5" />,
-    title: 'Chatbot HIR',
-    desc: 'Panduan tata cara gugatan perdata, sita jaminan, hingga kekuatan alat bukti persidangan.',
+    title: 'Panduan Beracara HIR',
+    desc: 'Pelajari tata cara gugatan, mekanisme sita jaminan, mediasi, hingga kekuatan pembuktian di persidangan.',
     href: '/chat?source=HIR',
     tag: 'Hukum Acara',
+    actionText: 'Pelajari Alur',
   },
 ];
 
 export default function HomePage() {
   return (
     <div className="flex flex-col gap-24 pb-12 font-body">
-      {/* Hero Section — Inspired by fe-kuhp-kuhap-chatbot (Clean & Minimal) */}
+      {/* Hero Section — Minimalist & Direct */}
       <section className="relative overflow-hidden w-full min-h-[calc(100vh-7rem)] flex flex-col justify-center py-8 md:py-12">
         {/* Soft Faded Background Law Emblem Watermark */}
         <div
@@ -65,15 +68,15 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full my-auto">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
             <h1 className="font-bodoni text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-[#3B010B] mb-5">
-              Hukum Perdata
+              Navigasi Perdata
               <br />
               <span className="font-bellefair text-[#75162D] italic font-normal">
-                dalam Genggaman
+                Jernih &amp; Terpercaya
               </span>
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-[#6B5559] leading-relaxed mb-8 max-w-xl font-normal font-sans">
-              Platform cerdas untuk memahami KUHPerdata dan HIR Indonesia. Cari pasal, tanya aturan perjanjian, ganti rugi, hingga tata cara persidangan — dengan AI.
+              Temukan rujukan pasal perikatan, keabsahan perjanjian, tuntutan ganti rugi, hingga tata tertib sidang perdata secara instan berbantuan AI.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -81,7 +84,7 @@ export default function HomePage() {
                 href="/chat"
                 className="btn-burgundy-primary px-6 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"
               >
-                <span>Mulai Tanya AI</span>
+                <span>Mulai Konsultasi AI</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
@@ -89,50 +92,50 @@ export default function HomePage() {
                 className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-[#75162D] bg-white/90 border border-[#E8DEC9] hover:bg-[#F2E5C6]/40 transition-all flex items-center gap-2 font-sans shadow-xs"
               >
                 <Search className="w-4 h-4" />
-                <span>Cari Pasal</span>
+                <span>Katalog Naskah</span>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section — 3 Simple Cards like Mas Nicho */}
+      {/* Main Channels Section */}
       <section className="max-w-6xl mx-auto px-6 w-full">
         <div className="mb-8">
           <p className="text-xs font-bold uppercase tracking-widest text-[#75162D] font-montserrat mb-1.5">
-            Fitur Utama
+            Layanan Utama
           </p>
           <h2 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B]">
-            Semua yang Anda butuhkan
+            Tiga Jalur Penelusuran Mandiri
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {FEATURES.map((f, i) => (
+          {CHANNELS.map((item, i) => (
             <Link
               key={i}
-              href={f.href}
+              href={item.href}
               className="group p-7 rounded-2xl bg-white border border-[#E8DEC9] hover:border-[#75162D] hover:shadow-md transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#F2E5C6] text-[#75162D] group-hover:scale-105 transition-transform">
-                    {f.icon}
+                    {item.icon}
                   </div>
                   <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FAF6EE] text-[#75162D] border border-[#E8DEC9] font-montserrat">
-                    {f.tag}
+                    {item.tag}
                   </span>
                 </div>
                 <h3 className="font-cyntho text-lg font-bold text-[#3B010B] mb-2 group-hover:text-[#75162D] transition-colors">
-                  {f.title}
+                  {item.title}
                 </h3>
                 <p className="text-xs text-[#6B5559] leading-relaxed font-sans mb-6">
-                  {f.desc}
+                  {item.desc}
                 </p>
               </div>
 
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#75162D] font-sans group-hover:gap-2 transition-all">
-                <span>Buka</span>
+                <span>{item.actionText}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
             </Link>
@@ -140,16 +143,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Bento Value Section — Simple & Concise */}
+      {/* Value Pillars Section */}
       <section className="max-w-6xl mx-auto px-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left Column — Heading */}
           <div className="lg:col-span-5">
             <h2 className="font-bodoni text-3xl md:text-4xl lg:text-5xl leading-tight text-[#3B010B] mb-4">
-              Pakar Hukum Perdata Digital dalam Saku Anda.
+              Menjembatani Teks Hukum dengan Kebutuhan Riil.
             </h2>
             <p className="text-xs sm:text-sm text-[#6B5559] leading-relaxed font-sans">
-              Akses langsung ke database KUHPerdata dan HIR, disederhanakan agar mudah dipahami tanpa menghilangkan presisi hukum.
+              CiviLex AI mengurai kerumitan pasal perdata menjadi rujukan yang terang, terarah, dan berpijak pada naskah otentik.
             </p>
           </div>
 
@@ -161,23 +164,23 @@ export default function HomePage() {
                 <Scale className="w-5 h-5" />
               </div>
               <h3 className="font-cyntho text-base font-bold text-[#3B010B] mb-2">
-                KUHPerdata &amp; HIR Terpadu
+                Harmonisasi Materiel &amp; Formil
               </h3>
               <p className="text-xs text-[#6B5559] leading-relaxed font-sans">
-                Penelusuran pasal hukum materiil dan hukum acara perdata secara instan dalam satu sistem.
+                Menghubungkan hak substantif Anda (KUHPerdata) dengan langkah penegakannya di ruang sidang (HIR).
               </p>
             </div>
 
             {/* Card 2 */}
             <div className="p-7 rounded-2xl bg-white border border-[#E8DEC9] shadow-xs">
               <div className="w-10 h-10 rounded-xl bg-[#F2E5C6] text-[#75162D] flex items-center justify-center mb-4">
-                <Languages className="w-5 h-5" />
+                <Sparkles className="w-5 h-5" />
               </div>
               <h3 className="font-cyntho text-base font-bold text-[#3B010B] mb-2">
-                Bahasa Manusia
+                Uraian Terang &amp; Runtut
               </h3>
               <p className="text-xs text-[#6B5559] leading-relaxed font-sans">
-                Mengubah pasal-pasal hukum yang kaku menjadi penjelasan praktis yang mudah dimengerti.
+                Menyajikan intisari aturan hukum secara runtut dan mudah dipahami tanpa mengurangi bobot yuridisnya.
               </p>
             </div>
 
@@ -188,17 +191,17 @@ export default function HomePage() {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <h3 className="font-cyntho text-base font-bold text-[#3B010B] mb-1.5">
-                  Rujukan Pasal Terverifikasi
+                  Transparansi Nomor &amp; Petikan Pasal
                 </h3>
                 <p className="text-xs text-[#6B5559] leading-relaxed font-sans max-w-md">
-                  Setiap jawaban AI menyertakan nomor pasal dan kutipan resmi aslinya agar dapat ditinjau ulang.
+                  Tiap simpulan selalu menyandingkan nomor pasal dan kutipan bunyi aslinya agar dapat ditinjau ulang kapan saja.
                 </p>
               </div>
               <Link
                 href="/chat"
                 className="btn-burgundy-primary px-5 py-2.5 rounded-xl text-xs font-bold font-sans flex items-center gap-1.5 shrink-0"
               >
-                <span>Coba Sekarang</span>
+                <span>Eksplorasi Sekarang</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -221,17 +224,17 @@ export default function HomePage() {
               <Scale className="w-6 h-6 text-[#F2D9A0]" />
             </div>
             <h2 className="font-bodoni text-2xl sm:text-3xl md:text-4xl text-white mb-3">
-              Siap mencari pasal yang tepat?
+              Punya Persoalan Seputar Kasus Perdata?
             </h2>
             <p className="text-xs sm:text-sm text-white/80 font-sans mb-8 leading-relaxed">
-              Gunakan CiviLex AI untuk memahami hukum perdata Indonesia dengan mudah, cepat, dan akurat.
+              Diskusikan kronologi persoalan Anda atau cari pasal terkait untuk memperoleh analisis awal berbasis rujukan terpercaya.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link
                 href="/chat"
                 className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold bg-[#FAF6EE] text-[#560B18] hover:bg-white transition-all shadow-sm flex items-center gap-2"
               >
-                <span>Mulai Tanya AI</span>
+                <span>Mulai Konsultasi AI</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
@@ -239,7 +242,7 @@ export default function HomePage() {
                 className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2"
               >
                 <Search className="w-4 h-4" />
-                <span>Cari Pasal</span>
+                <span>Katalog Naskah</span>
               </Link>
             </div>
           </div>

@@ -3,9 +3,9 @@ import './globals.css';
 import Navbar from './components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'LexPerdata AI — Sistem Tanya Jawab Hukum Perdata & Pertahanan Knowledge Poisoning',
+  title: 'LexPerdata — Sistem Tanya Jawab Hukum Perdata & Acara Perdata Indonesia',
   description:
-    'Sistem Legal Question Answering Hukum Perdata & Acara Perdata Indonesia (KUHPerdata & HIR) Berbasis RAG dengan Mekanisme Pertahanan Two-Tier Knowledge Poisoning (SHA-256 + NLI).',
+    'Sistem konsultasi cerdas berbasis KUHPerdata dan HIR dengan jaminan keaslian naskah hukum resmi JDIH.',
 };
 
 export default function RootLayout({
@@ -15,25 +15,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col selection:bg-indigo-600 selection:text-white">
+      <body className="min-h-screen bg-[#faf7f2] text-[#1c1917] flex flex-col selection:bg-[#7a1827] selection:text-white">
         <Navbar />
         <main className="flex-1 pt-24 pb-16">{children}</main>
-        
-        {/* Footer */}
-        <footer className="border-t border-slate-800/80 bg-slate-950/60 py-8 px-6 text-center text-xs text-slate-400">
-          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-left">
-              <p className="font-semibold text-slate-200">LexPerdata AI — Sistem LQA Hukum Perdata & Acara Perdata</p>
-              <p className="text-[11px] text-slate-400">
-                Tugas Akhir Sarjana — Departemen Teknologi Informasi, FTEIC, Institut Teknologi Sepuluh Nopember (ITS)
+
+        {/* Elegant Editorial Footer */}
+        <footer className="border-t border-[#e7dfd5] bg-[#f5f0ea] py-12 px-6 text-[#57534e]">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="flex flex-col gap-1">
+              <span className="font-editorial-title text-xl font-bold text-[#1c1917]">
+                LexPerdata<span className="text-[#7a1827]">.</span>
+              </span>
+              <p className="text-xs text-[#78716c] max-w-sm">
+                Sistem Tanya Jawab Cerdas Hukum Perdata Material (KUHPerdata) dan Formil (HIR) dengan Perlindungan Integritas Naskah Resmi.
               </p>
             </div>
-            <div className="flex items-center gap-4 text-[11px] text-slate-400">
+
+            <div className="flex flex-wrap items-center gap-6 text-xs text-[#78716c]">
+              <span>2.276 Pasal Terkodifikasi</span>
+              <span>•</span>
+              <span>Departemen Teknologi Informasi — FTEIC ITS</span>
+              <span>•</span>
               <span>NRP: 5027231075</span>
-              <span>•</span>
-              <span>Two-Tier Defense Framework</span>
-              <span>•</span>
-              <span>KUHPerdata (1.993) & HIR (283)</span>
             </div>
           </div>
         </footer>

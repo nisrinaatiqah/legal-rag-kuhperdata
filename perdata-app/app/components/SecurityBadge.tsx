@@ -1,16 +1,14 @@
 'use client';
 
-import { ShieldCheck, ShieldAlert, AlertTriangle, Lock, Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, AlertTriangle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 
 export interface BlockedPasal {
   pasal: string;
   source: string;
   content: string;
-  composite_risk_score: number;
-  reason: string;
-  source_status?: string;
-  semantic_status?: string;
+  composite_risk_score?: number;
+  reason?: string;
 }
 
 export interface DefenseStatusProps {
@@ -24,7 +22,7 @@ export interface DefenseStatusProps {
 }
 
 export default function SecurityBadge({ defense }: { defense: DefenseStatusProps }) {
-  const [showBlockedDetails, setShowBlockedDetails] = useState(false);
+  const [showBlocked, setShowBlocked] = useState(false);
 
   if (!defense) return null;
 
@@ -33,102 +31,74 @@ export default function SecurityBadge({ defense }: { defense: DefenseStatusProps
   const isDanger = defense.status_badge === 'DANGER_PENETRATED';
 
   return (
-    <div className="w-full my-4">
-      {/* Main Alert Banner */}
-      <div
-        className={`rounded-2xl p-4 border transition-all ${
-          isAuthentic
-            ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200 shadow-lg shadow-emerald-950/20'
-            : isBlocked
-            ? 'bg-amber-950/30 border-amber-500/40 text-amber-200 shadow-lg shadow-amber-950/20'
-            : 'bg-rose-950/40 border-rose-500/50 text-rose-200 shadow-lg shadow-rose-950/30 animate-pulse'
-        }`}
-      >
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-start gap-3">
-            <div
-              className={`p-2.5 rounded-xl shrink-0 ${
-                isAuthentic
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  : isBlocked
-                  ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                  : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-              }`}
-            >
-              {isAuthentic && <ShieldCheck className="w-6 h-6" />}
-              {isBlocked && <ShieldAlert className="w-6 h-6" />}
-              {isDanger && <AlertTriangle className="w-6 h-6" />}
+    <div className="w-full my-3">
+      {isAuthentic && (
+        <div className="rounded-xl px-4 py-2.5 bg-[#f0fdf4] border border-[#bbf7d0] text-[#166534] flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-[#16a34a] shrink-0" />
+            <span className="font-semibold">Naskah Resmi Terverifikasi</span>
+            <span className="text-[#15803d] hidden sm:inline">• Bebas dari manipulasi informasi</span>
+          </div>
+          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#dcfce7] text-[#15803d]">
+            JDIH Valid
+          </span>
+        </div>
+      )}
+
+      {isBlocked && (
+        <div className="rounded-xl p-4 bg-[#fef2f2] border border-[#fecaca] text-[#991b1b] flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5 text-[#dc2626] shrink-0" />
+              <span className="font-bold text-xs sm:text-sm">
+                Manipulasi Terdeteksi &amp; Berhasil Dicegat
+              </span>
             </div>
-
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-sm tracking-wide uppercase">
-                  {isAuthentic && 'Otentisitas Terverifikasi (100% SHA-256 Valid)'}
-                  {isBlocked && 'Peringatan: Knowledge Poisoning Terdeteksi & Dikarantina!'}
-                  {isDanger && 'Peringatan Bahaya: Pertahanan Dinonaktifkan (Pasal Beracun Lolos)'}
-                </span>
-
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-800/80 border border-slate-700/60 text-slate-300">
-                  {defense.cleared_count}/{defense.total_retrieved} Dokumen Sah
-                </span>
-              </div>
-
-              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                {defense.status_message}
-              </p>
-            </div>
+            {defense.blocked_count > 0 && defense.blocked_pasals && (
+              <button
+                onClick={() => setShowBlocked(!showBlocked)}
+                className="text-[11px] font-semibold text-[#991b1b] hover:underline flex items-center gap-1"
+              >
+                <span>{showBlocked ? 'Tutup' : `Lihat ${defense.blocked_count} Pasal Dicegat`}</span>
+                {showBlocked ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+              </button>
+            )}
           </div>
 
-          {/* Toggle Blocked Details Button */}
-          {defense.blocked_count > 0 && defense.blocked_pasals && (
-            <button
-              onClick={() => setShowBlockedDetails(!showBlockedDetails)}
-              className="text-xs px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors"
-            >
-              <Eye className="w-3.5 h-3.5" />
-              <span>{showBlockedDetails ? 'Tutup Rincian' : `Lihat ${defense.blocked_count} Pasal Dicegat`}</span>
-              {showBlockedDetails ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-            </button>
-          )}
-        </div>
+          <p className="text-xs text-[#7f1d1d] leading-relaxed">
+            Sistem mendeteksi adanya ketidaksesuaian naskah dengan rujukan resmi. Seluruh dokumen yang terindikasi palsu telah dikeluarkan dari pertimbangan hukum AI.
+          </p>
 
-        {/* Detailed Blocked Chunks Drawer */}
-        {showBlockedDetails && defense.blocked_pasals && (
-          <div className="mt-4 pt-4 border-t border-amber-500/20 flex flex-col gap-3">
-            <p className="text-xs font-semibold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
-              Audit Log Pasal yang Dicegat oleh Two-Tier Defense:
-            </p>
-            {defense.blocked_pasals.map((bp, idx) => (
-              <div
-                key={idx}
-                className="p-3 rounded-xl bg-slate-900/90 border border-rose-500/30 text-xs flex flex-col gap-1.5"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-rose-300">
+          {showBlocked && defense.blocked_pasals && (
+            <div className="mt-2 pt-2 border-t border-[#fecaca] space-y-2">
+              {defense.blocked_pasals.map((bp, idx) => (
+                <div key={idx} className="p-2.5 rounded-lg bg-white border border-[#fca5a5] text-xs">
+                  <span className="font-bold text-[#b91c1c]">
                     {bp.source} Pasal {bp.pasal}
                   </span>
-                  <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-mono border border-rose-500/30">
-                    Skor Risiko: {bp.composite_risk_score.toFixed(3)} (Threshold &gt; 0.50)
+                  <p className="text-[#7f1d1d] italic mt-0.5">&ldquo;{bp.content}&rdquo;</p>
+                  <span className="text-[10px] text-[#dc2626] font-semibold block mt-1">
+                    Status: Dicegat &amp; Ditolak dari Konteks AI
                   </span>
                 </div>
-                <p className="text-slate-300 italic line-clamp-2">&quot;{bp.content}&quot;</p>
-                <div className="flex items-center gap-3 text-[11px] text-slate-400 mt-1">
-                  <span>
-                    Integritas Sumber:{' '}
-                    <strong className="text-rose-400">{bp.source_status || 'Hash Mismatch'}</strong>
-                  </span>
-                  <span>•</span>
-                  <span>
-                    Validasi NLI:{' '}
-                    <strong className="text-amber-400">{bp.semantic_status || 'Contradiction'}</strong>
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {isDanger && (
+        <div className="rounded-xl px-4 py-3 bg-[#fffbeb] border border-[#fde68a] text-[#92400e] flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-[#d97706] shrink-0" />
+            <span className="font-semibold">Mode Tanpa Pertahanan Aktif</span>
+            <span className="text-[#b45309] hidden sm:inline">(Pengujian Kerentanan Serangan)</span>
           </div>
-        )}
-      </div>
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#fef3c7] text-[#b45309]">
+            Simulasi Demo
+          </span>
+        </div>
+      )}
     </div>
   );
 }

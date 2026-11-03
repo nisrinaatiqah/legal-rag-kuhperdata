@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Scale, ShieldCheck, BookOpen, BarChart3, Menu, X, Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import { Menu, X, ArrowUpRight, Scale } from 'lucide-react';
 
 const navLinks = [
-  { href: '/', label: 'Beranda', icon: Sparkles },
-  { href: '/chat', label: 'Tanya Jawab Perdata', icon: Scale },
-  { href: '/database', label: 'Basis Data 2.276 Pasal', icon: BookOpen },
-  { href: '/evaluasi', label: 'Evaluasi & Pertahanan', icon: BarChart3 },
+  { href: '/', label: 'Beranda' },
+  { href: '/chat', label: 'Konsultasi Hukum' },
+  { href: '/database', label: 'Katalog Pasal' },
+  { href: '/evaluasi', label: 'Keandalan Sistem' },
 ];
 
 export default function Navbar() {
@@ -17,98 +17,93 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl rounded-2xl glass-nav shadow-2xl shadow-black/40">
-      <div className="px-5 h-16 flex items-center justify-between">
-        {/* Logo & Identity */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-700 flex items-center justify-center shadow-lg shadow-indigo-600/30 group-hover:scale-105 transition-transform">
-            <Scale className="w-5 h-5 text-white" />
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#faf7f2]/90 backdrop-blur-md border-b border-[#e7dfd5]">
+      <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        {/* Brand / Logo */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-full bg-[#7a1827] text-white flex items-center justify-center font-editorial-display text-lg font-bold group-hover:scale-105 transition-transform">
+            §
           </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-legal-title text-lg font-bold tracking-wide text-white">
-                LexPerdata
-              </span>
-              <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
-                AI
-              </span>
-            </div>
-            <p className="text-[10px] text-slate-400 tracking-wider uppercase font-medium">
-              KUHPerdata & HIR • Two-Tier Defense
-            </p>
+          <div className="flex flex-col">
+            <span className="font-editorial-title text-xl font-bold tracking-tight text-[#1c1917]">
+              LexPerdata<span className="text-[#7a1827]">.</span>
+            </span>
+            <span className="text-[10px] tracking-widest uppercase text-[#8a847c] font-medium -mt-1">
+              KUHPerdata &amp; HIR
+            </span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1.5">
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
-            const Icon = link.icon;
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium transition-all ${
+                className={`text-sm font-medium tracking-wide transition-colors relative py-1 ${
                   isActive
-                    ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 shadow-sm'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                    ? 'text-[#7a1827] font-semibold'
+                    : 'text-[#57534e] hover:text-[#1c1917]'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
+                {isActive && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#7a1827] mr-1.5 align-middle"></span>}
                 {link.label}
               </Link>
             );
           })}
+        </nav>
+
+        {/* Action Button */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link
+            href="/chat"
+            className="btn-burgundy px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5"
+          >
+            <span>Mulai Konsultasi</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
 
-        {/* Right CTA / Shield Status Indicator */}
-        <div className="hidden md:flex items-center gap-3">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-medium text-emerald-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>SHA-256 Active</span>
-          </div>
-        </div>
-
-        {/* Mobile Menu Button */}
+        {/* Mobile menu trigger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-colors"
-          aria-label="Toggle Menu"
+          className="md:hidden p-2 rounded-lg text-[#1c1917] hover:bg-[#f0ebe1] transition-colors"
+          aria-label="Toggle navigation"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-700/50 px-4 py-3 flex flex-col gap-1 rounded-b-2xl bg-slate-900/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-[#e7dfd5] bg-[#faf7f2] px-6 py-4 flex flex-col gap-3">
           {navLinks.map((link) => {
-            const Icon = link.icon;
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                  isActive
-                    ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive ? 'text-[#7a1827] font-bold' : 'text-[#57534e]'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
                 {link.label}
               </Link>
             );
           })}
-          <div className="mt-2 pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 px-3">
-            <span>Status Pertahanan:</span>
-            <span className="text-emerald-400 font-semibold flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5" /> SHA-256 + NLI
-            </span>
-          </div>
+          <Link
+            href="/chat"
+            onClick={() => setMobileMenuOpen(false)}
+            className="btn-burgundy mt-2 py-3 rounded-full text-center text-xs font-semibold flex items-center justify-center gap-1.5"
+          >
+            <span>Mulai Konsultasi</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       )}
-    </nav>
+    </header>
   );
 }

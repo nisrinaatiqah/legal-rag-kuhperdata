@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, Hash, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
+import { Copy, Check, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 
 export interface ArticleDoc {
   pasal: string;
@@ -15,7 +15,7 @@ export interface ArticleDoc {
 
 export default function PasalCard({ article, index }: { article: ArticleDoc; index?: number }) {
   const [copied, setCopied] = useState(false);
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const copyToClipboard = () => {
     const textToCopy = `${article.source} Pasal ${article.pasal}:\n"${article.content}"`;
@@ -24,95 +24,86 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const isLong = article.content.length > 280;
+  const isLong = article.content.length > 250;
 
   return (
-    <div className="rounded-2xl glass-card p-5 border border-slate-700/60 transition-all hover:border-indigo-500/40 hover:shadow-lg hover:shadow-indigo-950/20">
+    <div className="editorial-card editorial-card-hover rounded-2xl p-5 md:p-6 transition-all">
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-xs shrink-0">
-            {index !== undefined ? index + 1 : <BookOpen className="w-4 h-4" />}
+      <div className="flex items-start justify-between gap-4 mb-3">
+        <div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-editorial-title text-base md:text-lg font-bold text-[#1c1917]">
+              {article.source} Pasal {article.pasal}
+            </span>
+            <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-[#f4eee5] text-[#7a1827] border border-[#e2d7c9]">
+              {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
+            </span>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-sm text-white">
-                {article.source} Pasal {article.pasal}
-              </span>
-              <span
-                className={`text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                  article.source === 'KUHPerdata'
-                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                    : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                }`}
-              >
-                {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara'}
-              </span>
-            </div>
-            {article.bab_title && article.bab_title !== '-' && (
-              <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">{article.bab_title}</p>
-            )}
-          </div>
+          {article.bab_title && article.bab_title !== '-' && (
+            <p className="text-xs text-[#78716c] mt-1 italic font-editorial-display text-sm">
+              {article.bab_title}
+            </p>
+          )}
         </div>
 
-        {/* Action & Metric Score */}
-        <div className="flex items-center gap-2">
-          {article.score !== undefined && article.score > 0 && (
-            <span className="text-[11px] font-mono px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-indigo-300">
-              Sim: {article.score.toFixed(4)}
-            </span>
+        {/* Copy Button */}
+        <button
+          onClick={copyToClipboard}
+          className="p-2 rounded-xl bg-[#faf7f2] hover:bg-[#f0ebe1] text-[#57534e] hover:text-[#1c1917] border border-[#e7dfd5] transition-all shrink-0 flex items-center gap-1.5 text-xs"
+          title="Salin Rujukan Hukum"
+        >
+          {copied ? (
+            <>
+              <Check className="w-3.5 h-3.5 text-[#15803d]" />
+              <span className="text-[11px] text-[#15803d] font-medium">Tersalin</span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline text-[11px]">Salin</span>
+            </>
           )}
-          <button
-            onClick={copyToClipboard}
-            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors"
-            title="Salin Rujukan Hukum"
-          >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-          </button>
-        </div>
+        </button>
       </div>
 
-      {/* Content Body */}
-      <div className="relative">
+      {/* Content Text */}
+      <div className="relative mt-2">
         <p
-          className={`text-xs text-slate-200 leading-relaxed font-normal ${
+          className={`text-xs sm:text-sm text-[#44403c] leading-relaxed font-normal ${
             !expanded && isLong ? 'line-clamp-3' : ''
           }`}
         >
-          &quot;{article.content}&quot;
+          &ldquo;{article.content}&rdquo;
         </p>
 
         {isLong && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-[11px] text-indigo-400 hover:text-indigo-300 mt-1 flex items-center gap-1 font-medium"
+            className="text-xs text-[#7a1827] hover:underline font-semibold mt-2 inline-flex items-center gap-1"
           >
             {expanded ? (
               <>
-                <ChevronUp className="w-3 h-3" /> Ringkas
+                <ChevronUp className="w-3.5 h-3.5" /> Ringkas
               </>
             ) : (
               <>
-                <ChevronDown className="w-3 h-3" /> Tampilkan Lengkap
+                <ChevronDown className="w-3.5 h-3.5" /> Baca Selengkapnya
               </>
             )}
           </button>
         )}
       </div>
 
-      {/* Footer Metadata: SHA-256 Checksum */}
-      {article.sha256 && (
-        <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-400">
-          <div className="flex items-center gap-1.5 font-mono truncate max-w-[80%]">
-            <Hash className="w-3 h-3 text-emerald-400 shrink-0" />
-            <span className="text-slate-500">SHA-256:</span>
-            <span className="text-slate-400 truncate">{article.sha256}</span>
-          </div>
-          <span className="text-emerald-400 font-medium shrink-0 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Valid JDIH
-          </span>
+      {/* Subtle Integrity Badge */}
+      <div className="mt-4 pt-3 border-t border-[#f2ede4] flex items-center justify-between text-[11px] text-[#8a847c]">
+        <div className="flex items-center gap-1.5 text-[#15803d] font-medium">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Naskah Resmi Terverifikasi</span>
         </div>
-      )}
+        <span className="text-[10px] text-[#a8a29e] uppercase tracking-wider font-mono">
+          JDIH Valid
+        </span>
+      </div>
     </div>
   );
 }

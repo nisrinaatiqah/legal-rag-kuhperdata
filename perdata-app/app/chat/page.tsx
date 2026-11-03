@@ -2,21 +2,17 @@
 
 import { useState, useRef, useEffect } from 'react';
 import {
+  ArrowUpRight,
   Send,
   Scale,
   ShieldCheck,
   ShieldAlert,
-  AlertTriangle,
   Bot,
   User,
   Sparkles,
   RefreshCw,
-  Cpu,
-  Layers,
-  ChevronDown,
-  ChevronUp,
   FileText,
-  SlidersHorizontal,
+  Sliders,
 } from 'lucide-react';
 import SecurityBadge, { DefenseStatusProps } from '../components/SecurityBadge';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
@@ -26,42 +22,26 @@ interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: string;
-  llmUsed?: string;
   defenseStatus?: DefenseStatusProps;
   retrievedPasals?: ArticleDoc[];
 }
 
 const SUGGESTED_QUERIES = [
-  {
-    title: 'Syarat Sah Perjanjian (Ps. 1320)',
-    query: 'Apa saja 4 syarat sahnya suatu perjanjian menurut Pasal 1320 KUHPerdata dan konsekuensi hukumnya?',
-  },
-  {
-    title: 'Perbuatan Melawan Hukum (Ps. 1365)',
-    query: 'Jelaskan unsur-unsur Perbuatan Melawan Hukum (PMH) berdasarkan Pasal 1365 KUHPerdata beserta ganti ruginya!',
-  },
-  {
-    title: 'Sita Jaminan HIR (Hukum Acara)',
-    query: 'Bagaimana prosedur dan syarat permohonan sita jaminan (conservatoir beslag) menurut ketentuan HIR?',
-  },
-  {
-    title: 'Pembatalan Akibat Wanprestasi (Ps. 1266)',
-    query: 'Apakah pembatalan perjanjian akibat wanprestasi harus selalu dimintakan ke Pengadilan menurut Pasal 1266?',
-  },
+  'Apa 4 syarat sahnya perjanjian menurut Pasal 1320 KUHPerdata?',
+  'Bagaimana unsur Perbuatan Melawan Hukum (PMH) Pasal 1365 KUHPerdata?',
+  'Bagaimana prosedur sita jaminan (conservatoir beslag) menurut HIR?',
+  'Apakah pembatalan perjanjian akibat wanprestasi harus melalui Pengadilan?',
 ];
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
 
-  // Settings
-  const [selectedModel, setSelectedModel] = useState('gemini');
-  const [selectedCollection, setSelectedCollection] = useState('kuhperdata_hir_bgem3');
+  // Clean, essential controls only
   const [enableDefense, setEnableDefense] = useState(true);
-  const [topK, setTopK] = useState(5);
-  const [showSettings, setShowSettings] = useState(false);
+  const [corpusScenario, setCorpusScenario] = useState('kuhperdata_hir_bgem3');
+  const [showDemoOptions, setShowDemoOptions] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -83,42 +63,36 @@ export default function ChatPage() {
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setLoading(true);
-    setActiveStep(1);
 
     try {
-      // Step simulation for transparency
-      setTimeout(() => setActiveStep(2), 700);
-      setTimeout(() => setActiveStep(3), 1500);
-
-      // Endpoint: backend FastAPI
       const res = await fetch('/api/py/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           query: text,
-          collection: selectedCollection,
+          collection: corpusScenario,
           enable_defense: enableDefense,
-          llm_model: selectedModel,
-          top_k: topK,
+          llm_model: 'gemini',
+          top_k: 5,
         }),
       });
 
       if (!res.ok) {
-        // Fallback directly to localhost:8000 if rewrite is not active in dev
+        // Fallback directly to localhost:8000
         const fallbackRes = await fetch('http://127.0.0.1:8000/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             query: text,
-            collection: selectedCollection,
+            collection: corpusScenario,
             enable_defense: enableDefense,
-            llm_model: selectedModel,
-            top_k: topK,
+            llm_model: 'gemini',
+            top_k: 5,
           }),
         });
 
         if (!fallbackRes.ok) {
-          throw new Error(`Server API Error: ${fallbackRes.statusText}`);
+          throw new Error('Gagal menghubungi backend');
         }
         const data = await fallbackRes.json();
         handleServerSuccess(data);
@@ -128,17 +102,16 @@ export default function ChatPage() {
       const data = await res.json();
       handleServerSuccess(data);
     } catch (err: any) {
-      console.error('Chat error:', err);
       const errorMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `Terjadi kendala saat menghubungi server backend (${err.message || 'Connection refused'}). Pastikan backend server.py berjalan di port 8000.`,
+        content:
+          'Mohon maaf, terjadi kendala koneksi dengan server backend. Pastikan server.py telah berjalan di latar belakang.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
       setLoading(false);
-      setActiveStep(0);
     }
   };
 
@@ -148,7 +121,6 @@ export default function ChatPage() {
       role: 'assistant',
       content: data.answer,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      llmUsed: data.llm_used,
       defenseStatus: data.defense_status,
       retrievedPasals: data.retrieved_pasals,
     };
@@ -156,203 +128,138 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col gap-6">
-      {/* Top Controls / Experiment Settings Bar */}
-      <div className="rounded-2xl glass-card p-4 border border-slate-700/60 shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-              <Scale className="w-5 h-5" />
-            </div>
-            <div>
-              <h2 className="font-bold text-sm text-white">Konsultasi Hukum Perdata &amp; Acara</h2>
-              <p className="text-[11px] text-slate-400">
-                KUHPerdata &amp; HIR • BAAI/bge-m3 • Two-Tier Defense
-              </p>
-            </div>
+    <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12">
+      {/* Editorial Page Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#e7dfd5] pb-6">
+        <div>
+          <span className="text-xs font-semibold tracking-widest uppercase text-[#7a1827]">
+            Konsultasi Hukum AI
+          </span>
+          <h1 className="font-editorial-title text-3xl md:text-4xl font-bold text-[#1c1917] mt-1">
+            Tanya Jawab KUHPerdata &amp; HIR
+          </h1>
+        </div>
+
+        {/* Essential Defense Toggle for Demo */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#e2d7c9] shadow-sm text-xs font-medium text-[#44403c]">
+            <span>Proteksi Naskah Asli:</span>
+            <button
+              onClick={() => setEnableDefense(!enableDefense)}
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                enableDefense
+                  ? 'bg-[#15803d] text-white'
+                  : 'bg-[#991b1b] text-white'
+              }`}
+            >
+              {enableDefense ? 'Aktif' : 'Nonaktif'}
+            </button>
           </div>
 
-          {/* Quick Defense Switch */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-700/80">
-              <span className="text-xs text-slate-300 font-medium">Pertahanan SHA-256 + NLI:</span>
-              <button
-                onClick={() => setEnableDefense(!enableDefense)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                  enableDefense
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
-                    : 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
-                }`}
-              >
-                {enableDefense ? (
-                  <>
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>AKTIF</span>
-                  </>
-                ) : (
-                  <>
-                    <ShieldAlert className="w-3.5 h-3.5" />
-                    <span>NONAKTIF</span>
-                  </>
-                )}
-              </button>
-            </div>
+          <button
+            onClick={() => setShowDemoOptions(!showDemoOptions)}
+            className="p-2 rounded-full bg-white border border-[#e2d7c9] text-[#78716c] hover:text-[#1c1917] transition-colors"
+            title="Pilihan Skenario Uji"
+          >
+            <Sliders className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
 
-            {/* Toggle Experiment Settings */}
+      {/* Hidden Collapsible Demo Options (Only for Thesis Simulation) */}
+      {showDemoOptions && (
+        <div className="p-4 rounded-2xl bg-[#f4eee5] border border-[#e2d7c9] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span className="text-[#57534e] font-medium">Pilihan Skenario Korpus untuk Sidang:</span>
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
-              title="Konfigurasi Model & Koleksi"
+              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
+              className={`px-3 py-1.5 rounded-full font-medium ${
+                corpusScenario === 'kuhperdata_hir_bgem3'
+                  ? 'bg-[#7a1827] text-white'
+                  : 'bg-white text-[#57534e] border border-[#dcd2c4]'
+              }`}
             >
-              <SlidersHorizontal className="w-4 h-4" />
+              Korpus Bersih (Resmi)
+            </button>
+            <button
+              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
+              className={`px-3 py-1.5 rounded-full font-medium ${
+                corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
+                  ? 'bg-[#7a1827] text-white'
+                  : 'bg-white text-[#57534e] border border-[#dcd2c4]'
+              }`}
+            >
+              Uji Racun 1% (Simulasi Manipulasi)
             </button>
           </div>
         </div>
+      )}
 
-        {/* Collapsible Experiment Parameters Panel */}
-        {showSettings && (
-          <div className="mt-4 pt-4 border-t border-slate-700/60 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-            {/* LLM Model */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-slate-400 font-medium flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-indigo-400" />
-                Generator LLM:
-              </label>
-              <select
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
-              >
-                <option value="gemini">Google Gemini 2.5 Flash (Cloud)</option>
-                <option value="deepseek-r1">DeepSeek-R1-8B (Ollama Local)</option>
-                <option value="qwen">Qwen2.5-7B (Ollama Local)</option>
-                <option value="deepseek-cloud">DeepSeek-V3 (Cloud API)</option>
-              </select>
-            </div>
-
-            {/* Collection / Poison Scenario */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-slate-400 font-medium flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-blue-400" />
-                Korpus Qdrant / Skenario Injeksi:
-              </label>
-              <select
-                value={selectedCollection}
-                onChange={(e) => setSelectedCollection(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
-              >
-                <option value="kuhperdata_hir_bgem3">Koleksi Bersih (Baseline JDIH)</option>
-                <option value="kuhperdata_hir_bgem3_p1pct">Injeksi Manipulasi 1% (P-1%)</option>
-                <option value="kuhperdata_hir_bgem3_p5pct">Injeksi Manipulasi 5% (P-5%)</option>
-              </select>
-            </div>
-
-            {/* Top-K */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-slate-400 font-medium flex items-center justify-between">
-                <span>Top-K Dokumen Ditarik:</span>
-                <span className="font-mono text-indigo-400">{topK} pasal</span>
-              </label>
-              <input
-                type="range"
-                min="1"
-                max="10"
-                value={topK}
-                onChange={(e) => setTopK(parseInt(e.target.value))}
-                className="w-full accent-indigo-500 mt-2"
-              />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Messages Feed Area */}
-      <div className="min-h-[420px] flex flex-col gap-6">
+      {/* Conversation Thread */}
+      <div className="min-h-[380px] flex flex-col gap-6">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center text-center my-auto py-12 px-4">
-            <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4 shadow-xl shadow-indigo-950/40">
-              <Scale className="w-7 h-7" />
+          <div className="my-auto py-12 text-center flex flex-col items-center">
+            <div className="w-12 h-12 rounded-full bg-[#f4eee5] border border-[#e2d7c9] flex items-center justify-center text-[#7a1827] mb-4">
+              <Scale className="w-6 h-6" />
             </div>
-            <h3 className="font-legal-title text-xl font-bold text-white">
-              Pusat Tanya Jawab Hukum Perdata Indonesia
-            </h3>
-            <p className="text-xs text-slate-400 max-w-md mt-1.5 leading-relaxed">
-              Tanyakan ketentuan perdata material (KUHPerdata) maupun formil (HIR). Sistem akan mencari pasal rujukan resmi dan memverifikasi integritasnya sebelum menyusun jawaban.
+            <h2 className="font-editorial-title text-2xl font-bold text-[#1c1917]">
+              Mulai Konsultasi Permasalahan Hukum
+            </h2>
+            <p className="text-xs sm:text-sm text-[#78716c] max-w-md mt-1.5 leading-relaxed">
+              Ajukan pertanyaan mengenai perjanjian, wanprestasi, ganti rugi perbuatan melawan hukum, maupun prosedur gugatan di persidangan.
             </p>
 
-            {/* Suggested Question Chips */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xl mt-8">
-              {SUGGESTED_QUERIES.map((sq, idx) => (
+            {/* Clean, Non-Noisy Suggested Question Pills */}
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2.5 max-w-2xl mt-8">
+              {SUGGESTED_QUERIES.map((q, idx) => (
                 <button
                   key={idx}
-                  onClick={() => handleSubmit(sq.query)}
-                  className="p-3.5 rounded-xl glass-card text-left hover:border-indigo-500/40 transition-all text-xs group"
+                  onClick={() => handleSubmit(q)}
+                  className="px-4 py-2.5 rounded-full bg-white hover:bg-[#f5efe6] border border-[#e2d7c9] text-xs font-medium text-[#44403c] transition-all text-left shadow-sm"
                 >
-                  <p className="font-semibold text-slate-200 group-hover:text-indigo-300">
-                    {sq.title}
-                  </p>
-                  <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">{sq.query}</p>
+                  {q}
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        {/* Render Conversation List */}
+        {/* Message Items */}
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex flex-col gap-2 ${
+            className={`flex flex-col gap-1.5 ${
               msg.role === 'user' ? 'items-end' : 'items-start'
             }`}
           >
-            {/* Author Label */}
-            <div className="flex items-center gap-2 px-1 text-[11px] text-slate-400">
-              {msg.role === 'user' ? (
-                <>
-                  <span>Pengguna</span>
-                  <User className="w-3.5 h-3.5" />
-                </>
-              ) : (
-                <>
-                  <Bot className="w-3.5 h-3.5 text-indigo-400" />
-                  <span className="font-medium text-slate-300">LexPerdata AI</span>
-                  {msg.llmUsed && (
-                    <span className="px-1.5 py-0.2 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px]">
-                      {msg.llmUsed}
-                    </span>
-                  )}
-                </>
-              )}
-              <span>•</span>
-              <span>{msg.timestamp}</span>
-            </div>
+            <span className="text-[11px] text-[#8a847c] px-1 font-medium">
+              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Pertimbangan Hukum LexPerdata'} • {msg.timestamp}
+            </span>
 
-            {/* Bubble */}
             <div
-              className={`rounded-2xl p-5 max-w-3xl leading-relaxed text-xs sm:text-sm ${
+              className={`rounded-2xl p-6 leading-relaxed max-w-2xl ${
                 msg.role === 'user'
-                  ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg shadow-indigo-600/15'
-                  : 'glass-card border border-slate-700/60 text-slate-200 shadow-xl'
+                  ? 'bg-[#1c1917] text-white shadow-md'
+                  : 'editorial-card text-[#292524]'
               }`}
             >
-              {/* If Assistant, show Security Badge First */}
+              {/* Security Badge */}
               {msg.defenseStatus && <SecurityBadge defense={msg.defenseStatus} />}
 
-              {/* Main Content Body */}
-              <div className="whitespace-pre-wrap leading-relaxed space-y-2">{msg.content}</div>
+              {/* Main Text Answer */}
+              <div className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed space-y-2.5">
+                {msg.content}
+              </div>
 
-              {/* Retrieved Articles Shelf */}
+              {/* Cited Articles Shelf */}
               {msg.retrievedPasals && msg.retrievedPasals.length > 0 && (
-                <div className="mt-6 pt-5 border-t border-slate-700/60 flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <FileText className="w-3.5 h-3.5 text-indigo-400" />
-                      Pasal Rujukan Resmi ({msg.retrievedPasals.length} Divalidasi):
-                    </p>
-                  </div>
+                <div className="mt-6 pt-5 border-t border-[#f0ebe1] flex flex-col gap-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#7a1827] flex items-center gap-1.5">
+                    <FileText className="w-3.5 h-3.5" />
+                    Pasal Rujukan Resmi ({msg.retrievedPasals.length} Pasal Terverifikasi):
+                  </span>
 
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="space-y-3">
                     {msg.retrievedPasals.map((art, idx) => (
                       <PasalCard key={idx} article={art} index={idx} />
                     ))}
@@ -363,67 +270,46 @@ export default function ChatPage() {
           </div>
         ))}
 
-        {/* Loading / Multi-step Reasoning Indicator */}
+        {/* Loading Spinner */}
         {loading && (
-          <div className="flex flex-col items-start gap-2 max-w-md">
-            <div className="flex items-center gap-2 px-1 text-[11px] text-slate-400">
-              <Bot className="w-3.5 h-3.5 text-indigo-400" />
-              <span>LexPerdata AI sedang menganalisis kueri hukum...</span>
-            </div>
-            <div className="rounded-2xl glass-card p-4 border border-indigo-500/30 flex flex-col gap-2.5 w-full">
-              <div className="flex items-center gap-2.5 text-xs">
-                <RefreshCw className="w-4 h-4 text-indigo-400 animate-spin" />
-                <span className="font-semibold text-slate-200">
-                  {activeStep === 1 && 'Menarik pasal relevan dengan BAAI/bge-m3...'}
-                  {activeStep === 2 && 'Memeriksa integritas SHA-256 & filter semantik NLI...'}
-                  {activeStep === 3 && 'Menyusun sintesis pertimbangan hukum...'}
-                </span>
-              </div>
-              <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                <div
-                  className="bg-indigo-500 h-1.5 rounded-full transition-all duration-500"
-                  style={{ width: `${(activeStep / 3) * 100}%` }}
-                ></div>
-              </div>
-            </div>
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#e2d7c9] max-w-xs shadow-sm">
+            <RefreshCw className="w-4 h-4 text-[#7a1827] animate-spin" />
+            <span className="text-xs font-medium text-[#57534e]">
+              Sedang menelaah pasal rujukan resmi...
+            </span>
           </div>
         )}
 
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Box Bar */}
-      <div className="sticky bottom-4 z-20">
+      {/* Minimalist Question Input Bar */}
+      <div className="sticky bottom-6 z-20">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(input);
           }}
-          className="relative flex items-center shadow-2xl shadow-black/80 rounded-2xl glass-card border border-slate-700/80 focus-within:border-indigo-500/80 transition-all p-1.5"
+          className="relative flex items-center rounded-full bg-white border border-[#dcd2c4] shadow-xl shadow-black/5 p-1.5 focus-within:border-[#7a1827] transition-all"
         >
-          <textarea
+          <input
+            type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSubmit(input);
-              }
-            }}
-            placeholder="Ketik pertanyaan hukum perdata atau hukum acara (contoh: Pasal 1320, ganti rugi wanprestasi, sita jaminan)..."
-            rows={1}
-            className="w-full px-4 py-3 bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none max-h-32"
+            placeholder="Tuliskan pertanyaan hukum perdata atau hukum acara..."
+            className="w-full px-5 py-3 text-xs sm:text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none bg-transparent"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="p-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:hover:bg-indigo-600 text-white transition-all shrink-0 ml-1"
+            className="btn-burgundy p-3 rounded-full disabled:opacity-40 shrink-0 ml-1"
+            title="Kirim Pertanyaan"
           >
-            <Send className="w-4 h-4" />
+            <ArrowUpRight className="w-4 h-4" />
           </button>
         </form>
-        <p className="text-[10px] text-center text-slate-500 mt-2">
-          LexPerdata AI menyajikan analisis hukum terverifikasi. Untuk keputusan yudisial resmi, selalu rujuk naskah putusan pengadilan &amp; JDIH.
+        <p className="text-[11px] text-center text-[#8a847c] mt-2 font-normal">
+          Seluruh jawaban dirumuskan berdasarkan ketentuan KUHPerdata &amp; HIR resmi dari JDIH Nasional.
         </p>
       </div>
     </div>

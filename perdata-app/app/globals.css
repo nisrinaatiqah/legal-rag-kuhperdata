@@ -41,12 +41,12 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Opsi B: High-Fashion Editorial Chic (Bodoni Moda + Plus Jakarta Sans) */
-  --font-display: 'Bodoni Moda', Georgia, serif;
-  --font-cyntho: 'Bodoni Moda', Georgia, serif;
-  --font-serif: 'Bodoni Moda', Georgia, serif;
-  --font-editorial: 'Bodoni Moda', Georgia, serif;
-  --font-accent: 'Bodoni Moda', Georgia, serif;
+  /* Opsi C: Sculpted Flared Sans (Tenor Sans + Plus Jakarta Sans) */
+  --font-display: 'Tenor Sans', sans-serif;
+  --font-cyntho: 'Tenor Sans', sans-serif;
+  --font-serif: 'Tenor Sans', sans-serif;
+  --font-editorial: 'Tenor Sans', sans-serif;
+  --font-accent: 'Tenor Sans', sans-serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Aliases */
@@ -57,6 +57,7 @@
   --font-forum: var(--font-display);
   --font-bodoni: var(--font-display);
   --font-prata: var(--font-display);
+  --font-tenor: var(--font-display);
   --font-montserrat: var(--font-sans);
   --font-jakarta: var(--font-sans);
 }
@@ -76,42 +77,55 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Opsi B: Bodoni Moda + Plus Jakarta Sans) */
+/* Typography Utility Classes (Opsi C: Tenor Sans + Plus Jakarta Sans) */
 .font-display {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-marcellus {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-italiana {
-  font-family: 'Bodoni Moda', Georgia, serif;
-  font-style: italic;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-cyntho {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-editorial {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-cormorant {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-dm-serif {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-forum {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-bodoni {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-tenor {
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-montserrat {
@@ -119,7 +133,8 @@ body {
 }
 
 .font-serif {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-body {
@@ -131,7 +146,8 @@ body {
 }
 
 .font-cinzel {
-  font-family: 'Bodoni Moda', Georgia, serif;
+  font-family: 'Tenor Sans', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .font-jakarta {

@@ -41,17 +41,20 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Opsi 3: Roman Imperial Monograph (Marcellus + Italiana + Montserrat) */
-  --font-display: 'Marcellus', Georgia, serif;
-  --font-cyntho: 'Marcellus', Georgia, serif;
-  --font-serif: 'Marcellus', Georgia, serif;
-  --font-editorial: 'Italiana', Georgia, serif;
-  --font-accent: 'Italiana', Georgia, serif;
-  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  /* Opsi 1: High-End Luxury Legal Editorial (Cormorant Garamond + Plus Jakarta Sans) */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-cyntho: 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Aliases */
   --font-cinzel: var(--font-display);
-  --font-cormorant: var(--font-editorial);
+  --font-cormorant: var(--font-display);
+  --font-marcellus: var(--font-display);
+  --font-montserrat: var(--font-sans);
+  --font-jakarta: var(--font-sans);
 }
 
 * {
@@ -69,62 +72,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Opsi 3: Marcellus + Italiana + Montserrat) */
+/* Typography Utility Classes (Opsi 1: Cormorant Garamond + Plus Jakarta Sans) */
 .font-display {
-  font-family: var(--font-display);
-  letter-spacing: 0.01em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.01em;
 }
 
 .font-marcellus {
-  font-family: 'Marcellus', Georgia, serif;
-  letter-spacing: 0.01em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.01em;
 }
 
 .font-italiana {
-  font-family: 'Italiana', Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
 }
 
 .font-cyntho {
-  font-family: 'Marcellus', Georgia, serif;
-  letter-spacing: 0.01em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
 .font-editorial {
-  font-family: 'Italiana', Georgia, serif;
-}
-
-.font-montserrat {
-  font-family: var(--font-sans);
-}
-
-.font-serif {
-  font-family: var(--font-display);
-  letter-spacing: 0.01em;
-}
-
-.font-body {
-  font-family: var(--font-sans);
-}
-
-.font-sans {
-  font-family: var(--font-sans);
-}
-
-.font-cinzel {
-  font-family: var(--font-display);
-  letter-spacing: 0.01em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
 .font-cormorant {
   font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
-.font-dm-serif {
-  font-family: 'DM Serif Display', Georgia, serif;
+.font-montserrat {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
-.font-playfair {
-  font-family: 'Playfair Display', Georgia, serif;
+.font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-cinzel {
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
 .font-jakarta {

@@ -114,16 +114,16 @@ export default function HomePage() {
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
-            {/* Asymmetric Typography Headline in Marcellus + Italiana */}
-            <h1 className="font-marcellus text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-normal tracking-wide text-[#3B010B] leading-[1.12]">
+            {/* Asymmetric Luxury Legal Headline in Cormorant Garamond (Opsi 1) */}
+            <h1 className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-semibold tracking-tight text-[#3B010B] leading-[1.08]">
               Penelusuran Cerdas{' '}
-              <span className="font-italiana text-[#75162D] block mt-1 normal-case text-3xl sm:text-5xl md:text-6xl">
+              <span className="text-[#75162D] block mt-1 italic font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem]">
                 Hukum Perdata Indonesia
               </span>
             </h1>
 
             {/* Lead Copy */}
-            <p className="text-xs sm:text-sm md:text-base text-[#6B5559] mt-4 leading-relaxed max-w-xl font-medium font-montserrat">
+            <p className="text-xs sm:text-sm md:text-base text-[#6B5559] mt-4 leading-relaxed max-w-xl font-normal font-sans">
               Asisten berbasis kecerdasan buatan untuk membantu penelusuran naskah resmi KUHPerdata dan HIR secara terstruktur, cepat, dan terverifikasi dari sumber pangkalan data JDIH Nasional.
             </p>
 
@@ -135,11 +135,11 @@ export default function HomePage() {
                   value={quickQuery}
                   onChange={(e) => setQuickQuery(e.target.value)}
                   placeholder="Ketik kata kunci atau pasal (contoh: 1320, ganti rugi, waris)..."
-                  className="w-full pl-5 pr-28 py-3.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full shadow-sm font-montserrat transition-all focus:ring-2 focus:ring-[#75162D]/10"
+                  className="w-full pl-5 pr-28 py-3.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full shadow-sm font-sans transition-all focus:ring-2 focus:ring-[#75162D]/10"
                 />
                 <button
                   type="submit"
-                  className="btn-burgundy-primary absolute right-1.5 px-5 py-2 rounded-full text-xs font-bold font-montserrat flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
+                  className="btn-burgundy-primary absolute right-1.5 px-5 py-2 rounded-full text-xs font-bold font-sans flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
                   title="Mulai Penelusuran"
                 >
                   <span>Cari</span>
@@ -152,26 +152,26 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center gap-3 mt-4">
               <Link
                 href="/chat"
-                className="btn-burgundy-primary px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-montserrat"
+                className="btn-burgundy-primary px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 shadow-sm hover:scale-[1.02] transition-transform font-sans"
               >
                 <span>Mulai Penelusuran AI</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
               <Link
                 href="/database"
-                className="px-5 py-2.5 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-montserrat"
+                className="px-5 py-2.5 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
               >
                 <span>Katalog Database</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
-            {/* Editorial Principle Quote in Italiana */}
+            {/* Editorial Principle Quote in Cormorant Garamond */}
             <div className="mt-6 pt-4 border-t border-[#E8DEC9] w-full max-w-xl">
-              <p className="font-italiana text-2xl md:text-3xl text-[#3B010B] leading-snug">
+              <p className="font-cormorant italic text-2xl md:text-3xl text-[#3B010B] leading-snug font-medium">
                 &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
               </p>
-              <p className="text-[10px] text-[#6B5559] mt-1.5 uppercase tracking-widest font-bold font-montserrat">
+              <p className="text-[10px] text-[#6B5559] mt-1.5 uppercase tracking-widest font-bold font-sans">
                 Prinsip Fundamental KUHPerdata &amp; HIR
               </p>
             </div>

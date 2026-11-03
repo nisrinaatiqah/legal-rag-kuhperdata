@@ -76,19 +76,15 @@ export default function HomePage() {
     <div className="flex flex-col gap-24 pb-20 font-body">
       {/* Editorial Hero Section with Faded Law Emblem Background */}
       <section className="relative overflow-hidden w-full min-h-[calc(100vh-7rem)] flex flex-col justify-center py-8 md:py-12">
-        {/* Soft Faded Background Law Emblem Watermark */}
+        {/* Law Emblem Hero Image */}
         <div
           aria-hidden="true"
-          className="absolute right-4 sm:right-8 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 w-[280px] sm:w-[340px] md:w-[400px] lg:w-[450px] max-w-[42vw] max-h-[66vh] aspect-square pointer-events-none select-none z-0 opacity-30 md:opacity-40 transition-opacity flex items-center justify-center"
-          style={{
-            maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 82%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 82%)',
-          }}
+          className="absolute right-4 sm:right-8 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 w-[280px] sm:w-[340px] md:w-[400px] lg:w-[450px] max-w-[42vw] max-h-[70vh] aspect-square pointer-events-none select-none z-0 flex items-center justify-center"
         >
           <img
             src="/law-emblem.png"
             alt=""
-            className="w-full h-full object-contain filter contrast-[1.05] sepia-[0.15] animate-float-slow"
+            className="w-full h-full object-contain animate-float-slow"
           />
         </div>
 

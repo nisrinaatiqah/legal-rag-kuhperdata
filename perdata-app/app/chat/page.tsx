@@ -124,15 +124,15 @@ export default function ChatPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Editorial Page Header in Cinzel & Cormorant */}
+      {/* Editorial Page Header in DM Serif Display & DM Sans */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E8DEC9] pb-6">
         <div>
-          <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-cinzel">
+          <span className="text-[11px] font-semibold tracking-widest uppercase text-[#75162D] font-sans">
             Asistensi Penelusuran Naskah
           </span>
-          <h1 className="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-[#3B010B] mt-1">
+          <h1 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#3B010B] mt-1">
             Tanya Jawab{' '}
-            <span className="font-cormorant italic font-normal text-[#75162D] text-3xl md:text-4xl normal-case">
+            <span className="italic text-[#75162D] text-3xl md:text-4xl">
               KUHPerdata &amp; HIR
             </span>
           </h1>
@@ -140,11 +140,11 @@ export default function ChatPage() {
 
         {/* Essential Defense Toggle */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-sm bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A]">
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-sm bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A] font-sans">
             <span className="text-[11px]">Proteksi Naskah Asli:</span>
             <button
               onClick={() => setEnableDefense(!enableDefense)}
-              className={`px-2.5 py-0.5 rounded-sm text-xs font-semibold font-cinzel transition-all ${
+              className={`px-2.5 py-0.5 rounded-sm text-xs font-semibold font-sans transition-all ${
                 enableDefense
                   ? 'bg-[#15803d] text-white shadow-sm'
                   : 'bg-[#75162D] text-[#F2E5C6]'

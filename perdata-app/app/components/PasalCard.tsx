@@ -32,15 +32,15 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-cinzel text-base md:text-lg font-bold tracking-wide text-[#3B010B]">
+            <span className="font-serif text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
               {article.source} Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-sm bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-cinzel">
+            <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-sm bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-sans">
               {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
             </span>
           </div>
           {article.bab_title && article.bab_title !== '-' && (
-            <p className="text-sm text-[#75162D] mt-1 italic font-cormorant font-medium">
+            <p className="text-sm text-[#75162D] mt-1 italic font-serif">
               {article.bab_title}
             </p>
           )}
@@ -49,7 +49,7 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
         {/* Copy Button: Crisp Rectangular (Image 2 Style) */}
         <button
           onClick={copyToClipboard}
-          className="p-2 rounded-sm bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-cinzel font-semibold"
+          className="p-2 rounded-sm bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-sans font-semibold"
           title="Salin Rujukan Hukum"
         >
           {copied ? (

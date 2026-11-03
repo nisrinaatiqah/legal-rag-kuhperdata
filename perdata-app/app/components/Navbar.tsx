@@ -19,23 +19,23 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAF6EE]/95 backdrop-blur-md border-b border-[#E8DEC9]">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Brand / Logo in Roman Cinzel */}
+        {/* Brand / Logo in DM Serif Display */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-sm bg-[#75162D] text-[#F2E5C6] flex items-center justify-center font-cinzel text-sm font-bold group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-sm bg-[#75162D] text-[#F2E5C6] flex items-center justify-center font-serif text-base font-bold group-hover:scale-105 transition-transform">
             §
           </div>
           <div className="flex flex-col">
-            <span className="font-cinzel text-xl font-bold tracking-wider text-[#3B010B]">
-              CIVILEX<span className="text-[#75162D]">.AI</span>
+            <span className="font-serif text-xl font-normal tracking-wide text-[#3B010B]">
+              CiviLex<span className="text-[#75162D] font-bold">.AI</span>
             </span>
-            <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-0.5 font-body">
+            <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-0.5 font-sans">
               Asisten Referensi • KUHPerdata &amp; HIR
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation in Inter */}
-        <nav className="hidden md:flex items-center gap-8 font-body">
+        {/* Desktop Navigation in DM Sans */}
+        <nav className="hidden md:flex items-center gap-8 font-sans">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -54,11 +54,11 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Action Button: Rectangular Editorial (Image 1 Style) */}
+        {/* Action Button: Rectangular Editorial */}
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/chat"
-            className="btn-burgundy-primary px-5 py-2.5 rounded-sm text-xs font-semibold tracking-wider uppercase font-cinzel flex items-center gap-1.5"
+            className="btn-burgundy-primary px-5 py-2.5 rounded-sm text-xs font-semibold tracking-wider uppercase font-sans flex items-center gap-1.5"
           >
             <span>Mulai Penelusuran</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -96,7 +96,7 @@ export default function Navbar() {
           <Link
             href="/chat"
             onClick={() => setMobileMenuOpen(false)}
-            className="btn-burgundy-primary mt-2 py-3 rounded-sm text-center text-xs font-semibold tracking-wider uppercase font-cinzel flex items-center justify-center gap-1.5"
+            className="btn-burgundy-primary mt-2 py-3 rounded-sm text-center text-xs font-semibold tracking-wider uppercase font-sans flex items-center justify-center gap-1.5"
           >
             <span>Mulai Penelusuran</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

@@ -59,18 +59,18 @@ export default function DatabasePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Editorial Header in Cinzel & Cormorant */}
+      {/* Editorial Header in DM Serif Display & DM Sans */}
       <div className="flex flex-col gap-2 border-b border-[#E8DEC9] pb-6">
-        <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-cinzel">
+        <span className="text-[11px] font-semibold tracking-widest uppercase text-[#75162D] font-sans">
           Pangkalan Data Resmi
         </span>
-        <h1 className="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-[#3B010B]">
+        <h1 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#3B010B]">
           Katalog 2.276 Ketentuan{' '}
-          <span className="font-cormorant italic font-normal text-[#75162D] text-3xl md:text-4xl normal-case">
+          <span className="italic text-[#75162D] text-3xl md:text-4xl">
             KUHPerdata &amp; HIR
           </span>
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B5559] max-w-xl">
+        <p className="text-xs sm:text-sm text-[#6B5559] max-w-xl font-sans">
           Naskah resmi dari Lembaran Negara dan JDIH Nasional, terverifikasi utuh dan bebas dari distorsi data.
         </p>
       </div>

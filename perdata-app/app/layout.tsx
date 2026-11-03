@@ -24,10 +24,10 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto flex flex-col gap-6">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="flex flex-col gap-1.5">
-                <span className="font-cinzel text-xl font-bold tracking-wider text-[#3B010B]">
-                  CIVILEX<span className="text-[#75162D]">.AI</span>
+                <span className="font-serif text-xl font-normal tracking-wide text-[#3B010B]">
+                  CiviLex<span className="text-[#75162D] font-bold">.AI</span>
                 </span>
-                <p className="text-xs text-[#6B5559] max-w-sm leading-relaxed">
+                <p className="text-xs text-[#6B5559] max-w-sm leading-relaxed font-sans">
                   Platform Asistensi Penelusuran dan Analisis Naskah Resmi KUHPerdata dan HIR Berbasis Kecerdasan Buatan.
                 </p>
               </div>

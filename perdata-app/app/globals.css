@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Didact+Gothic&family=Cinzel:wght@400;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 @import "tailwindcss";
 
@@ -17,10 +17,14 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Pilihan 2: The Roman Jurist Fonts */
-  --font-cinzel: 'Cinzel', Georgia, serif;
-  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Pilihan 3: Modern Editorial Law Atelier */
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-editorial: 'DM Serif Display', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  /* Dynamic bindings for existing classes */
+  --font-cinzel: var(--font-serif);
+  --font-cormorant: var(--font-serif);
 }
 
 * {
@@ -38,25 +42,34 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes */
-.font-cinzel {
-  font-family: var(--font-cinzel);
-}
-
-.font-cormorant {
-  font-family: var(--font-cormorant);
-}
-
+/* Typography Utility Classes (Pilihan 3: DM Serif Display + DM Sans) */
 .font-display {
-  font-family: var(--font-cinzel);
+  font-family: var(--font-serif);
 }
 
 .font-editorial {
-  font-family: var(--font-cormorant);
+  font-family: var(--font-serif);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
 }
 
 .font-body {
   font-family: var(--font-sans);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-cinzel {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+.font-cormorant {
+  font-family: var(--font-serif);
 }
 
 /* Editorial Buttons with Burgundy & Dark Maroon */

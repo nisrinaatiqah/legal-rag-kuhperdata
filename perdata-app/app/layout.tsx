@@ -3,7 +3,7 @@ import './globals.css';
 import Navbar from './components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'Civil AI — Asisten Penelusuran & Referensi Hukum Perdata Indonesia',
+  title: 'CiviLex AI — Asisten Penelusuran & Referensi Hukum Perdata Indonesia',
   description:
     'Alat bantu cerdas berbasis AI untuk penelusuran naskah resmi KUHPerdata dan HIR dengan jaminan keaslian data JDIH.',
 };
@@ -25,7 +25,7 @@ export default function RootLayout({
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="flex flex-col gap-1.5">
                 <span className="font-cinzel text-xl font-bold tracking-wider text-[#3B010B]">
-                  CIVIL<span className="text-[#75162D]">.AI</span>
+                  CIVILEX<span className="text-[#75162D]">.AI</span>
                 </span>
                 <p className="text-xs text-[#6B5559] max-w-sm leading-relaxed">
                   Platform Asistensi Penelusuran dan Analisis Naskah Resmi KUHPerdata dan HIR Berbasis Kecerdasan Buatan.
@@ -37,14 +37,14 @@ export default function RootLayout({
                 <span>•</span>
                 <span>Naskah Resmi JDIH</span>
                 <span>•</span>
-                <span>© 2026 Civil.AI • Hak Cipta Dilindungi</span>
+                <span>© 2026 CiviLex AI • Hak Cipta Dilindungi</span>
               </div>
             </div>
 
             {/* Official Legal Disclaimer Box */}
             <div className="pt-6 border-t border-[#E8DEC9]/60 text-[11px] text-[#7A6B6E] leading-relaxed">
               <p>
-                <strong>Penafian Hukum (Disclaimer):</strong> Civil.AI dikembangkan sebagai sarana edukasi dan alat bantu penelusuran referensi naskah hukum resmi. Informasi dan hasil pencarian yang disajikan oleh sistem ini <u>bukan merupakan nasihat, pendapat hukum, atau pengganti jasa konsultasi hukum profesional</u> dari advokat/penasihat hukum berlisensi. Untuk penanganan perkara konkret atau keputusan hukum resmi, selalu rujuk naskah asli Lembaran Negara dan konsultasikan kepada praktisi hukum yang berwenang.
+                <strong>Penafian Hukum (Disclaimer):</strong> CiviLex AI dikembangkan sebagai sarana edukasi dan alat bantu penelusuran referensi naskah hukum resmi. Informasi dan hasil pencarian yang disajikan oleh sistem ini <u>bukan merupakan nasihat, pendapat hukum, atau pengganti jasa konsultasi hukum profesional</u> dari advokat/penasihat hukum berlisensi. Untuk penanganan perkara konkret atau keputusan hukum resmi, selalu rujuk naskah asli Lembaran Negara dan konsultasikan kepada praktisi hukum yang berwenang.
               </p>
             </div>
           </div>

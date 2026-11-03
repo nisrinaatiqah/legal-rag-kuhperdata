@@ -237,7 +237,7 @@ export default function ChatPage() {
             }`}
           >
             <span className="text-[11px] text-[#6B5559] px-1 font-medium">
-              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Hasil Penelusuran Civil AI'} • {msg.timestamp}
+              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Hasil Penelusuran CiviLex AI'} • {msg.timestamp}
             </span>
 
             <div
@@ -315,7 +315,7 @@ export default function ChatPage() {
 
         {/* Explicit Legal Disclaimer */}
         <p className="text-[10px] text-center text-[#8C7A7C] mt-2 font-normal leading-relaxed">
-          Civil.AI menyajikan kutipan naskah resmi KUHPerdata &amp; HIR untuk tujuan edukasi dan referensi hukum. Sistem ini bukan nasihat hukum atau pengganti konsultasi profesional dengan advokat berlisensi.
+          CiviLex AI menyajikan kutipan naskah resmi KUHPerdata &amp; HIR untuk tujuan edukasi dan referensi hukum. Sistem ini bukan nasihat hukum atau pengganti konsultasi profesional dengan advokat berlisensi.
         </p>
       </div>
     </div>

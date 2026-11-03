@@ -26,7 +26,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-cinzel text-xl font-bold tracking-wider text-[#3B010B]">
-              CIVIL<span className="text-[#75162D]">.AI</span>
+              CIVILEX<span className="text-[#75162D]">.AI</span>
             </span>
             <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-0.5 font-body">
               Asisten Referensi • KUHPerdata &amp; HIR

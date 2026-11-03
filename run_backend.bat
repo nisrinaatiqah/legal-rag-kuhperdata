@@ -1,6 +1,6 @@
 @echo off
 echo ========================================================
-echo  Menjalankan Backend FastAPI: Civil AI
+echo  Menjalankan Backend FastAPI: CiviLex AI
 echo  Sistem Legal Question Answering Hukum Perdata & HIR
 echo  Port: http://localhost:8000
 echo ========================================================

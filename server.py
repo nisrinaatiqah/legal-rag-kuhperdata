@@ -1,5 +1,5 @@
 """
-FastAPI Backend Server: Civil AI
+FastAPI Backend Server: CiviLex AI
 Sistem Legal Question Answering Hukum Perdata (KUHPerdata & HIR)
 dengan Mekanisme Deteksi Knowledge Poisoning (SHA-256 + NLI)
 
@@ -27,11 +27,11 @@ if str(BASE_DIR) not in sys.path:
 load_dotenv(BASE_DIR / ".env")
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("lexperdata-server")
+logger = logging.getLogger("civilex-server")
 
 # Inisialisasi FastAPI
 app = FastAPI(
-    title="Civil AI — Legal QA Backend API",
+    title="CiviLex AI — Legal QA Backend API",
     description="API Sistem Legal Question Answering Hukum Perdata (KUHPerdata & HIR) dengan Pertahanan Knowledge Poisoning",
     version="1.0.0",
 )
@@ -171,7 +171,7 @@ class ChatResponse(BaseModel):
 def health_check():
     return {
         "status": "healthy",
-        "service": "Civil AI — Legal RAG Backend",
+        "service": "CiviLex AI — Legal RAG Backend",
         "version": "1.0.0",
         "docs": "/docs",
     }

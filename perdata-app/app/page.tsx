@@ -76,10 +76,10 @@ export default function HomePage() {
     <div className="flex flex-col gap-24 pb-20 font-body">
       {/* Editorial Hero Section with Faded Law Emblem Background */}
       <section className="relative overflow-hidden w-full min-h-[calc(100vh-7rem)] flex flex-col justify-center py-8 md:py-12">
-        {/* Law Emblem Hero Image */}
+        {/* Law Emblem Hero Image - Gede & Alami */}
         <div
           aria-hidden="true"
-          className="absolute right-4 sm:right-8 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 w-[280px] sm:w-[340px] md:w-[400px] lg:w-[450px] max-w-[42vw] max-h-[70vh] aspect-square pointer-events-none select-none z-0 flex items-center justify-center"
+          className="absolute right-0 sm:right-4 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 w-[340px] sm:w-[440px] md:w-[540px] lg:w-[620px] max-w-[50vw] max-h-[85vh] pointer-events-none select-none z-0 flex items-center justify-center"
         >
           <img
             src="/law-emblem.png"
@@ -87,15 +87,6 @@ export default function HomePage() {
             className="w-full h-full object-contain animate-float-slow"
           />
         </div>
-
-        {/* Subtle Ambient Radial Glow */}
-        <div
-          aria-hidden="true"
-          className="absolute top-1/2 right-16 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none select-none z-0 opacity-20 animate-pulse-subtle"
-          style={{
-            background: 'radial-gradient(circle, #F2D9A0 0%, transparent 70%)',
-          }}
-        />
 
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full my-auto">

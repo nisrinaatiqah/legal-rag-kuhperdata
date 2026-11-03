@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowUpRight, Search, FileText, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
+import { ArrowUpRight, Search, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -89,15 +89,15 @@ export default function HomePage() {
   return (
     <div className="flex flex-col gap-24 pb-20 font-body">
       {/* Editorial Hero Section with Faded Law Emblem Background (Inspired by fe-kuhp-kuhap-chatbot) */}
-      <section className="relative overflow-hidden w-full pt-4 pb-8">
-        {/* Soft Faded Background Law Emblem Watermark */}
+      <section className="relative overflow-hidden w-full pt-4 pb-12">
+        {/* Soft Faded Background Law Emblem Watermark - Grounded at bottom right */}
         <div
           aria-hidden="true"
-          className="absolute right-0 md:right-8 lg:right-16 top-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] lg:w-[600px] h-[340px] sm:h-[460px] lg:h-[600px] pointer-events-none select-none z-0 opacity-20 md:opacity-25 transition-opacity"
+          className="absolute right-0 md:right-4 lg:right-8 bottom-0 w-[420px] sm:w-[560px] lg:w-[700px] h-[480px] sm:h-[600px] lg:h-[720px] pointer-events-none select-none z-0 opacity-25 md:opacity-30 transition-opacity"
           style={{
             backgroundImage: "url('/law-emblem.png')",
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
+            backgroundPosition: 'bottom right',
             backgroundSize: 'contain',
             filter: 'contrast(1.05) sepia(0.15)',
           }}
@@ -128,7 +128,7 @@ export default function HomePage() {
               Asisten berbasis kecerdasan buatan untuk membantu penelusuran naskah resmi KUHPerdata dan HIR secara terstruktur, cepat, dan terverifikasi dari sumber pangkalan data JDIH Nasional.
             </p>
 
-            {/* Direct Query Search Input - Floraverse Floating Pill */}
+            {/* Direct Query Search Input - Sole Interaction Point in Hero (No Duplicates) */}
             <form onSubmit={handleQuickSearch} className="mt-8 w-full max-w-xl">
               <div className="relative flex items-center">
                 <input
@@ -136,39 +136,21 @@ export default function HomePage() {
                   value={quickQuery}
                   onChange={(e) => setQuickQuery(e.target.value)}
                   placeholder="Ketik kata kunci atau pasal (contoh: 1320, ganti rugi, waris)..."
-                  className="w-full pl-5 pr-12 py-3.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full shadow-sm font-montserrat transition-all focus:ring-2 focus:ring-[#75162D]/10"
+                  className="w-full pl-5 pr-28 py-3.5 bg-white/95 backdrop-blur-md border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] rounded-full shadow-sm font-montserrat transition-all focus:ring-2 focus:ring-[#75162D]/10"
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 p-2.5 rounded-full bg-[#75162D] text-white hover:bg-[#560B18] transition-colors shadow-sm"
-                  title="Cari Naskah"
+                  className="btn-burgundy-primary absolute right-1.5 px-5 py-2 rounded-full text-xs font-bold font-montserrat flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
+                  title="Mulai Penelusuran"
                 >
-                  <Search className="w-4 h-4" />
+                  <span>Cari</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </form>
 
-            {/* Actions: Floraverse Rounded-Full Pill Buttons */}
-            <div className="flex flex-wrap items-center gap-6 mt-6">
-              <Link
-                href="/chat"
-                className="btn-burgundy-primary px-7 py-3.5 rounded-full text-xs font-bold tracking-wide uppercase font-montserrat flex items-center gap-2 shadow-md hover:scale-[1.02] transition-transform"
-              >
-                <span>Mulai Penelusuran AI</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-
-              <Link
-                href="/database"
-                className="text-xs font-bold tracking-wide uppercase font-montserrat text-[#3B010B] hover:text-[#75162D] transition-colors border-b-2 border-[#3B010B] pb-0.5 flex items-center gap-1"
-              >
-                <span>Database</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#75162D]" />
-              </Link>
-            </div>
-
             {/* Editorial Principle Quote in Italiana */}
-            <div className="mt-12 pt-6 border-t border-[#E8DEC9] w-full max-w-xl">
+            <div className="mt-8 pt-5 border-t border-[#E8DEC9] w-full max-w-xl">
               <p className="font-italiana text-2xl md:text-3xl text-[#3B010B] leading-snug">
                 &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
               </p>
@@ -350,31 +332,6 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* Authentic Swiss/Editorial Statement Section (Floraverse Rounded-2xl Style) */}
-      <section className="max-w-6xl mx-auto px-6 w-full">
-        <div className="bg-[#F2E5C6]/50 backdrop-blur-sm border border-[#E8DEC9] p-8 md:p-12 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-xs">
-          <div className="flex flex-col gap-2 max-w-2xl">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#75162D] font-montserrat">
-              Integritas &amp; Verifikasi Data
-            </span>
-            <h3 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B]">
-              Kepastian Rujukan Berdasarkan Naskah Resmi
-            </h3>
-            <p className="text-xs sm:text-sm text-[#560B18] leading-relaxed mt-1 font-montserrat font-medium">
-              Setiap rujukan pasal yang ditampilkan ditautkan langsung dengan naskah otentik dari JDIH Nasional guna mencegah kesalahan sitasi, distorsi redaksi, maupun kutipan yang tidak berlaku.
-            </p>
-          </div>
-
-          <Link
-            href="/chat"
-            className="btn-burgundy-primary px-8 py-3.5 rounded-full text-xs font-bold tracking-wide uppercase font-montserrat shrink-0 flex items-center gap-2 shadow-md hover:scale-[1.02] transition-transform"
-          >
-            <span>Mulai Penelusuran Naskah</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </Link>
         </div>
       </section>
     </div>

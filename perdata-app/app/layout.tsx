@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 export const metadata: Metadata = {
   title: 'CiviLex AI — Asisten Penelusuran & Referensi Hukum Perdata Indonesia',
   description:
-    'Alat bantu cerdas berbasis AI untuk penelusuran naskah resmi KUHPerdata dan HIR dengan jaminan keaslian data JDIH.',
+    'Alat bantu cerdas berbasis AI untuk penelusuran naskah resmi KUHPerdata dan HIR dari sumber terpercaya.',
 };
 
 export default function RootLayout({

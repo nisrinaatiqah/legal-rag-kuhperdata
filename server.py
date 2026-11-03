@@ -243,7 +243,7 @@ def handle_chat(req: ChatRequest):
             status_badge = "BLOCKED_POISON"
             status_msg = (
                 f"Sistem mendeteksi {len(blocked_chunks)} pasal manipulasi yang tidak konsisten dengan "
-                f"naskah resmi JDIH. Seluruh pasal beracun telah berhasil dicegat dan dikarantina!"
+                f"naskah resmi dari sumber terpercaya. Seluruh pasal beracun telah berhasil dicegat dan dikarantina!"
             )
         elif any(c.get("is_poisoned") for c in safe_chunks):
             status_badge = "DANGER_PENETRATED"

@@ -6,7 +6,7 @@ import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale, X, Layers, Filter 
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
 
 const SOURCE_OPTIONS = [
-  { label: 'Semua Koleksi (2.276)', value: '', desc: 'KUHPerdata & HIR Terpadu' },
+  { label: 'Semua Koleksi Database', value: '', desc: 'KUHPerdata & HIR Terpadu' },
   { label: 'KUHPerdata (1.993)', value: 'KUHPerdata', desc: 'Hukum Perdata Materiel' },
   { label: 'HIR — Acara Perdata (283)', value: 'HIR', desc: 'Hukum Acara Formil di Pengadilan' },
 ];
@@ -119,7 +119,7 @@ function DatabaseContent() {
           Pangkalan Data Naskah Resmi
         </span>
         <h1 className="font-marcellus text-3xl sm:text-4xl md:text-5xl font-normal tracking-wide text-[#3B010B]">
-          Katalog 2.276 Ketentuan{' '}
+          Database{' '}
           <span className="font-italiana text-[#75162D] normal-case text-4xl sm:text-5xl md:text-6xl block sm:inline">
             KUHPerdata &amp; HIR
           </span>

@@ -170,7 +170,7 @@ export default function HomePage() {
                 href="/database"
                 className="text-xs font-bold tracking-wide uppercase font-montserrat text-[#3B010B] hover:text-[#75162D] transition-colors border-b-2 border-[#3B010B] pb-0.5 flex items-center gap-1"
               >
-                <span>Katalog 2.276 Ketentuan</span>
+                <span>Database</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-[#75162D]" />
               </Link>
             </div>
@@ -266,7 +266,7 @@ export default function HomePage() {
                 01
               </div>
               <h3 className="font-cyntho text-lg font-bold tracking-tight text-[#3B010B]">
-                2.276 Ketentuan Terkodifikasi
+                Database Terkodifikasi
               </h3>
               <p className="text-xs text-[#6B5559] mt-3 leading-relaxed font-montserrat">
                 Memproses naskah resmi KUHPerdata (Buku I–IV) dan HIR secara granular per ketentuan pasal mandiri dari sumber primer JDIH Nasional guna mengeliminasi informasi bising (*zero context noise*).

@@ -7,7 +7,7 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Beranda' },
-  { href: '/database', label: 'Katalog 2.276 Ketentuan' },
+  { href: '/database', label: 'Database' },
 ];
 
 export default function Navbar() {

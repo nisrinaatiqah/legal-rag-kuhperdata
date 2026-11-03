@@ -271,6 +271,21 @@ body {
   }
 }
 
+@keyframes pageTransition {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-transition {
+  animation: pageTransition 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .animate-fade-up {
   animation: fadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

@@ -7,7 +7,6 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Beranda' },
-  { href: '/chat', label: 'Tanya Jawab Naskah' },
   { href: '/database', label: 'Katalog 2.276 Ketentuan' },
 ];
 
@@ -60,7 +59,11 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <Link
             href="/chat"
-            className="btn-burgundy-primary px-5 py-2 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
+            className={`px-5 py-2 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 shadow-sm transition-all ${
+              pathname === '/chat'
+                ? 'bg-[#560B18] text-[#FAF6EE] shadow-md ring-2 ring-[#75162D]/30'
+                : 'btn-burgundy-primary hover:scale-[1.02]'
+            }`}
           >
             <span>Mulai Penelusuran</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

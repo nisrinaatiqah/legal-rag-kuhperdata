@@ -351,13 +351,7 @@ function ChatContent() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={
-              sourceFilter === 'KUHPerdata'
-                ? 'Tanyakan materi perjanjian, wanprestasi, PMH, atau waris (KUHPerdata)...'
-                : sourceFilter === 'HIR'
-                ? 'Tanyakan tata cara gugatan, sita jaminan, atau alat bukti (HIR)...'
-                : 'Tanyakan persoalan hukum perdata (materiil & formil otomatis dianalisis)...'
-            }
+            placeholder="Tanyakan persoalan hukum perdata (KUHPerdata & HIR dianalisis bersamaan)..."
             className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-montserrat"
           />
           <button

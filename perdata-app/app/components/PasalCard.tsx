@@ -30,30 +30,30 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
   const isLong = article.content.length > 250;
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-5 md:p-6 transition-all hover:border-[#75162D] font-montserrat shadow-sm">
+    <div className="bg-white/95 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-5 md:p-6 transition-all hover:border-[#75162D] font-sans shadow-sm">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-marcellus text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
-              {article.source} Pasal {article.pasal}
+            <span className="font-bodoni text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
+              Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-montserrat">
+            <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-sans">
               {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
             </span>
             {article.buku && (
-              <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-montserrat">
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-sans">
                 {article.buku}
               </span>
             )}
             {article.bagian && (
-              <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-montserrat" title={article.bagian}>
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-sans" title={article.bagian}>
                 {article.bagian.split('.')[0] || article.bagian}
               </span>
             )}
           </div>
           {article.bab_title && article.bab_title !== '-' && (
-            <p className="text-xs text-[#75162D] mt-1 font-semibold font-montserrat">
+            <p className="text-xs text-[#75162D] mt-1 font-semibold font-sans">
               {article.bab_title}
             </p>
           )}
@@ -62,7 +62,7 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
         {/* Copy Button: Rounded-Full Pill */}
         <button
           onClick={copyToClipboard}
-          className="px-3 py-1.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-montserrat font-bold"
+          className="px-3 py-1.5 rounded-full bg-[#FAF6EE] hover:bg-[#F2E5C6] text-[#560B18] border border-[#E8DEC9] transition-all shrink-0 flex items-center gap-1.5 text-xs font-sans font-bold"
           title="Salin Rujukan Hukum"
         >
           {copied ? (

@@ -51,11 +51,35 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col gap-24 pb-20 font-body">
-      {/* Editorial Hero Section (Asymmetric 2-Column Grid - Inspired by Image 2 & 3) */}
-      <section className="max-w-6xl mx-auto px-6 pt-6 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column (60%): Headline, Context, & Action */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
+      {/* Editorial Hero Section with Faded Law Emblem Background (Inspired by fe-kuhp-kuhap-chatbot) */}
+      <section className="relative overflow-hidden w-full pt-4 pb-8">
+        {/* Soft Faded Background Law Emblem Watermark */}
+        <div
+          aria-hidden="true"
+          className="absolute right-0 md:right-8 lg:right-20 top-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] lg:w-[560px] h-[340px] sm:h-[460px] lg:h-[560px] pointer-events-none select-none z-0 opacity-15 md:opacity-20 transition-opacity"
+          style={{
+            backgroundImage: "url('/law-emblem.png')",
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            filter: 'contrast(1.1) sepia(0.2)',
+          }}
+        />
+
+        {/* Subtle Ambient Radial Glow */}
+        <div
+          aria-hidden="true"
+          className="absolute top-1/2 right-16 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none select-none z-0 opacity-20"
+          style={{
+            background: 'radial-gradient(circle, #F2D9A0 0%, transparent 70%)',
+          }}
+        />
+
+        {/* Content Container */}
+        <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left Column (60%): Headline, Context, & Action */}
+            <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Minimalist Section Eyebrow */}
             <div className="flex items-center gap-3 mb-6">
               <span className="w-6 h-[1.5px] bg-[#75162D]"></span>
@@ -177,7 +201,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Structured Competences Section (Enclosed 4-Column Division - Inspired by Image 3 & 5) */}
       <section className="max-w-6xl mx-auto px-6 w-full">

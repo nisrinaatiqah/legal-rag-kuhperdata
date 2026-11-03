@@ -11,6 +11,7 @@ import {
   RefreshCw,
   FileText,
   Sliders,
+  AlertCircle,
 } from 'lucide-react';
 import SecurityBadge, { DefenseStatusProps } from '../components/SecurityBadge';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
@@ -130,7 +131,7 @@ export default function ChatPage() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E8DEC9] pb-6">
         <div>
           <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-cinzel">
-            Konsultasi Hukum AI
+            Asistensi Penelusuran Naskah
           </span>
           <h1 className="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-[#3B010B] mt-1">
             Tanya Jawab{' '}
@@ -140,7 +141,7 @@ export default function ChatPage() {
           </h1>
         </div>
 
-        {/* Essential Defense Toggle for Demo */}
+        {/* Essential Defense Toggle */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#E8DEC9] shadow-sm text-xs font-medium text-[#2A171A]">
             <span>Proteksi Naskah Asli:</span>
@@ -203,13 +204,13 @@ export default function ChatPage() {
               <Scale className="w-6 h-6" />
             </div>
             <h2 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
-              Mulai Konsultasi{' '}
+              Mulai Penelusuran{' '}
               <span className="font-cormorant italic font-normal text-[#75162D] text-2xl md:text-3xl normal-case">
-                Permasalahan Hukum
+                Ketentuan Hukum
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#6B5559] max-w-md mt-1.5 leading-relaxed">
-              Ajukan pertanyaan mengenai perjanjian, wanprestasi, ganti rugi perbuatan melawan hukum, maupun prosedur gugatan di persidangan.
+              Ajukan pertanyaan mengenai bunyi pasal perjanjian, ketentuan wanprestasi, pasal perbuatan melawan hukum, maupun aturan beracara di persidangan.
             </p>
 
             {/* Clean Suggested Question Pills */}
@@ -236,7 +237,7 @@ export default function ChatPage() {
             }`}
           >
             <span className="text-[11px] text-[#6B5559] px-1 font-medium">
-              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Pertimbangan Hukum Civil AI'} • {msg.timestamp}
+              {msg.role === 'user' ? 'Pertanyaan Anda' : 'Hasil Penelusuran Civil AI'} • {msg.timestamp}
             </span>
 
             <div
@@ -299,7 +300,7 @@ export default function ChatPage() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Tuliskan pertanyaan hukum perdata atau hukum acara..."
+            placeholder="Tuliskan pertanyaan pasal perdata atau hukum acara..."
             className="w-full px-5 py-3 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent"
           />
           <button
@@ -311,8 +312,10 @@ export default function ChatPage() {
             <ArrowUpRight className="w-4 h-4" />
           </button>
         </form>
-        <p className="text-[11px] text-center text-[#6B5559] mt-2 font-normal">
-          Seluruh jawaban dirumuskan berdasarkan ketentuan KUHPerdata &amp; HIR resmi dari JDIH Nasional.
+
+        {/* Explicit Legal Disclaimer */}
+        <p className="text-[10px] text-center text-[#8C7A7C] mt-2 font-normal leading-relaxed">
+          Civil.AI menyajikan kutipan naskah resmi KUHPerdata &amp; HIR untuk tujuan edukasi dan referensi hukum. Sistem ini bukan nasihat hukum atau pengganti konsultasi profesional dengan advokat berlisensi.
         </p>
       </div>
     </div>

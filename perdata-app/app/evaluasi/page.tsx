@@ -44,7 +44,7 @@ export default function EvaluasiPage() {
             Kebocoran Serangan (ASR)
           </h3>
           <p className="text-xs text-[#6B5559] mt-1.5 leading-relaxed font-body">
-            Pasal beracun tidak pernah berhasil menembus pertimbangan hukum yang dihasilkan AI.
+            Pasal beracun tidak pernah berhasil menembus hasil penelusuran yang disajikan AI.
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export default function EvaluasiPage() {
               Verifikasi Integritas Berlapis
             </h3>
             <p className="text-xs sm:text-sm text-[#560B18] leading-relaxed font-body">
-              Menggabungkan verifikasi sidik jari kriptografis terhadap pangkalan data resmi JDIH Nasional dengan validasi semantik. Jika terdapat naskah yang dimanipulasi, mekanisme pertahanan akan langsung mengarantina dokumen tersebut sebelum mencapai modul konsultasi.
+              Menggabungkan verifikasi sidik jari kriptografis terhadap pangkalan data resmi JDIH Nasional dengan validasi semantik. Jika terdapat naskah yang dimanipulasi, mekanisme pertahanan akan langsung mengarantina dokumen tersebut sebelum mencapai modul penelusuran.
             </p>
           </div>
         </div>
@@ -119,16 +119,16 @@ export default function EvaluasiPage() {
       {/* CTA Bottom in Sand Gold & Burgundy */}
       <div className="rounded-3xl bg-gradient-to-br from-[#F2E5C6] to-[#F2D9A0]/70 border border-[#F2D9A0] p-8 text-center flex flex-col items-center gap-3">
         <h3 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
-          Mulai Konsultasi Permasalahan Hukum
+          Mulai Eksplorasi Informasi Hukum
         </h3>
         <p className="text-xs sm:text-sm text-[#560B18] max-w-md font-body">
-          Ajukan pertanyaan hukum perdata material maupun formil dan dapatkan pertimbangan hukum berbasis naskah resmi.
+          Ajukan pertanyaan pasal hukum perdata material maupun formil dan temukan rujukan pasal terverifikasi berbasis naskah resmi JDIH.
         </p>
         <Link
           href="/chat"
           className="btn-burgundy-primary px-7 py-3 rounded-full text-xs font-semibold tracking-wider uppercase font-cinzel flex items-center gap-2 mt-2"
         >
-          <span>Buka Modul Konsultasi</span>
+          <span>Buka Modul Tanya Jawab</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
         </Link>
       </div>

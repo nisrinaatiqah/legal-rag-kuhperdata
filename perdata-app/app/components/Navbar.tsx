@@ -7,7 +7,7 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Beranda' },
-  { href: '/chat', label: 'Konsultasi Hukum' },
+  { href: '/chat', label: 'Tanya Jawab Naskah' },
   { href: '/database', label: 'Katalog Pasal' },
   { href: '/evaluasi', label: 'Keandalan Sistem' },
 ];
@@ -29,7 +29,7 @@ export default function Navbar() {
               CIVIL<span className="text-[#75162D]">.AI</span>
             </span>
             <span className="text-[10px] tracking-widest uppercase text-[#6B5559] font-medium -mt-0.5 font-body">
-              Hukum Perdata &amp; Acara • KUHPerdata &amp; HIR
+              Asisten Referensi • KUHPerdata &amp; HIR
             </span>
           </div>
         </Link>
@@ -63,7 +63,7 @@ export default function Navbar() {
             href="/chat"
             className="btn-burgundy-primary px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5 font-body"
           >
-            <span>Mulai Konsultasi</span>
+            <span>Mulai Tanya Jawab</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -101,7 +101,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="btn-burgundy-primary mt-2 py-3 rounded-full text-center text-xs font-semibold flex items-center justify-center gap-1.5"
           >
-            <span>Mulai Konsultasi</span>
+            <span>Mulai Tanya Jawab</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>

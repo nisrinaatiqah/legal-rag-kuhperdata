@@ -7,7 +7,7 @@ const COMPETENCES = [
   {
     num: '01',
     title: 'Hukum Perikatan & Perjanjian',
-    desc: 'Membedah syarat sahnya perjanjian (Pasal 1320), wanprestasi, akibat kelalaian debitur, hingga pembatalan sepihak.',
+    desc: 'Menelaah ketentuan syarat sahnya perjanjian (Pasal 1320), wanprestasi, kelalaian debitur, dan pembatalan perikatan.',
     badge: 'Buku III KUHPerdata',
   },
   {
@@ -33,25 +33,25 @@ const COMPETENCES = [
 export default function HomePage() {
   return (
     <div className="flex flex-col gap-20 pb-16 font-body">
-      {/* Clean Hero Section — The Roman Jurist Style */}
+      {/* Clean Hero Section — Educational & Research Assistant Positioning */}
       <section className="max-w-4xl mx-auto px-6 pt-10 flex flex-col items-center text-center">
         {/* Small Roman Header Tag */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#F2D9A0] bg-[#F2E5C6]/60 text-[11px] font-bold tracking-widest uppercase font-cinzel text-[#560B18] mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-[#75162D]"></span>
-          <span>Sistem Tanya Jawab Hukum Perdata Indonesia</span>
+          <span>Sistem Penelusuran Informasi Hukum Perdata Indonesia</span>
         </div>
 
-        {/* Big Roman Jurist Headline: Cinzel + Cormorant Garamond */}
+        {/* Big Roman Jurist Headline: Focus on Intelligent Search & Reference */}
         <h1 className="font-cinzel text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-[#3B010B] max-w-4xl leading-[1.25]">
-          MITRA HUKUM ANDA DALAM{' '}
+          PENELUSURAN CERDAS{' '}
           <span className="font-cormorant italic font-normal text-[#75162D] text-4xl sm:text-5xl md:text-6xl lg:text-7xl block sm:inline normal-case">
-            setiap situasi
+            hukum perdata
           </span>
         </h1>
 
         {/* Subtitle in Inter */}
         <p className="text-sm sm:text-base text-[#6B5559] max-w-2xl mt-6 font-normal leading-relaxed">
-          Memberikan solusi dan analisis hukum perdata yang presisi melalui kecerdasan buatan, dengan jaminan integritas naskah resmi dari KUHPerdata dan HIR.
+          Asisten cerdas berbasis AI untuk mempermudah pencarian, pemahaman, dan penelusuran pasal-pasal KUHPerdata dan HIR berlandaskan naskah resmi JDIH yang terlindungi dari manipulasi data.
         </p>
 
         {/* Call to Actions in Swatch Colors */}
@@ -60,7 +60,7 @@ export default function HomePage() {
             href="/chat"
             className="btn-burgundy-primary px-8 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase font-cinzel flex items-center gap-2"
           >
-            <span>Mulai Konsultasi</span>
+            <span>Mulai Tanya Jawab</span>
             <ArrowUpRight className="w-4 h-4" />
           </Link>
 
@@ -99,7 +99,7 @@ export default function HomePage() {
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-[#6B5559] max-w-md leading-relaxed">
-            Dirancang khusus untuk menganalisis sengketa perdata material dan memandu langkah prosedural hukum formil di pengadilan.
+            Membantu membedah dan menemukan rujukan pasal yang relevan untuk kebutuhan studi, riset, dan pemahaman aturan perdata di Indonesia.
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export default function HomePage() {
                   href="/chat"
                   className="text-xs font-semibold text-[#75162D] hover:underline flex items-center gap-1 font-cinzel"
                 >
-                  <span>Tanya</span>
+                  <span>Telusuri</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -144,10 +144,10 @@ export default function HomePage() {
               Jaminan Integritas Informasi
             </span>
             <h3 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
-              Setiap Jawaban Berpijak pada Naskah Asli Terverifikasi
+              Setiap Rujukan Berpijak pada Naskah Asli Terverifikasi
             </h3>
             <p className="text-xs sm:text-sm text-[#560B18] leading-relaxed mt-1">
-              Sistem secara otomatis memverifikasi keaslian pasal sebelum merumuskan jawaban, memastikan pengguna terhindar dari informasi palsu atau manipulasi pasal hukum.
+              Sistem secara otomatis memverifikasi keaslian pasal sebelum menyajikan rangkuman, memastikan pengguna terhindar dari informasi palsu atau manipulasi naskah undang-undang.
             </p>
           </div>
 
@@ -155,7 +155,7 @@ export default function HomePage() {
             href="/chat"
             className="btn-burgundy-primary px-8 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase font-cinzel shrink-0 flex items-center gap-2 shadow-lg"
           >
-            <span>Mulai Konsultasi Sekarang</span>
+            <span>Mulai Penelusuran Sekarang</span>
             <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>

@@ -66,7 +66,7 @@ export default function SecurityBadge({ defense }: { defense: DefenseStatusProps
           </div>
 
           <p className="text-xs text-[#7f1d1d] leading-relaxed">
-            Sistem mendeteksi adanya ketidaksesuaian naskah dengan rujukan resmi. Seluruh dokumen yang terindikasi palsu telah dikeluarkan dari pertimbangan hukum AI.
+            Sistem mendeteksi adanya ketidaksesuaian naskah dengan rujukan resmi. Seluruh dokumen yang terindikasi palsu telah dikeluarkan dari hasil penelusuran AI.
           </p>
 
           {showBlocked && defense.blocked_pasals && (

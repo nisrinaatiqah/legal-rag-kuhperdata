@@ -149,75 +149,63 @@ function ChatContent() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-6 pb-12 font-body">
-      {/* Compact Header in Hybrid B + D with Direct Testing Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#E8DEC9] pb-4 gap-4">
-        <div>
-          <h1 className="font-bodoni text-2xl sm:text-3xl font-medium tracking-tight text-[#3B010B]">
-            Chatbot{' '}
-            <span className="font-bellefair text-[#75162D] italic font-normal text-3xl sm:text-4xl">
-              KUHPerdata &amp; HIR
-            </span>
-          </h1>
+      {/* Centered Testing Controls: Korpus (Poison/Non-Poison) & Proteksi (ON/OFF) */}
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-1 pb-1">
+        {/* Korpus: Non-Poison vs Poison */}
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
+          <span className="text-[11px] text-[#6B5559] font-medium">Korpus:</span>
+          <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
+            <button
+              type="button"
+              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                corpusScenario === 'kuhperdata_hir_bgem3'
+                  ? 'bg-[#75162D] text-[#FAF6EE] shadow-2xs'
+                  : 'text-[#6B5559] hover:text-[#3B010B]'
+              }`}
+            >
+              Non-Poison
+            </button>
+            <button
+              type="button"
+              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
+                  ? 'bg-[#c2410c] text-white shadow-2xs'
+                  : 'text-[#6B5559] hover:text-[#3B010B]'
+              }`}
+            >
+              Poison (1%)
+            </button>
+          </div>
         </div>
 
-        {/* 2 Direct Testing Controls: Korpus (Poison/Non-Poison) & Proteksi (ON/OFF) */}
-        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-          {/* Korpus: Non-Poison vs Poison */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
-            <span className="text-[11px] text-[#6B5559] font-medium">Korpus:</span>
-            <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
-              <button
-                type="button"
-                onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                  corpusScenario === 'kuhperdata_hir_bgem3'
-                    ? 'bg-[#75162D] text-[#FAF6EE] shadow-2xs'
-                    : 'text-[#6B5559] hover:text-[#3B010B]'
-                }`}
-              >
-                Non-Poison
-              </button>
-              <button
-                type="button"
-                onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                  corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
-                    ? 'bg-[#c2410c] text-white shadow-2xs'
-                    : 'text-[#6B5559] hover:text-[#3B010B]'
-                }`}
-              >
-                Poison (1%)
-              </button>
-            </div>
-          </div>
-
-          {/* Proteksi: ON vs OFF */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
-            <span className="text-[11px] text-[#6B5559] font-medium">Proteksi:</span>
-            <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
-              <button
-                type="button"
-                onClick={() => setEnableDefense(true)}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                  enableDefense
-                    ? 'bg-[#15803d] text-white shadow-2xs'
-                    : 'text-[#6B5559] hover:text-[#3B010B]'
-                }`}
-              >
-                ON
-              </button>
-              <button
-                type="button"
-                onClick={() => setEnableDefense(false)}
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                  !enableDefense
-                    ? 'bg-[#b91c1c] text-white shadow-2xs'
-                    : 'text-[#6B5559] hover:text-[#3B010B]'
-                }`}
-              >
-                OFF
-              </button>
-            </div>
+        {/* Proteksi: ON vs OFF */}
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
+          <span className="text-[11px] text-[#6B5559] font-medium">Proteksi:</span>
+          <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
+            <button
+              type="button"
+              onClick={() => setEnableDefense(true)}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                enableDefense
+                  ? 'bg-[#15803d] text-white shadow-2xs'
+                  : 'text-[#6B5559] hover:text-[#3B010B]'
+              }`}
+            >
+              ON
+            </button>
+            <button
+              type="button"
+              onClick={() => setEnableDefense(false)}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                !enableDefense
+                  ? 'bg-[#b91c1c] text-white shadow-2xs'
+                  : 'text-[#6B5559] hover:text-[#3B010B]'
+              }`}
+            >
+              OFF
+            </button>
           </div>
         </div>
       </div>

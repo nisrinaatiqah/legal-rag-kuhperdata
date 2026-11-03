@@ -114,10 +114,10 @@ export default function HomePage() {
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
-            {/* Sculpted Flared Sans Headline in Tenor Sans (Opsi C) */}
-            <h1 className="font-tenor text-3xl sm:text-4xl md:text-5xl lg:text-[3.85rem] font-normal tracking-wide text-[#3B010B] leading-[1.14]">
+            {/* Slender Aristocratic Headline in Bellefair (Opsi D) */}
+            <h1 className="font-bellefair text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-normal tracking-wide text-[#3B010B] leading-[1.08]">
               Penelusuran Cerdas{' '}
-              <span className="text-[#75162D] block mt-1 font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[4.1rem]">
+              <span className="text-[#75162D] block mt-1 font-normal text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem]">
                 Hukum Perdata Indonesia
               </span>
             </h1>
@@ -166,9 +166,9 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Editorial Principle Quote in Tenor Sans (Opsi C) */}
+            {/* Editorial Principle Quote in Bellefair (Opsi D) */}
             <div className="mt-6 pt-4 border-t border-[#E8DEC9] w-full max-w-xl">
-              <p className="font-tenor text-2xl md:text-3xl text-[#3B010B] leading-snug">
+              <p className="font-bellefair text-2xl md:text-3xl text-[#3B010B] leading-snug">
                 &ldquo;Hukum perdata ditegakkan atas kepastian janji, kesucian perikatan, dan keadilan pembuktian.&rdquo;
               </p>
               <p className="text-[10px] text-[#6B5559] mt-1.5 uppercase tracking-widest font-bold font-sans">

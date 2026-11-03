@@ -41,12 +41,12 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Opsi C: Sculpted Flared Sans (Tenor Sans + Plus Jakarta Sans) */
-  --font-display: 'Tenor Sans', sans-serif;
-  --font-cyntho: 'Tenor Sans', sans-serif;
-  --font-serif: 'Tenor Sans', sans-serif;
-  --font-editorial: 'Tenor Sans', sans-serif;
-  --font-accent: 'Tenor Sans', sans-serif;
+  /* Opsi D: Slender Aristocratic Monograph (Bellefair + Plus Jakarta Sans) */
+  --font-display: 'Bellefair', Georgia, serif;
+  --font-cyntho: 'Bellefair', Georgia, serif;
+  --font-serif: 'Bellefair', Georgia, serif;
+  --font-editorial: 'Bellefair', Georgia, serif;
+  --font-accent: 'Bellefair', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Aliases */
@@ -58,6 +58,7 @@
   --font-bodoni: var(--font-display);
   --font-prata: var(--font-display);
   --font-tenor: var(--font-display);
+  --font-bellefair: var(--font-display);
   --font-montserrat: var(--font-sans);
   --font-jakarta: var(--font-sans);
 }
@@ -77,55 +78,60 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Opsi C: Tenor Sans + Plus Jakarta Sans) */
+/* Typography Utility Classes (Opsi D: Bellefair + Plus Jakarta Sans) */
 .font-display {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-marcellus {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-italiana {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-cyntho {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-editorial {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-cormorant {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-dm-serif {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-forum {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-bodoni {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-tenor {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
+}
+
+.font-bellefair {
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-montserrat {
@@ -133,8 +139,8 @@ body {
 }
 
 .font-serif {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-body {
@@ -146,8 +152,8 @@ body {
 }
 
 .font-cinzel {
-  font-family: 'Tenor Sans', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.01em;
 }
 
 .font-jakarta {

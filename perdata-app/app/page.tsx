@@ -124,7 +124,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/database"
-                className="px-6 py-3 rounded-full text-xs font-bold text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
+                className="px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
               >
                 <span>Cari Pasal</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />

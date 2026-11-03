@@ -253,10 +253,10 @@ body {
 
 @keyframes floatSlow {
   0%, 100% {
-    transform: translateY(-50%) translateY(0px);
+    transform: translateY(0px);
   }
   50% {
-    transform: translateY(-50%) translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 

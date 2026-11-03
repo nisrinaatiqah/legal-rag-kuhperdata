@@ -79,12 +79,16 @@ export default function HomePage() {
         {/* Soft Faded Background Law Emblem Watermark */}
         <div
           aria-hidden="true"
-          className="absolute right-2 sm:right-6 md:right-10 lg:right-14 top-1/2 -translate-y-1/2 w-[300px] sm:w-[380px] md:w-[460px] lg:w-[520px] max-w-[45vw] max-h-[72vh] aspect-square pointer-events-none select-none z-0 opacity-25 md:opacity-35 transition-opacity flex items-center justify-center animate-float-slow"
+          className="absolute right-4 sm:right-8 md:right-12 lg:right-16 top-1/2 -translate-y-1/2 w-[280px] sm:w-[340px] md:w-[400px] lg:w-[450px] max-w-[42vw] max-h-[66vh] aspect-square pointer-events-none select-none z-0 opacity-30 md:opacity-40 transition-opacity flex items-center justify-center"
+          style={{
+            maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 82%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 82%)',
+          }}
         >
           <img
             src="/law-emblem.png"
             alt=""
-            className="w-full h-full object-contain filter contrast-[1.05] sepia-[0.15]"
+            className="w-full h-full object-contain filter contrast-[1.05] sepia-[0.15] animate-float-slow"
           />
         </div>
 

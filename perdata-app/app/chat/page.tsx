@@ -149,9 +149,9 @@ function ChatContent() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-6 pb-12 font-body">
-      {/* Centered Testing Controls: Korpus (Poison/Non-Poison) & Proteksi (ON/OFF) */}
+      {/* Centered Testing Controls: Korpus (Non-Poison, 1%, 5%, 10%) & Proteksi (ON/OFF) */}
       <div className="flex flex-wrap items-center justify-center gap-3 pt-1 pb-1">
-        {/* Korpus: Non-Poison vs Poison */}
+        {/* Korpus: Non-Poison vs Poison 1%, 5%, 10% */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
           <span className="text-[11px] text-[#6B5559] font-medium">Korpus:</span>
           <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
@@ -175,7 +175,29 @@ function ChatContent() {
                   : 'text-[#6B5559] hover:text-[#3B010B]'
               }`}
             >
-              Poison (1%)
+              Poison 1%
+            </button>
+            <button
+              type="button"
+              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p5pct')}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                corpusScenario === 'kuhperdata_hir_bgem3_p5pct'
+                  ? 'bg-[#ea580c] text-white shadow-2xs'
+                  : 'text-[#6B5559] hover:text-[#3B010B]'
+              }`}
+            >
+              Poison 5%
+            </button>
+            <button
+              type="button"
+              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p10pct')}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                corpusScenario === 'kuhperdata_hir_bgem3_p10pct'
+                  ? 'bg-[#dc2626] text-white shadow-2xs'
+                  : 'text-[#6B5559] hover:text-[#3B010B]'
+              }`}
+            >
+              Poison 10%
             </button>
           </div>
         </div>

@@ -12,6 +12,7 @@ const REGULATION_SCOPES = [
     subject: 'KUHPerdata Buku III',
     description:
       'Penelusuran syarat sah perjanjian (Pasal 1320), wanprestasi, ganti rugi kelalaian, dan pembatalan perikatan timbal balik.',
+    href: '/database?source=KUHPerdata&q=perikatan',
   },
   {
     code: '02',
@@ -19,6 +20,7 @@ const REGULATION_SCOPES = [
     subject: 'KUHPerdata Pasal 1365',
     description:
       'Analisis unsur kesalahan, kerugian materiel-imateriel, dan hubungan kausalitas dalam gugatan ganti rugi perdata.',
+    href: '/database?source=KUHPerdata&q=1365',
   },
   {
     code: '03',
@@ -26,6 +28,7 @@ const REGULATION_SCOPES = [
     subject: 'KUHPerdata Buku II',
     description:
       'Ketentuan hak milik, hak jaminan kebendaan, pembagian harta peninggalan, dan perlindungan hak mutlak ahli waris.',
+    href: '/database?source=KUHPerdata&q=waris',
   },
   {
     code: '04',
@@ -33,6 +36,7 @@ const REGULATION_SCOPES = [
     subject: 'Reglemen Indonesia yang Diperbaharui',
     description:
       'Pedoman beracara di pengadilan: tata cara pendaftaran gugatan, sita jaminan (conservatoir beslag), dan kekuatan alat bukti.',
+    href: '/database?source=HIR',
   },
 ];
 
@@ -226,7 +230,7 @@ export default function HomePage() {
 
               <div className="mt-6 pt-3 border-t border-[#FAF6EE] flex items-center justify-between text-xs font-montserrat">
                 <Link
-                  href={`/database?q=${encodeURIComponent(scope.title.split(' ')[1] || 'perdata')}`}
+                  href={scope.href}
                   className="text-xs font-bold text-[#75162D] hover:underline flex items-center gap-1"
                 >
                   <span>Lihat Ketentuan</span>

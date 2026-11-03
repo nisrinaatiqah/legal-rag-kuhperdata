@@ -133,6 +133,10 @@ class ChatRequest(BaseModel):
         default="gemini",
         description="'gemini', 'deepseek-r1', 'qwen2.5', atau 'deepseek-cloud'",
     )
+    source_filter: Optional[str] = Field(
+        default=None,
+        description="Filter cakupan regulasi: 'KUHPerdata', 'HIR', atau None (Semua Koleksi)",
+    )
     top_k: int = Field(default=5, ge=1, le=10, description="Jumlah pasal teratas yang ditarik")
 
 
@@ -207,7 +211,16 @@ def handle_chat(req: ChatRequest):
         # 1. Retrieval top-K dokumen dari Qdrant
         retriever = get_retriever(req.collection)
         detector = get_detector()
-        hits = retriever.retrieve(query=query_text, top_k=req.top_k)
+        fetch_k = req.top_k * 3 if req.source_filter else req.top_k
+        hits = retriever.retrieve(query=query_text, top_k=fetch_k)
+        if req.source_filter:
+            filtered_hits = [h for h in hits if h.get("source") == req.source_filter]
+            if filtered_hits:
+                hits = filtered_hits[:req.top_k]
+            else:
+                hits = hits[:req.top_k]
+        else:
+            hits = hits[:req.top_k]
 
         safe_chunks = []
         blocked_chunks = []

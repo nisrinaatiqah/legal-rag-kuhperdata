@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   ArrowUpRight,
   Scale,
-  ShieldCheck,
-  ShieldAlert,
   RefreshCw,
   FileText,
   Sliders,
+  Sparkles,
 } from 'lucide-react';
 import SecurityBadge, { DefenseStatusProps } from '../components/SecurityBadge';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
@@ -20,40 +20,80 @@ interface ChatMessage {
   timestamp: string;
   defenseStatus?: DefenseStatusProps;
   retrievedPasals?: ArticleDoc[];
+  scopeUsed?: string;
 }
 
 const SUGGESTED_QUERIES = [
-  'Apa 4 syarat sahnya perjanjian menurut Pasal 1320 KUHPerdata?',
-  'Bagaimana unsur Perbuatan Melawan Hukum (PMH) Pasal 1365 KUHPerdata?',
-  'Bagaimana prosedur sita jaminan (conservatoir beslag) menurut HIR?',
-  'Apakah pembatalan perjanjian akibat wanprestasi harus melalui Pengadilan?',
+  {
+    tag: 'KUHPerdata Buku III',
+    title: 'Syarat Sah Perjanjian & Akibat Batal',
+    query: 'Apa 4 syarat sahnya perjanjian menurut Pasal 1320 KUHPerdata dan apa akibat hukumnya jika syarat subjektif atau objektif tidak terpenuhi?',
+  },
+  {
+    tag: 'KUHPerdata Pasal 1365',
+    title: 'Gugatan Perbuatan Melawan Hukum (PMH)',
+    query: 'Apa saja 5 unsur Perbuatan Melawan Hukum (PMH) menurut Pasal 1365 KUHPerdata yang wajib dibuktikan oleh penggugat?',
+  },
+  {
+    tag: 'HIR Pasal 227',
+    title: 'Sita Jaminan (Conservatoir Beslag)',
+    query: 'Bagaimana tata cara dan syarat permohonan sita jaminan (conservatoir beslag) menurut Pasal 227 HIR agar aset tergugat tidak dipindahtangankan?',
+  },
+  {
+    tag: 'HIR Pasal 164',
+    title: 'Hierarki 5 Alat Bukti Persidangan',
+    query: 'Sebutkan dan jelaskan kekuatan pembuktian 5 alat bukti yang sah dalam persidangan perdata menurut Pasal 164 HIR!',
+  },
 ];
 
-export default function ChatPage() {
+const SCOPE_TABS = [
+  { label: 'Semua Regulasi (KUHPerdata & HIR)', value: '', badge: 'Terpadu' },
+  { label: 'KUHPerdata Saja', value: 'KUHPerdata', badge: 'Hukum Materiel' },
+  { label: 'HIR Saja', value: 'HIR', badge: 'Hukum Acara' },
+];
+
+function ChatContent() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const initialSource = searchParams.get('source') || '';
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [sourceFilter, setSourceFilter] = useState<string>(initialSource);
 
-  // Clean, essential controls only
+  // Essential Anti-Poisoning Defense & Scenario
   const [enableDefense, setEnableDefense] = useState(true);
   const [corpusScenario, setCorpusScenario] = useState('kuhperdata_hir_bgem3');
   const [showDemoOptions, setShowDemoOptions] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const hasAutoQueried = useRef(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  const handleSubmit = async (queryText: string) => {
+  // Auto-run if query param is passed from homepage or database
+  useEffect(() => {
+    if (initialQuery && !hasAutoQueried.current) {
+      hasAutoQueried.current = true;
+      handleSubmit(initialQuery, initialSource);
+    }
+  }, [initialQuery, initialSource]);
+
+  const handleSubmit = async (queryText: string, activeSourceOverride?: string) => {
     const text = queryText.trim();
     if (!text || loading) return;
+
+    const currentFilter = activeSourceOverride !== undefined ? activeSourceOverride : sourceFilter;
 
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
       content: text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      scopeUsed: currentFilter || 'Semua Regulasi',
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -61,47 +101,41 @@ export default function ChatPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/py/chat', {
+      const payload = {
+        query: text,
+        collection: corpusScenario,
+        enable_defense: enableDefense,
+        llm_model: 'gemini',
+        source_filter: currentFilter || null,
+        top_k: 5,
+      };
+
+      let res = await fetch('/api/py/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: text,
-          collection: corpusScenario,
-          enable_defense: enableDefense,
-          llm_model: 'gemini',
-          top_k: 5,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
-        const fallbackRes = await fetch('http://127.0.0.1:8000/api/chat', {
+        res = await fetch('http://127.0.0.1:8000/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: text,
-            collection: corpusScenario,
-            enable_defense: enableDefense,
-            llm_model: 'gemini',
-            top_k: 5,
-          }),
+          body: JSON.stringify(payload),
         });
+      }
 
-        if (!fallbackRes.ok) {
-          throw new Error('Gagal menghubungi backend');
-        }
-        const data = await fallbackRes.json();
-        handleServerSuccess(data);
-        return;
+      if (!res.ok) {
+        throw new Error('Gagal menghubungi backend CiviLex AI');
       }
 
       const data = await res.json();
-      handleServerSuccess(data);
+      handleServerSuccess(data, currentFilter);
     } catch (err: any) {
       const errorMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         content:
-          'Mohon maaf, terjadi kendala koneksi dengan server backend. Pastikan server.py telah berjalan di latar belakang.',
+          'Mohon maaf, terjadi kendala koneksi dengan server backend CiviLex AI. Pastikan server.py telah berjalan di latar belakang.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -110,7 +144,7 @@ export default function ChatPage() {
     }
   };
 
-  const handleServerSuccess = (data: any) => {
+  const handleServerSuccess = (data: any, filterUsed: string) => {
     const assistantMsg: ChatMessage = {
       id: (Date.now() + 1).toString(),
       role: 'assistant',
@@ -118,108 +152,153 @@ export default function ChatPage() {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       defenseStatus: data.defense_status,
       retrievedPasals: data.retrieved_pasals,
+      scopeUsed: filterUsed || 'Semua Regulasi',
     };
     setMessages((prev) => [...prev, assistantMsg]);
   };
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-8 pb-12 font-body">
-      {/* Floraverse-Style Page Header in Cyntho Next & Montserrat */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E8DEC9] pb-6">
-        <div>
-          <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
-            Asistensi Penelusuran Naskah
-          </span>
-          <h1 className="font-cyntho text-2xl md:text-3xl font-bold tracking-tight text-[#3B010B] mt-1">
-            Tanya Jawab{' '}
-            <span className="text-[#75162D]">
-              KUHPerdata &amp; HIR
+      {/* Header with Marcellus & Italiana Typography */}
+      <div className="flex flex-col gap-4 border-b border-[#E8DEC9] pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-montserrat">
+              Asistensi Penelusuran Cerdas
             </span>
-          </h1>
-        </div>
-
-        {/* Essential Defense Toggle */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/90 border border-[#E8DEC9] shadow-sm text-xs font-semibold text-[#2A171A] font-montserrat">
-            <span className="text-[11px]">Proteksi Naskah Asli:</span>
-            <button
-              onClick={() => setEnableDefense(!enableDefense)}
-              className={`px-3 py-0.5 rounded-full text-xs font-bold font-montserrat transition-all ${
-                enableDefense
-                  ? 'bg-[#15803d] text-white shadow-sm'
-                  : 'bg-[#75162D] text-[#F2E5C6]'
-              }`}
-            >
-              {enableDefense ? 'Aktif' : 'Nonaktif'}
-            </button>
+            <h1 className="font-marcellus text-3xl sm:text-4xl font-normal tracking-wide text-[#3B010B] mt-1">
+              Konsultasi Naskah{' '}
+              <span className="font-italiana text-[#75162D] normal-case text-4xl sm:text-5xl block sm:inline">
+                KUHPerdata &amp; HIR
+              </span>
+            </h1>
+            <p className="text-xs sm:text-sm text-[#6B5559] mt-1 font-montserrat font-medium max-w-xl">
+              Satu asisten terpadu untuk menelaah hukum materiel (perjanjian &amp; ganti rugi) sekaligus hukum formil persidangan (sita jaminan &amp; pembuktian).
+            </p>
           </div>
 
-          <button
-            onClick={() => setShowDemoOptions(!showDemoOptions)}
-            className="p-2 rounded-full bg-white/90 border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
-            title="Mode Basis Data"
-          >
-            <Sliders className="w-4 h-4" />
-          </button>
+          {/* Essential Defense Toggle */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E8DEC9] shadow-xs text-xs font-semibold text-[#2A171A] font-montserrat">
+              <span className="text-[11px] text-[#6B5559]">Proteksi SHA-256 + NLI:</span>
+              <button
+                onClick={() => setEnableDefense(!enableDefense)}
+                className={`px-3 py-0.5 rounded-full text-[11px] font-bold transition-all ${
+                  enableDefense
+                    ? 'bg-[#15803d] text-white shadow-xs'
+                    : 'bg-[#75162D] text-[#F2E5C6]'
+                }`}
+              >
+                {enableDefense ? 'Aktif' : 'Nonaktif'}
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowDemoOptions(!showDemoOptions)}
+              className="p-2 rounded-full bg-white/95 border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors shadow-xs"
+              title="Pengaturan Korpus Pengujian"
+            >
+              <Sliders className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Unified vs Targeted Scope Pill Switcher */}
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#FAF6EE] font-montserrat">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#6B5559]">
+            Cakupan Analisis:
+          </span>
+          <div className="inline-flex items-center gap-1.5 p-1 bg-white/90 backdrop-blur-md rounded-full border border-[#E8DEC9] text-xs">
+            {SCOPE_TABS.map((tab) => {
+              const isSelected = sourceFilter === tab.value;
+              return (
+                <button
+                  key={tab.value}
+                  type="button"
+                  onClick={() => setSourceFilter(tab.value)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1 ${
+                    isSelected
+                      ? 'bg-[#75162D] text-[#F2E5C6] shadow-xs'
+                      : 'text-[#6B5559] hover:text-[#3B010B]'
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Hidden Collapsible Options */}
+      {/* Hidden Collapsible Options for Evaluation / Attack Simulation */}
       {showDemoOptions && (
-        <div className="p-4 rounded-sm bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-[#560B18] font-semibold">Mode Pangkalan Data:</span>
+        <div className="p-4 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3 font-montserrat shadow-xs">
+          <span className="text-[#560B18] font-semibold">Korpus Pengujian (Knowledge Poisoning Test):</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
-              className={`px-3 py-1.5 rounded-sm font-medium ${
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                 corpusScenario === 'kuhperdata_hir_bgem3'
-                  ? 'bg-[#75162D] text-white'
+                  ? 'bg-[#75162D] text-white shadow-xs'
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
-              Standar Resmi JDIH
+              Korpus Asli JDIH (Clean)
             </button>
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
-              className={`px-3 py-1.5 rounded-sm font-medium ${
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                 corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
-                  ? 'bg-[#75162D] text-white'
+                  ? 'bg-[#75162D] text-white shadow-xs'
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
-              Simulasi Uji Integritas (1%)
+              Simulasi Serangan Racun (1% Poisoned)
             </button>
           </div>
         </div>
       )}
 
       {/* Conversation Thread */}
-      <div className="min-h-[380px] flex flex-col gap-6">
+      <div className="min-h-[380px] flex flex-col gap-6 font-montserrat">
         {messages.length === 0 && (
-          <div className="my-auto py-12 text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-sm bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4">
+          <div className="my-auto py-10 text-center flex flex-col items-center">
+            <div className="w-12 h-12 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-4 shadow-xs">
               <Scale className="w-6 h-6" />
             </div>
-            <h2 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
+            <h2 className="font-marcellus text-2xl md:text-3xl font-normal tracking-wide text-[#3B010B]">
               Mulai Penelusuran{' '}
-              <span className="font-cormorant italic font-normal text-[#75162D] text-2xl md:text-3xl normal-case">
+              <span className="font-italiana text-[#75162D] normal-case text-3xl md:text-4xl">
                 Ketentuan Hukum
               </span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#6B5559] max-w-md mt-1.5 leading-relaxed">
-              Ajukan pertanyaan mengenai bunyi pasal perjanjian, ketentuan wanprestasi, pasal perbuatan melawan hukum, maupun aturan beracara di persidangan.
+            <p className="text-xs sm:text-sm text-[#6B5559] max-w-md mt-2 leading-relaxed font-medium">
+              Ajukan kronologi sengketa, syarat perjanjian, dasar ganti rugi wanprestasi/PMH, maupun tata cara sita jaminan dan alat bukti di persidangan.
             </p>
 
-            {/* Clean Editorial Suggested Question Panels */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-2xl mt-8 w-full text-left">
+            {/* Suggested Question Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mt-8 w-full text-left">
               {SUGGESTED_QUERIES.map((q, idx) => (
                 <button
                   key={idx}
-                  onClick={() => handleSubmit(q)}
-                  className="p-3.5 rounded-sm bg-white hover:bg-[#FAF6EE] border border-[#E8DEC9] text-xs font-normal text-[#2A171A] transition-all shadow-sm hover:border-[#75162D] flex items-start justify-between gap-2 group"
+                  onClick={() => handleSubmit(q.query)}
+                  className="p-4 rounded-2xl bg-white/95 hover:bg-white border border-[#E8DEC9] text-xs text-[#2A171A] transition-all shadow-xs hover:border-[#75162D] hover:shadow-md flex flex-col justify-between gap-2 group text-left"
                 >
-                  <span className="line-clamp-2">{q}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-[#8C7A7C] group-hover:text-[#75162D] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] font-bold tracking-wider uppercase text-[#75162D]">
+                      {q.tag}
+                    </span>
+                    <h4 className="font-bold text-[#3B010B] mt-0.5 group-hover:text-[#75162D] transition-colors">
+                      {q.title}
+                    </h4>
+                    <p className="text-[11px] text-[#6B5559] mt-1 line-clamp-2 leading-relaxed">
+                      {q.query}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1 text-[11px] font-bold text-[#75162D] pt-2 border-t border-[#FAF6EE]">
+                    <span>Ajukan Pertanyaan Ini</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
                 </button>
               ))}
             </div>
@@ -234,29 +313,39 @@ export default function ChatPage() {
               msg.role === 'user' ? 'items-end' : 'items-start'
             }`}
           >
-            <span className="text-[11px] text-[#6B5559] px-1 font-medium font-cinzel">
-              {msg.role === 'user' ? 'Kueri Pengguna' : 'Hasil Penelusuran CiviLex AI'} • {msg.timestamp}
-            </span>
+            <div className="flex items-center gap-2 px-1 text-[11px] text-[#6B5559] font-medium">
+              <span>{msg.role === 'user' ? 'Pertanyaan Anda' : 'Analisis CiviLex AI'}</span>
+              <span>•</span>
+              <span>{msg.timestamp}</span>
+              {msg.scopeUsed && (
+                <>
+                  <span>•</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] text-[10px] font-bold">
+                    {msg.scopeUsed === 'KUHPerdata' ? 'KUHPerdata' : msg.scopeUsed === 'HIR' ? 'HIR' : 'KUHPerdata & HIR'}
+                  </span>
+                </>
+              )}
+            </div>
 
             <div
-              className={`rounded-sm p-6 leading-relaxed max-w-2xl border ${
+              className={`rounded-2xl p-6 leading-relaxed max-w-2xl border ${
                 msg.role === 'user'
                   ? 'bg-[#3B010B] text-[#FAF6EE] border-[#3B010B] shadow-sm'
                   : 'bg-[#FFFFFF] text-[#2A171A] border-[#E8DEC9] shadow-sm'
               }`}
             >
-              {/* Security Badge */}
+              {/* Security Defense Badge */}
               {msg.defenseStatus && <SecurityBadge defense={msg.defenseStatus} />}
 
-              {/* Main Text Answer */}
-              <div className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed space-y-2.5">
+              {/* Main Answer Content */}
+              <div className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed space-y-3 font-normal">
                 {msg.content}
               </div>
 
-              {/* Cited Articles Shelf */}
+              {/* Cited Official Articles */}
               {msg.retrievedPasals && msg.retrievedPasals.length > 0 && (
                 <div className="mt-6 pt-5 border-t border-[#E8DEC9] flex flex-col gap-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#75162D] flex items-center gap-1.5 font-cinzel">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#75162D] flex items-center gap-1.5">
                     <FileText className="w-3.5 h-3.5" />
                     Pasal Rujukan Resmi ({msg.retrievedPasals.length} Pasal Terverifikasi):
                   </span>
@@ -274,10 +363,10 @@ export default function ChatPage() {
 
         {/* Loading Spinner */}
         {loading && (
-          <div className="flex items-center gap-3 p-4 rounded-sm bg-white border border-[#E8DEC9] max-w-xs shadow-sm">
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#E8DEC9] max-w-xs shadow-sm">
             <RefreshCw className="w-4 h-4 text-[#75162D] animate-spin" />
             <span className="text-xs font-medium text-[#6B5559]">
-              Sedang menelaah pasal rujukan resmi...
+              Sedang menelaah naskah resmi KUHPerdata &amp; HIR...
             </span>
           </div>
         )}
@@ -285,7 +374,7 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Floraverse Rounded-Full Search Bar */}
+      {/* Floating Query Input */}
       <div className="sticky bottom-6 z-20">
         <form
           onSubmit={(e) => {
@@ -298,13 +387,19 @@ export default function ChatPage() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ketik pertanyaan pasal perdata atau hukum acara..."
+            placeholder={
+              sourceFilter === 'KUHPerdata'
+                ? 'Tanyakan materi perjanjian, wanprestasi, PMH, atau waris (KUHPerdata)...'
+                : sourceFilter === 'HIR'
+                ? 'Tanyakan tata cara gugatan, sita jaminan, atau alat bukti (HIR)...'
+                : 'Tanyakan persoalan hukum perdata (materiil & formil otomatis dianalisis)...'
+            }
             className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-montserrat"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="btn-burgundy-primary px-5 py-2.5 rounded-full disabled:opacity-40 shrink-0 ml-1 text-xs font-bold font-montserrat flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
+            className="btn-burgundy-primary px-6 py-2.5 rounded-full disabled:opacity-40 shrink-0 ml-1 text-xs font-bold font-montserrat flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
             title="Kirim Pertanyaan"
           >
             <span>Kirim</span>
@@ -312,11 +407,25 @@ export default function ChatPage() {
           </button>
         </form>
 
-        {/* Explicit Legal Disclaimer */}
-        <p className="text-[10px] text-center text-[#8C7A7C] mt-2 font-normal leading-relaxed">
-          CiviLex AI menyajikan kutipan naskah resmi KUHPerdata &amp; HIR untuk tujuan edukasi dan referensi hukum. Sistem ini bukan nasihat hukum atau pengganti konsultasi profesional dengan advokat berlisensi.
+        {/* Legal Disclaimer Pill */}
+        <p className="text-[10px] text-center text-[#8C7A7C] mt-2 font-normal leading-relaxed font-montserrat">
+          CiviLex AI menyajikan kutipan naskah otentik KUHPerdata &amp; HIR untuk tujuan edukasi dan asistensi penelitian hukum. Bukan merupakan nasihat atau konsultasi hukum berlisensi.
         </p>
       </div>
     </div>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-4xl mx-auto px-6 py-20 flex justify-center text-xs text-[#6B5559] font-montserrat">
+          Memuat ruang konsultasi naskah...
+        </div>
+      }
+    >
+      <ChatContent />
+    </Suspense>
   );
 }

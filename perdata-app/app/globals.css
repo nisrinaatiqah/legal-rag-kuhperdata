@@ -41,24 +41,25 @@
   --text-main: #2A171A;
   --text-muted: #6B5559;
 
-  /* Opsi D: Slender Aristocratic Monograph (Bellefair + Plus Jakarta Sans) */
-  --font-display: 'Bellefair', Georgia, serif;
-  --font-cyntho: 'Bellefair', Georgia, serif;
-  --font-serif: 'Bellefair', Georgia, serif;
+  /* Hybrid Opsi B + D: High-Fashion Didone (Bodoni Moda) + Slender Aristocratic (Bellefair) + Plus Jakarta Sans */
+  --font-display: 'Bodoni Moda', Georgia, serif;
   --font-editorial: 'Bellefair', Georgia, serif;
+  --font-serif: 'Bodoni Moda', Georgia, serif;
+  --font-cyntho: 'Bodoni Moda', Georgia, serif;
   --font-accent: 'Bellefair', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Aliases */
+  --font-bodoni: 'Bodoni Moda', Georgia, serif;
+  --font-bellefair: 'Bellefair', Georgia, serif;
   --font-cinzel: var(--font-display);
-  --font-cormorant: var(--font-display);
+  --font-cormorant: var(--font-editorial);
   --font-marcellus: var(--font-display);
   --font-dm-serif: var(--font-display);
-  --font-forum: var(--font-display);
-  --font-bodoni: var(--font-display);
+  --font-forum: var(--font-editorial);
   --font-prata: var(--font-display);
-  --font-tenor: var(--font-display);
-  --font-bellefair: var(--font-display);
+  --font-tenor: var(--font-editorial);
+  --font-italiana: var(--font-editorial);
   --font-montserrat: var(--font-sans);
   --font-jakarta: var(--font-sans);
 }
@@ -78,82 +79,71 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utility Classes (Opsi D: Bellefair + Plus Jakarta Sans) */
+/* Typography Utility Classes (Hybrid B + D: Bodoni Moda + Bellefair + Plus Jakarta Sans) */
 .font-display {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-marcellus {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-italiana {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-cyntho {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-editorial {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-cormorant {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-dm-serif {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-forum {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-bodoni {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-tenor {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-bellefair {
   font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
 }
 
-.font-montserrat {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+.font-marcellus {
+  font-family: 'Bodoni Moda', Georgia, serif;
+}
+
+.font-cyntho {
+  font-family: 'Bodoni Moda', Georgia, serif;
+}
+
+.font-editorial {
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.015em;
+}
+
+.font-italiana {
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.015em;
+}
+
+.font-cormorant {
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.015em;
+}
+
+.font-dm-serif {
+  font-family: 'Bodoni Moda', Georgia, serif;
+}
+
+.font-forum {
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.015em;
+}
+
+.font-tenor {
+  font-family: 'Bellefair', Georgia, serif;
+  letter-spacing: 0.015em;
 }
 
 .font-serif {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
-}
-
-.font-body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Bodoni Moda', Georgia, serif;
 }
 
 .font-sans {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
-.font-cinzel {
-  font-family: 'Bellefair', Georgia, serif;
-  letter-spacing: 0.01em;
+.font-body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-montserrat {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 .font-jakarta {

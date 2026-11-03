@@ -114,10 +114,10 @@ export default function HomePage() {
         {/* Content Container */}
         <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
           <div className="max-w-2xl lg:max-w-3xl flex flex-col items-start text-left">
-            {/* Slender Aristocratic Headline in Bellefair (Opsi D) */}
-            <h1 className="font-bellefair text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-normal tracking-wide text-[#3B010B] leading-[1.08]">
+            {/* Hybrid B + D: Bodoni Moda (High Didone) + Bellefair (Slender Aristocratic) */}
+            <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl lg:text-[3.85rem] font-medium tracking-tight text-[#3B010B] leading-[1.08]">
               Penelusuran Cerdas{' '}
-              <span className="text-[#75162D] block mt-1 font-normal text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem]">
+              <span className="font-bellefair text-[#75162D] block mt-1.5 italic font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[4.25rem] tracking-wide">
                 Hukum Perdata Indonesia
               </span>
             </h1>

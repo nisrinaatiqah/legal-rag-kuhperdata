@@ -114,14 +114,14 @@ function DatabaseContent() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 flex flex-col gap-8 pb-12 font-sans">
-      {/* Header in Slender Aristocratic Style (Bellefair - Opsi D) */}
+      {/* Header in Hybrid B + D Style (Bodoni Moda + Bellefair) */}
       <div className="flex flex-col gap-2 border-b border-[#E8DEC9] pb-6">
         <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-sans">
           Pangkalan Data Naskah Resmi
         </span>
-        <h1 className="font-bellefair text-3xl sm:text-4xl md:text-5xl font-normal tracking-wide text-[#3B010B]">
+        <h1 className="font-bodoni text-3xl sm:text-4xl md:text-5xl font-medium tracking-normal text-[#3B010B]">
           Katalog Ketentuan{' '}
-          <span className="text-[#75162D] normal-case text-3xl sm:text-4xl md:text-5xl block sm:inline">
+          <span className="font-bellefair text-[#75162D] italic normal-case text-3xl sm:text-4xl md:text-5xl block sm:inline tracking-wide">
             KUHPerdata &amp; HIR
           </span>
         </h1>

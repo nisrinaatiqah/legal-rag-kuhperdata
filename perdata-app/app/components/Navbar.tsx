@@ -7,9 +7,9 @@ import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Beranda', id: 'home' },
-  { href: '/chat', label: 'Tanya Jawab', id: 'chat' },
   { href: '/database?source=KUHPerdata', label: 'KUHPerdata', id: 'kuhperdata' },
   { href: '/database?source=HIR', label: 'HIR', id: 'hir' },
+  { href: '/chat', label: 'Chatbot', id: 'chat' },
 ];
 
 function NavbarContent() {

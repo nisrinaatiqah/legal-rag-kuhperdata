@@ -153,7 +153,7 @@ function ChatContent() {
       <div className="flex items-center justify-between border-b border-[#E8DEC9] pb-4">
         <div>
           <h1 className="font-bodoni text-2xl sm:text-3xl font-medium tracking-tight text-[#3B010B]">
-            Tanya Jawab{' '}
+            Chatbot{' '}
             <span className="font-bellefair text-[#75162D] italic font-normal text-3xl sm:text-4xl">
               KUHPerdata &amp; HIR
             </span>

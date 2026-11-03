@@ -9,7 +9,7 @@ export default function EvaluasiPage() {
       {/* Editorial Header in Cinzel & Cormorant */}
       <div className="flex flex-col gap-2 border-b border-[#E8DEC9] pb-6">
         <span className="text-[11px] font-bold tracking-widest uppercase text-[#75162D] font-cinzel">
-          Tolok Ukur Ilmiah
+          Standar Transparansi
         </span>
         <h1 className="font-cinzel text-2xl md:text-3xl font-bold tracking-wider text-[#3B010B]">
           Keandalan &amp;{' '}
@@ -18,7 +18,7 @@ export default function EvaluasiPage() {
           </span>
         </h1>
         <p className="text-xs sm:text-sm text-[#6B5559] max-w-xl">
-          Ringkasan keunggulan teknis dan hasil evaluasi empiris Tugas Akhir Departemen Teknologi Informasi FTEIC ITS.
+          Standar pengujian independen untuk memastikan setiap rujukan hukum yang disajikan otentik, akurat, dan terlindungi dari manipulasi data.
         </p>
       </div>
 
@@ -66,7 +66,7 @@ export default function EvaluasiPage() {
         <h2 className="font-cinzel text-xl md:text-2xl font-bold tracking-wide text-[#3B010B]">
           3 Pilar{' '}
           <span className="font-cormorant italic font-normal text-[#75162D] text-2xl md:text-3xl normal-case">
-            Keunggulan Ilmiah
+            Integritas Informasi
           </span>
         </h2>
 
@@ -77,10 +77,10 @@ export default function EvaluasiPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <h3 className="font-cinzel text-base font-bold tracking-wide text-[#3B010B]">
-              Granularitas Pasal Tunggal (C1 Single-Article)
+              Granularitas Pasal Mandiri
             </h3>
             <p className="text-xs sm:text-sm text-[#560B18] leading-relaxed font-body">
-              Alih-alih memotong dokumen secara sembarangan berbasis jumlah kata atau token yang dapat mencampuradukkan 5 hingga 8 pasal sekaligus, sistem memproses setiap pasal sebagai satu entitas hukum mandiri. Pendekatan ini menghasilkan <strong>nol informasi bising (zero context noise)</strong> dan memastikan kutipan yang diambil selalu spesifik pada pokok perkara.
+              Sistem memproses setiap ketentuan pasal sebagai satu entitas hukum utuh dan mandiri. Pendekatan ini menghasilkan <strong>nol informasi bising (zero context noise)</strong> dan memastikan kutipan yang diambil selalu spesifik pada pokok perkara.
             </p>
           </div>
         </div>
@@ -92,10 +92,10 @@ export default function EvaluasiPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <h3 className="font-cinzel text-base font-bold tracking-wide text-[#3B010B]">
-              Perlindungan Berlapis Anti-Knowledge Poisoning
+              Verifikasi Integritas Berlapis
             </h3>
             <p className="text-xs sm:text-sm text-[#560B18] leading-relaxed font-body">
-              Menggabungkan verifikasi sidik jari kriptografis (SHA-256) terhadap pangkalan data resmi JDIH Nasional dengan validasi semantik (NLI). Jika terdapat pihak yang mencoba menyusupkan interpretasi pasal palsu ke dalam sistem, mekanisme pertahanan akan langsung mengarantina dokumen tersebut sebelum mencapai modul sintesis.
+              Menggabungkan verifikasi sidik jari kriptografis terhadap pangkalan data resmi JDIH Nasional dengan validasi semantik. Jika terdapat naskah yang dimanipulasi, mekanisme pertahanan akan langsung mengarantina dokumen tersebut sebelum mencapai modul konsultasi.
             </p>
           </div>
         </div>
@@ -107,10 +107,10 @@ export default function EvaluasiPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <h3 className="font-cinzel text-base font-bold tracking-wide text-[#3B010B]">
-              Kesesuaian Jawaban 100% Berpijak pada Hukum Positif
+              Kepatuhan 100% pada Hukum Positif
             </h3>
             <p className="text-xs sm:text-sm text-[#560B18] leading-relaxed font-body">
-              Pengujian tingkat kepatuhan model bahasa membuktikan bahwa saat sistem pertahanan aktif, jawaban yang dihasilkan sepenuhnya setia (Faithfulness = 1.0000) pada ketentuan naskah resmi, mengeliminasi risiko halusinasi hukum pada nasehat perdata.
+              Jawaban yang dirumuskan sepenuhnya berpijak pada ketentuan naskah resmi KUHPerdata dan HIR, mengeliminasi risiko halusinasi informasi hukum.
             </p>
           </div>
         </div>
@@ -119,10 +119,10 @@ export default function EvaluasiPage() {
       {/* CTA Bottom in Sand Gold & Burgundy */}
       <div className="rounded-3xl bg-gradient-to-br from-[#F2E5C6] to-[#F2D9A0]/70 border border-[#F2D9A0] p-8 text-center flex flex-col items-center gap-3">
         <h3 className="font-cinzel text-xl md:text-2xl font-bold tracking-wider text-[#3B010B]">
-          Ingin Menguji Sistem Ini Secara Langsung?
+          Mulai Konsultasi Permasalahan Hukum
         </h3>
         <p className="text-xs sm:text-sm text-[#560B18] max-w-md font-body">
-          Anda dapat mencoba mengajukan pertanyaan kasus hukum atau mendemonstrasikan saklar pertahanan di modul konsultasi.
+          Ajukan pertanyaan hukum perdata material maupun formil dan dapatkan pertimbangan hukum berbasis naskah resmi.
         </p>
         <Link
           href="/chat"

@@ -159,17 +159,17 @@ export default function ChatPage() {
           <button
             onClick={() => setShowDemoOptions(!showDemoOptions)}
             className="p-2 rounded-full bg-white border border-[#E8DEC9] text-[#6B5559] hover:text-[#3B010B] transition-colors"
-            title="Pilihan Skenario Uji Sidang"
+            title="Mode Basis Data"
           >
             <Sliders className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* Hidden Collapsible Demo Options (For Thesis Simulation) */}
+      {/* Hidden Collapsible Options */}
       {showDemoOptions && (
         <div className="p-4 rounded-2xl bg-[#F2E5C6]/50 border border-[#F2D9A0] text-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-[#560B18] font-semibold">Pilihan Skenario Korpus untuk Uji Sidang:</span>
+          <span className="text-[#560B18] font-semibold">Mode Pangkalan Data:</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
@@ -179,7 +179,7 @@ export default function ChatPage() {
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
-              Korpus Bersih (Resmi)
+              Standar Resmi JDIH
             </button>
             <button
               onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
@@ -189,7 +189,7 @@ export default function ChatPage() {
                   : 'bg-white text-[#560B18] border border-[#E8DEC9]'
               }`}
             >
-              Uji Racun 1% (Simulasi Manipulasi)
+              Simulasi Uji Integritas (1%)
             </button>
           </div>
         </div>

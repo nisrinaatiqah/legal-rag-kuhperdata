@@ -6,21 +6,6 @@ import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale, X, Layers, Chevron
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
 import kuhperdataBabsData from './kuhperdata_babs.json';
 
-const KUHPERDATA_QUICK_BABS = [
-  { value: '', label: 'Semua Bab (1.993)' },
-  { value: 'BUKU KETIGA:BAB II', label: 'Bab II: Perjanjian & Kontrak (1320)' },
-  { value: 'BUKU KETIGA:BAB III', label: 'Bab III: PMH & Ganti Rugi (1365)' },
-  { value: 'BUKU KETIGA:BAB IV', label: 'Bab IV: Hapusnya Perikatan' },
-  { value: 'BUKU KETIGA:BAB V', label: 'Bab V: Jual Beli' },
-  { value: 'BUKU KETIGA:BAB VII', label: 'Bab VII: Sewa Menyewa' },
-  { value: 'BUKU KEDUA:BAB XII', label: 'Bab XII: Waris & Kematian' },
-  { value: 'BUKU KEDUA:BAB XIII', label: 'Bab XIII: Surat Wasiat' },
-  { value: 'BUKU KEDUA:BAB XXI', label: 'Bab XXI: Hipotek' },
-  { value: 'BUKU KEDUA:BAB XX', label: 'Bab XX: Gadai (Pand)' },
-  { value: 'BUKU KEEMPAT:BAB II', label: 'Bab II: Bukti Tertulis / Akta' },
-  { value: 'BUKU KESATU:BAB IV', label: 'Bab IV: Perkawinan & Harta' },
-];
-
 const HIR_CATEGORIES = [
   { label: 'Semua Bagian (283 Ketentuan)', value: '', count: '283' },
   { label: 'Bagian 1: Pemeriksaan & Gugatan (Pasal 118–161)', value: 'Bagian 1', count: '51' },
@@ -238,32 +223,6 @@ function DatabaseContent() {
             )}
           </select>
           <ChevronDown className="w-4 h-4 text-[#75162D] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-        </div>
-
-        {/* Quick Bab Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-none">
-          <span className="text-[10px] font-bold text-[#8C7A7C] uppercase tracking-wider shrink-0 mr-1 font-sans">
-            Akses Cepat:
-          </span>
-          {(selectedSource === 'KUHPerdata' ? KUHPERDATA_QUICK_BABS : HIR_CATEGORIES).map((cat) => {
-            const isSelected = selectedCategory === cat.value;
-            return (
-              <button
-                key={cat.value}
-                onClick={() => {
-                  setSelectedCategory(cat.value);
-                  setPage(0);
-                }}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-normal transition-all whitespace-nowrap shrink-0 ${
-                  isSelected
-                    ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs ring-1 ring-[#560B18]'
-                    : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
-                }`}
-              >
-                <span>{cat.label}</span>
-              </button>
-            );
-          })}
         </div>
 
         {/* Active Bab Indicator */}

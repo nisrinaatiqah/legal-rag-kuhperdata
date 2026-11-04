@@ -236,9 +236,6 @@ function DatabaseContent() {
       <div className="flex flex-wrap items-center justify-between text-xs text-[#6B5559] px-1 font-sans gap-2">
         <div className="flex items-center gap-2 flex-wrap">
           <span>Menampilkan {articles.length} dari <strong className="text-[#3B010B]">{total}</strong> ketentuan</span>
-          <span className="px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] text-[10px] font-bold uppercase">
-            Sumber: {selectedSource}
-          </span>
           {selectedCategory && (
             <span className="px-2.5 py-0.5 rounded-full bg-[#75162D] text-[#F2E5C6] text-[10px] font-bold">
               {getCategoryLabel(selectedCategory)}

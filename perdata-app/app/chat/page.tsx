@@ -261,13 +261,10 @@ function ChatContent() {
           <div className="my-auto py-8 text-center flex flex-col items-center max-w-xl mx-auto font-sans">
             {/* Welcoming Headline */}
             <h2
-              className="font-bodoni text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#3B010B] leading-snug animate-fade-up"
+              className="font-bodoni text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#3B010B] leading-tight animate-fade-up"
               style={{ animationDelay: '0.05s' }}
             >
-              {greeting},{' '}
-              <span className="font-bellefair text-[#75162D] italic font-normal text-2xl sm:text-3xl md:text-4xl block sm:inline tracking-wide">
-                Selamat Datang di CiviLex AI
-              </span>
+              {greeting}
             </h2>
 
             {/* Subtitle / Opening Sentence */}
@@ -275,7 +272,7 @@ function ChatContent() {
               className="text-xs sm:text-sm text-[#6B5559] mt-2 mb-8 max-w-lg leading-relaxed font-normal animate-fade-up"
               style={{ animationDelay: '0.15s' }}
             >
-              Asisten cerdas untuk penelusuran naskah KUHPerdata dan HIR. Silakan pilih topik di bawah atau tanyakan langsung persoalan hukum Anda:
+              Tanyakan apa saja yang ingin Anda ketahui seputar ketentuan KUHPerdata dan HIR.
             </p>
 
             {/* Suggested Question Pills with Smooth Staggered Fade Entrance */}

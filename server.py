@@ -375,13 +375,28 @@ def get_articles(
 
     if category:
         cat_lower = category.strip().lower()
-        filtered = [
-            c
-            for c in filtered
-            if cat_lower in str(c.get("buku", "")).lower()
-            or cat_lower in str(c.get("bagian", "")).lower()
-            or cat_lower in str(c.get("bab", "")).lower()
-        ]
+        if ":" in cat_lower:
+            parts = [p.strip() for p in cat_lower.split(":", 1)]
+            buku_part, bab_part = parts[0], parts[1]
+            filtered = [
+                c
+                for c in filtered
+                if buku_part in str(c.get("buku", "")).lower()
+                and (
+                    bab_part == str(c.get("bab", "")).lower().strip()
+                    or bab_part == str(c.get("bagian", "")).lower().strip()
+                    or bab_part in str(c.get("bagian", "")).lower()
+                )
+            ]
+        else:
+            filtered = [
+                c
+                for c in filtered
+                if cat_lower in str(c.get("buku", "")).lower()
+                or cat_lower in str(c.get("bagian", "")).lower()
+                or cat_lower == str(c.get("bab", "")).lower().strip()
+                or cat_lower in str(c.get("bab", "")).lower()
+            ]
 
     if q:
         q_lower = q.strip().lower()

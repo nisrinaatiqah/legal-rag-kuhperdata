@@ -2,25 +2,34 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale, X, Layers } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, RefreshCw, Scale, X, Layers, ChevronDown } from 'lucide-react';
 import PasalCard, { ArticleDoc } from '../components/PasalCard';
+import kuhperdataBabsData from './kuhperdata_babs.json';
 
-const KUHPERDATA_CATEGORIES = [
-  { label: 'Semua Buku (1.993)', value: '', count: '1.993' },
-  { label: 'Buku I: Orang & Keluarga', value: 'BUKU KESATU', count: '547', desc: 'Subjek Hukum, Perkawinan, Status Sipil' },
-  { label: 'Buku II: Kebendaan & Waris', value: 'BUKU KEDUA', count: '741', desc: 'Hak Milik, Jaminan Kebendaan, Kewarisan' },
-  { label: 'Buku III: Perikatan & Perjanjian', value: 'BUKU KETIGA', count: '709', desc: 'Syarat Sah Perjanjian (1320), Wanprestasi, PMH (1365)' },
-  { label: 'Buku IV: Pembuktian & Daluwarsa', value: 'BUKU KEEMPAT', count: '130', desc: 'Alat Bukti Materiel, Kedaluwarsa Hak' },
+const KUHPERDATA_QUICK_BABS = [
+  { value: '', label: 'Semua Bab (1.993)' },
+  { value: 'BUKU KETIGA:BAB II', label: 'Bab II: Perjanjian & Kontrak (1320)' },
+  { value: 'BUKU KETIGA:BAB III', label: 'Bab III: PMH & Ganti Rugi (1365)' },
+  { value: 'BUKU KETIGA:BAB IV', label: 'Bab IV: Hapusnya Perikatan' },
+  { value: 'BUKU KETIGA:BAB V', label: 'Bab V: Jual Beli' },
+  { value: 'BUKU KETIGA:BAB VII', label: 'Bab VII: Sewa Menyewa' },
+  { value: 'BUKU KEDUA:BAB XII', label: 'Bab XII: Waris & Kematian' },
+  { value: 'BUKU KEDUA:BAB XIII', label: 'Bab XIII: Surat Wasiat' },
+  { value: 'BUKU KEDUA:BAB XXI', label: 'Bab XXI: Hipotek' },
+  { value: 'BUKU KEDUA:BAB XX', label: 'Bab XX: Gadai (Pand)' },
+  { value: 'BUKU KEEMPAT:BAB II', label: 'Bab II: Bukti Tertulis / Akta' },
+  { value: 'BUKU KESATU:BAB IV', label: 'Bab IV: Perkawinan & Harta' },
 ];
 
 const HIR_CATEGORIES = [
-  { label: 'Semua Bagian (283)', value: '', count: '283' },
-  { label: 'Bagian 1: Pemeriksaan & Gugatan', value: 'Bagian 1', count: '51', desc: 'Surat Gugatan, Pemanggilan, Sidang Perdamaian' },
-  { label: 'Bagian 2: Alat Bukti Persidangan', value: 'Bagian 2', count: '15', desc: '5 Alat Bukti Sah di Persidangan (Pasal 164 HIR)' },
-  { label: 'Bagian 3: Musyawarah & Putusan', value: 'Bagian 3', count: '10', desc: 'Putusan Hakim, Putusan Verstek, Kontradiktoir' },
-  { label: 'Bagian 4: Upaya Hukum Banding', value: 'Bagian 4', count: '9', desc: 'Pernyataan Banding ke Pengadilan Tinggi' },
-  { label: 'Bagian 5: Eksekusi & Sita Jaminan', value: 'Bagian 5', count: '35', desc: 'Conservatoir Beslag (227), Revindicatoir, Lelang' },
-  { label: 'Bagian 6 & Bab XV: Acara Istimewa', value: 'Bagian 6', count: '30', desc: 'Perkara Khusus dan Berbagai Peraturan' },
+  { label: 'Semua Bagian (283 Ketentuan)', value: '', count: '283' },
+  { label: 'Bagian 1: Pemeriksaan & Gugatan (Pasal 118–161)', value: 'Bagian 1', count: '51' },
+  { label: 'Bagian 2: 5 Alat Bukti Persidangan (Pasal 162–185)', value: 'Bagian 2', count: '15' },
+  { label: 'Bagian 3: Musyawarah & Putusan (Pasal 186–194)', value: 'Bagian 3', count: '10' },
+  { label: 'Bagian 4: Upaya Banding (Pasal 195–205)', value: 'Bagian 4', count: '9' },
+  { label: 'Bagian 5: Eksekusi & Sita Jaminan (Pasal 206–240)', value: 'Bagian 5', count: '35' },
+  { label: 'Bagian 6: Perkara Istimewa (Pasal 241–245)', value: 'Bagian 6', count: '14' },
+  { label: 'Bab XV: Berbagai Peraturan (Pasal 372–394)', value: 'BAB XV', count: '16' },
 ];
 
 function DatabaseContent() {
@@ -93,6 +102,17 @@ function DatabaseContent() {
     setPage(0);
   };
 
+  const getCategoryLabel = (catVal: string) => {
+    if (!catVal) return '';
+    if (selectedSource === 'KUHPerdata') {
+      const found = (kuhperdataBabsData as any[]).find((b) => b.value === catVal);
+      return found ? found.label : catVal;
+    } else {
+      const found = HIR_CATEGORIES.find((b) => b.value === catVal);
+      return found ? found.label : catVal;
+    }
+  };
+
   const totalPages = Math.ceil(total / limit);
 
   return (
@@ -131,15 +151,15 @@ function DatabaseContent() {
         <Search className="w-4 h-4 text-[#6B5559] absolute left-4 top-4" />
       </form>
 
-      {/* Sub-Category Chips for the Selected Law */}
-      <div className="bg-white/80 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-xs font-sans">
+      {/* Scope Navigation / Bab Filter */}
+      <div className="bg-white/80 backdrop-blur-sm border border-[#E8DEC9] rounded-2xl p-4 sm:p-5 flex flex-col gap-3.5 shadow-xs font-sans">
         <div className="flex items-center justify-between gap-2 border-b border-[#FAF6EE] pb-2.5">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#75162D]">
             <Layers className="w-3.5 h-3.5" />
             <span>
               {selectedSource === 'KUHPerdata'
-                ? 'Struktur 4 Buku KUHPerdata (Hukum Materiel)'
-                : 'Struktur Bagian HIR (Hukum Acara Persidangan)'}
+                ? 'Filter Bab KUHPerdata (Hukum Materiel)'
+                : 'Filter Bagian HIR (Hukum Acara Formil)'}
             </span>
           </div>
 
@@ -155,50 +175,113 @@ function DatabaseContent() {
           )}
         </div>
 
-        {/* Category Chips Container */}
-        <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
-          {selectedSource === 'KUHPerdata'
-            ? KUHPERDATA_CATEGORIES.map((cat) => {
-                const isSelected = selectedCategory === cat.value;
-                return (
-                  <button
-                    key={cat.value}
-                    onClick={() => {
-                      setSelectedCategory(cat.value);
-                      setPage(0);
-                    }}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap flex items-center gap-2 ${
-                      isSelected
-                        ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs'
-                        : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
-                    }`}
-                    title={cat.desc || cat.label}
-                  >
-                    <span>{cat.label}</span>
-                  </button>
-                );
-              })
-            : HIR_CATEGORIES.map((cat) => {
-                const isSelected = selectedCategory === cat.value;
-                return (
-                  <button
-                    key={cat.value}
-                    onClick={() => {
-                      setSelectedCategory(cat.value);
-                      setPage(0);
-                    }}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap flex items-center gap-2 ${
-                      isSelected
-                        ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs'
-                        : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
-                    }`}
-                    title={cat.desc || cat.label}
-                  >
-                    <span>{cat.label}</span>
-                  </button>
-                );
-              })}
+        {/* Dropdown Bab Selector: Covers All 63 Babs of KUHPerdata or All HIR Sections */}
+        <div className="relative w-full">
+          <select
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setPage(0);
+            }}
+            className="w-full appearance-none px-4 py-2.5 pr-10 rounded-xl bg-white border border-[#E8DEC9] text-xs sm:text-sm font-semibold text-[#3B010B] focus:outline-none focus:border-[#75162D] shadow-2xs cursor-pointer hover:border-[#75162D]/60 transition-colors"
+          >
+            <option value="">
+              {selectedSource === 'KUHPerdata'
+                ? '— Pilih Bab Spesifik (Semua 63 Bab / 1.993 Pasal) —'
+                : '— Pilih Bagian HIR (Semua Bagian / 283 Ketentuan) —'}
+            </option>
+            {selectedSource === 'KUHPerdata' ? (
+              <>
+                <optgroup label="Buku I: Tentang Orang & Keluarga (18 Bab)">
+                  {(kuhperdataBabsData as any[])
+                    .filter((b) => b.buku === 'BUKU KESATU')
+                    .map((b) => (
+                      <option key={b.value} value={b.value}>
+                        {b.label}
+                      </option>
+                    ))}
+                </optgroup>
+                <optgroup label="Buku II: Tentang Kebendaan & Waris (21 Bab)">
+                  {(kuhperdataBabsData as any[])
+                    .filter((b) => b.buku === 'BUKU KEDUA')
+                    .map((b) => (
+                      <option key={b.value} value={b.value}>
+                        {b.label}
+                      </option>
+                    ))}
+                </optgroup>
+                <optgroup label="Buku III: Tentang Perikatan & Kontrak (18 Bab)">
+                  {(kuhperdataBabsData as any[])
+                    .filter((b) => b.buku === 'BUKU KETIGA')
+                    .map((b) => (
+                      <option key={b.value} value={b.value}>
+                        {b.label}
+                      </option>
+                    ))}
+                </optgroup>
+                <optgroup label="Buku IV: Tentang Pembuktian & Daluwarsa (6 Bab)">
+                  {(kuhperdataBabsData as any[])
+                    .filter((b) => b.buku === 'BUKU KEEMPAT')
+                    .map((b) => (
+                      <option key={b.value} value={b.value}>
+                        {b.label}
+                      </option>
+                    ))}
+                </optgroup>
+              </>
+            ) : (
+              HIR_CATEGORIES.filter((h) => h.value !== '').map((h) => (
+                <option key={h.value} value={h.value}>
+                  {h.label}
+                </option>
+              ))
+            )}
+          </select>
+          <ChevronDown className="w-4 h-4 text-[#75162D] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
         </div>
+
+        {/* Quick Bab Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-none">
+          <span className="text-[10px] font-bold text-[#8C7A7C] uppercase tracking-wider shrink-0 mr-1 font-sans">
+            Akses Cepat:
+          </span>
+          {(selectedSource === 'KUHPerdata' ? KUHPERDATA_QUICK_BABS : HIR_CATEGORIES).map((cat) => {
+            const isSelected = selectedCategory === cat.value;
+            return (
+              <button
+                key={cat.value}
+                onClick={() => {
+                  setSelectedCategory(cat.value);
+                  setPage(0);
+                }}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-normal transition-all whitespace-nowrap shrink-0 ${
+                  isSelected
+                    ? 'bg-[#560B18] text-[#F2E5C6] shadow-xs ring-1 ring-[#560B18]'
+                    : 'bg-[#FAF6EE] text-[#560B18] hover:bg-[#F2E5C6] border border-[#E8DEC9]'
+                }`}
+              >
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active Bab Indicator */}
+        {selectedCategory && (
+          <div className="flex items-center gap-2 pt-2 border-t border-[#FAF6EE]">
+            <span className="text-[11px] text-[#6B5559] font-medium">Bab Aktif:</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#75162D] text-[#F2E5C6] text-xs font-bold shadow-2xs">
+              <span>{getCategoryLabel(selectedCategory)}</span>
+              <button
+                onClick={() => setSelectedCategory('')}
+                className="hover:text-white transition-colors"
+                title="Hapus Filter Bab"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Counter & Active Scope Info */}
@@ -210,7 +293,7 @@ function DatabaseContent() {
           </span>
           {selectedCategory && (
             <span className="px-2.5 py-0.5 rounded-full bg-[#75162D] text-[#F2E5C6] text-[10px] font-bold">
-              {selectedCategory}
+              {getCategoryLabel(selectedCategory)}
             </span>
           )}
         </div>

@@ -78,16 +78,26 @@ function ChatContent() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
-  // Only scroll down after actual messages exist in the conversation
+  // Smart scrolling: keep user question clearly in view, never overscroll down to footer
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
-    if (messages.length > 0) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+    // When the user asks the first question, keep the page at top so the question is clearly visible
+    if (messages.length <= 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
-  }, [messages, loading]);
+
+    // For subsequent messages and answers, only scroll if content overflows the view
+    const timer = setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 120);
+
+    return () => clearTimeout(timer);
+  }, [messages]);
 
   // Auto-run if query param is passed from homepage or database
   useEffect(() => {
@@ -305,7 +315,7 @@ function ChatContent() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex flex-col gap-1.5 ${
+            className={`flex flex-col gap-1.5 scroll-mt-32 ${
               msg.role === 'user' ? 'items-end' : 'items-start'
             }`}
           >

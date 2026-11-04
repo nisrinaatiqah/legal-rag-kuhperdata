@@ -78,26 +78,29 @@ function ChatContent() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
-  // Smart scrolling: keep user question clearly in view, never overscroll down to footer
+  // ChatGPT-style auto-follow scroll: follows prompt and generated answers smoothly
+  const scrollToFlow = (behavior: ScrollBehavior = 'smooth') => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior,
+        block: 'end',
+      });
+    }
+  };
+
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
 
-    // When the user asks the first question, keep the page at top so the question is clearly visible
-    if (messages.length <= 1) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    if (messages.length > 0 || loading) {
+      const timer = setTimeout(() => {
+        scrollToFlow('smooth');
+      }, 120);
+      return () => clearTimeout(timer);
     }
-
-    // For subsequent messages and answers, only scroll if content overflows the view
-    const timer = setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 120);
-
-    return () => clearTimeout(timer);
-  }, [messages]);
+  }, [messages, loading]);
 
   // Auto-run if query param is passed from homepage or database
   useEffect(() => {
@@ -334,7 +337,7 @@ function ChatContent() {
             </div>
 
             <div
-              className={`rounded-2xl p-6 leading-relaxed max-w-2xl border ${
+              className={`rounded-2xl p-6 leading-relaxed max-w-2xl border animate-fade-up ${
                 msg.role === 'user'
                   ? 'bg-[#3B010B] text-[#FAF6EE] border-[#3B010B] shadow-sm'
                   : 'bg-[#FFFFFF] text-[#2A171A] border-[#E8DEC9] shadow-sm'
@@ -369,7 +372,7 @@ function ChatContent() {
 
         {/* Loading Spinner */}
         {loading && (
-          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#E8DEC9] max-w-xs shadow-sm">
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-[#E8DEC9] max-w-xs shadow-sm animate-fade-up">
             <RefreshCw className="w-4 h-4 text-[#75162D] animate-spin" />
             <span className="text-xs font-medium text-[#6B5559]">
               Sedang menelaah naskah resmi KUHPerdata &amp; HIR...
@@ -377,8 +380,11 @@ function ChatContent() {
           </div>
         )}
 
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} className="h-4" />
       </div>
+
+      {/* Ample bottom spacer so cards and articles are never covered by sticky input */}
+      <div className="h-16 pointer-events-none" />
 
       {/* Floating Query Input */}
       <div className="sticky bottom-6 z-20">

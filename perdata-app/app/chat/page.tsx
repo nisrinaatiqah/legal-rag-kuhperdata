@@ -61,9 +61,22 @@ function ChatContent() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasAutoQueried = useRef(false);
+  const isInitialMount = useRef(true);
 
+  // Ensure view starts precisely at the top on initial load
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
+
+  // Only scroll down after actual messages exist in the conversation
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    if (messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages, loading]);
 
   // Auto-run if query param is passed from homepage or database

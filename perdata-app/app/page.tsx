@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, CheckCircle2, ShieldCheck, Scale } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, ShieldCheck, Scale, X } from 'lucide-react';
 
 const REGULATION_SCOPES = [
   {
@@ -72,6 +73,24 @@ const POPULAR_TOPICS = [
 ];
 
 export default function HomePage() {
+  const [showChoiceModal, setShowChoiceModal] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowChoiceModal(false);
+    };
+    if (showChoiceModal) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [showChoiceModal]);
+
   return (
     <div className="flex flex-col gap-24 pb-20 font-body">
       {/* Editorial Hero Section with Faded Law Emblem Background */}
@@ -124,13 +143,14 @@ export default function HomePage() {
                 <span>Mulai Penelusuran</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
-              <Link
-                href="/database"
-                className="px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans"
+              <button
+                type="button"
+                onClick={() => setShowChoiceModal(true)}
+                className="px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase text-[#75162D] hover:bg-[#F2E5C6]/40 border border-[#E8DEC9] transition-all flex items-center gap-1.5 font-sans cursor-pointer hover:border-[#75162D]"
               >
                 <span>Cari Pasal</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -308,6 +328,75 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Choice Modal for KUHPerdata vs HIR */}
+      {showChoiceModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A171A]/40 backdrop-blur-xs animate-in fade-in duration-200"
+          onClick={() => setShowChoiceModal(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#FAF6EE] border border-[#E8DEC9] rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative animate-in zoom-in-95 duration-200 font-sans"
+          >
+            <button
+              type="button"
+              onClick={() => setShowChoiceModal(false)}
+              className="absolute top-5 right-5 text-[#8C7A7C] hover:text-[#3B010B] p-1.5 rounded-full hover:bg-white/60 transition-colors cursor-pointer"
+              title="Tutup"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <h3 className="font-bodoni text-2xl font-bold text-[#3B010B]">
+              Cari Pasal
+            </h3>
+            <p className="text-xs text-[#6B5559] mt-1 mb-6 font-normal">
+              Pilih naskah yang ingin ditelusuri:
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/database?source=KUHPerdata"
+                onClick={() => setShowChoiceModal(false)}
+                className="flex items-center justify-between p-4 rounded-2xl bg-white border border-[#E8DEC9] hover:border-[#75162D] hover:shadow-md transition-all group"
+              >
+                <div className="flex flex-col text-left">
+                  <span className="font-bodoni text-lg font-bold text-[#3B010B] group-hover:text-[#75162D] transition-colors">
+                    KUHPerdata
+                  </span>
+                  <span className="text-xs text-[#6B5559] mt-0.5">
+                    Hukum Perdata Materiel
+                  </span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-[#FAF6EE] group-hover:bg-[#75162D] flex items-center justify-center text-[#75162D] group-hover:text-[#FAF6EE] transition-colors shrink-0">
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
+              </Link>
+
+              <Link
+                href="/database?source=HIR"
+                onClick={() => setShowChoiceModal(false)}
+                className="flex items-center justify-between p-4 rounded-2xl bg-white border border-[#E8DEC9] hover:border-[#75162D] hover:shadow-md transition-all group"
+              >
+                <div className="flex flex-col text-left">
+                  <span className="font-bodoni text-lg font-bold text-[#3B010B] group-hover:text-[#75162D] transition-colors">
+                    HIR
+                  </span>
+                  <span className="text-xs text-[#6B5559] mt-0.5">
+                    Hukum Acara Formil
+                  </span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-[#FAF6EE] group-hover:bg-[#75162D] flex items-center justify-center text-[#75162D] group-hover:text-[#FAF6EE] transition-colors shrink-0">
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

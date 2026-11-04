@@ -53,6 +53,16 @@ function ChatContent() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [greeting, setGreeting] = useState('Selamat Datang');
+
+  // Time-based greeting in Indonesian
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour >= 4 && hour < 11) setGreeting('Selamat Pagi');
+    else if (hour >= 11 && hour < 15) setGreeting('Selamat Siang');
+    else if (hour >= 15 && hour < 18) setGreeting('Selamat Sore');
+    else setGreeting('Selamat Malam');
+  }, []);
 
   // Essential Anti-Poisoning Defense & Scenario
   const [enableDefense, setEnableDefense] = useState(true);
@@ -248,24 +258,45 @@ function ChatContent() {
       {/* Conversation Thread */}
       <div className="min-h-[360px] flex flex-col gap-6 font-sans">
         {messages.length === 0 && (
-          <div className="my-auto py-8 text-center flex flex-col items-center max-w-xl mx-auto">
-            <div className="w-11 h-11 rounded-full bg-[#F2E5C6] border border-[#F2D9A0] flex items-center justify-center text-[#75162D] mb-3 shadow-xs">
-              <Scale className="w-5 h-5" />
+          <div className="my-auto py-8 text-center flex flex-col items-center max-w-xl mx-auto font-sans">
+            {/* Greeting Badge with Icon */}
+            <div
+              className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F2E5C6]/60 border border-[#E8DEC9] text-[#75162D] text-xs font-semibold mb-4 shadow-2xs animate-fade-up"
+              style={{ animationDelay: '0.05s' }}
+            >
+              <Scale className="w-3.5 h-3.5" />
+              <span>{greeting}</span>
             </div>
-            <h2 className="font-bodoni text-xl sm:text-2xl font-medium tracking-tight text-[#3B010B]">
-              Konsultasi Hukum Perdata
+
+            {/* Welcoming Headline */}
+            <h2
+              className="font-bodoni text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#3B010B] leading-snug animate-fade-up"
+              style={{ animationDelay: '0.15s' }}
+            >
+              {greeting},{' '}
+              <span className="font-bellefair text-[#75162D] italic font-normal text-2xl sm:text-3xl md:text-4xl block sm:inline tracking-wide">
+                Selamat Datang di CiviLex AI
+              </span>
             </h2>
-            <p className="text-xs text-[#6B5559] mt-1 mb-6 font-sans">
-              Pilih contoh pertanyaan di bawah atau ketik langsung pertanyaan Anda:
+
+            {/* Subtitle / Opening Sentence */}
+            <p
+              className="text-xs sm:text-sm text-[#6B5559] mt-2 mb-8 max-w-lg leading-relaxed font-normal animate-fade-up"
+              style={{ animationDelay: '0.25s' }}
+            >
+              Asisten cerdas untuk penelusuran naskah KUHPerdata dan HIR. Silakan pilih topik di bawah atau tanyakan langsung persoalan hukum Anda:
             </p>
 
-            {/* Suggested Question Pills (Clean & compact 2-col) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full text-left">
+            {/* Suggested Question Pills with Smooth Staggered Fade Entrance */}
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full text-left animate-fade-up"
+              style={{ animationDelay: '0.35s' }}
+            >
               {SUGGESTED_QUERIES.map((q, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSubmit(q.query)}
-                  className="p-3.5 rounded-xl bg-white border border-[#E8DEC9] text-xs text-[#2A171A] transition-all shadow-2xs hover:border-[#75162D] hover:shadow-xs flex items-center justify-between gap-3 group text-left"
+                  className="p-3.5 rounded-xl bg-white border border-[#E8DEC9] text-xs text-[#2A171A] transition-all shadow-2xs hover:border-[#75162D] hover:shadow-xs flex items-center justify-between gap-3 group text-left cursor-pointer"
                 >
                   <div className="min-w-0">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#75162D] block font-sans">

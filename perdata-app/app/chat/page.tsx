@@ -259,19 +259,10 @@ function ChatContent() {
       <div className="min-h-[360px] flex flex-col gap-6 font-sans">
         {messages.length === 0 && (
           <div className="my-auto py-8 text-center flex flex-col items-center max-w-xl mx-auto font-sans">
-            {/* Greeting Badge with Icon */}
-            <div
-              className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F2E5C6]/60 border border-[#E8DEC9] text-[#75162D] text-xs font-semibold mb-4 shadow-2xs animate-fade-up"
-              style={{ animationDelay: '0.05s' }}
-            >
-              <Scale className="w-3.5 h-3.5" />
-              <span>{greeting}</span>
-            </div>
-
             {/* Welcoming Headline */}
             <h2
               className="font-bodoni text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-[#3B010B] leading-snug animate-fade-up"
-              style={{ animationDelay: '0.15s' }}
+              style={{ animationDelay: '0.05s' }}
             >
               {greeting},{' '}
               <span className="font-bellefair text-[#75162D] italic font-normal text-2xl sm:text-3xl md:text-4xl block sm:inline tracking-wide">
@@ -282,7 +273,7 @@ function ChatContent() {
             {/* Subtitle / Opening Sentence */}
             <p
               className="text-xs sm:text-sm text-[#6B5559] mt-2 mb-8 max-w-lg leading-relaxed font-normal animate-fade-up"
-              style={{ animationDelay: '0.25s' }}
+              style={{ animationDelay: '0.15s' }}
             >
               Asisten cerdas untuk penelusuran naskah KUHPerdata dan HIR. Silakan pilih topik di bawah atau tanyakan langsung persoalan hukum Anda:
             </p>
@@ -290,7 +281,7 @@ function ChatContent() {
             {/* Suggested Question Pills with Smooth Staggered Fade Entrance */}
             <div
               className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full text-left animate-fade-up"
-              style={{ animationDelay: '0.35s' }}
+              style={{ animationDelay: '0.25s' }}
             >
               {SUGGESTED_QUERIES.map((q, idx) => (
                 <button

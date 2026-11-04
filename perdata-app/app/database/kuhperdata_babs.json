@@ -3,7 +3,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB I",
     "value": "BUKU KESATU:BAB I",
-    "label": "BAB I: Hak Kewargaan (Pasal 1–3)",
+    "label": "BAB I: Hak Kewargaan",
     "shortLabel": "BAB I: Hak Kewargaan",
     "count": 3
   },
@@ -11,7 +11,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB II",
     "value": "BUKU KESATU:BAB II",
-    "label": "BAB II: Akta Catatan Sipil (Pasal 4–16)",
+    "label": "BAB II: Akta Catatan Sipil",
     "shortLabel": "BAB II: Akta Catatan Sipil",
     "count": 14
   },
@@ -19,15 +19,15 @@
     "buku": "BUKU KESATU",
     "bab": "BAB III",
     "value": "BUKU KESATU:BAB III",
-    "label": "BAB III: Tempat Tinggal (Domisili) (Pasal 17–25)",
-    "shortLabel": "BAB III: Tempat Tinggal (Domisili)",
+    "label": "BAB III: Tempat Tinggal & Domisili",
+    "shortLabel": "BAB III: Tempat Tinggal & Domisili",
     "count": 9
   },
   {
     "buku": "BUKU KESATU",
     "bab": "BAB IV",
     "value": "BUKU KESATU:BAB IV",
-    "label": "BAB IV: Perkawinan (Pasal 26–102)",
+    "label": "BAB IV: Perkawinan",
     "shortLabel": "BAB IV: Perkawinan",
     "count": 78
   },
@@ -35,7 +35,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB V",
     "value": "BUKU KESATU:BAB V",
-    "label": "BAB V: Hak & Kewajiban Suami Istri (Pasal 103–118)",
+    "label": "BAB V: Hak & Kewajiban Suami Istri",
     "shortLabel": "BAB V: Hak & Kewajiban Suami Istri",
     "count": 16
   },
@@ -43,7 +43,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB VI",
     "value": "BUKU KESATU:BAB VI",
-    "label": "BAB VI: Harta Bersama Perkawinan (Pasal 119–138)",
+    "label": "BAB VI: Harta Bersama Perkawinan",
     "shortLabel": "BAB VI: Harta Bersama Perkawinan",
     "count": 20
   },
@@ -51,7 +51,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB VII",
     "value": "BUKU KESATU:BAB VII",
-    "label": "BAB VII: Perjanjian Kawin (Pasal 139–179)",
+    "label": "BAB VII: Perjanjian Kawin",
     "shortLabel": "BAB VII: Perjanjian Kawin",
     "count": 41
   },
@@ -59,7 +59,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB VIII",
     "value": "BUKU KESATU:BAB VIII",
-    "label": "BAB VIII: Perkawinan Kedua & Seterusnya (Pasal 180–185)",
+    "label": "BAB VIII: Perkawinan Kedua & Seterusnya",
     "shortLabel": "BAB VIII: Perkawinan Kedua & Seterusnya",
     "count": 7
   },
@@ -67,7 +67,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB IX",
     "value": "BUKU KESATU:BAB IX",
-    "label": "BAB IX: Pemisahan Harta Perkawinan (Pasal 186–198)",
+    "label": "BAB IX: Pemisahan Harta Perkawinan",
     "shortLabel": "BAB IX: Pemisahan Harta Perkawinan",
     "count": 13
   },
@@ -75,7 +75,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB X",
     "value": "BUKU KESATU:BAB X",
-    "label": "BAB X: Pembubaran Perkawinan / Cerai (Pasal 199–232)",
+    "label": "BAB X: Pembubaran Perkawinan / Cerai",
     "shortLabel": "BAB X: Pembubaran Perkawinan / Cerai",
     "count": 41
   },
@@ -83,7 +83,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB XI",
     "value": "BUKU KESATU:BAB XI",
-    "label": "BAB XI: Pisah Meja dan Ranjang (Pasal 233–249)",
+    "label": "BAB XI: Pisah Meja dan Ranjang",
     "shortLabel": "BAB XI: Pisah Meja dan Ranjang",
     "count": 19
   },
@@ -91,7 +91,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB XII",
     "value": "BUKU KESATU:BAB XII",
-    "label": "BAB XII: Kebapakan & Asal-Usul Anak (Pasal 250–289)",
+    "label": "BAB XII: Kebapakan & Asal-Usul Anak",
     "shortLabel": "BAB XII: Kebapakan & Asal-Usul Anak",
     "count": 41
   },
@@ -99,7 +99,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB XIII",
     "value": "BUKU KESATU:BAB XIII",
-    "label": "BAB XIII: Pengakuan Anak Luar Kawin (Pasal 290–297)",
+    "label": "BAB XIII: Pengakuan Anak Luar Kawin",
     "shortLabel": "BAB XIII: Pengakuan Anak Luar Kawin",
     "count": 8
   },
@@ -107,7 +107,7 @@
     "buku": "BUKU KESATU",
     "bab": "BAB XIV",
     "value": "BUKU KESATU:BAB XIV",
-    "label": "BAB XIV: Kekuasaan Orang Tua (Pasal 298–329)",
+    "label": "BAB XIV: Kekuasaan Orang Tua",
     "shortLabel": "BAB XIV: Kekuasaan Orang Tua",
     "count": 47
   },
@@ -115,31 +115,31 @@
     "buku": "BUKU KESATU",
     "bab": "BAB XV",
     "value": "BUKU KESATU:BAB XV",
-    "label": "BAB XV: Perwalian (Voogdij) (Pasal 330–418)",
-    "shortLabel": "BAB XV: Perwalian (Voogdij)",
+    "label": "BAB XV: Perwalian",
+    "shortLabel": "BAB XV: Perwalian",
     "count": 110
   },
   {
     "buku": "BUKU KESATU",
     "bab": "BAB XVI",
     "value": "BUKU KESATU:BAB XVI",
-    "label": "BAB XVI: Pendewasaan (Handlichting) (Pasal 419–432)",
-    "shortLabel": "BAB XVI: Pendewasaan (Handlichting)",
+    "label": "BAB XVI: Pendewasaan",
+    "shortLabel": "BAB XVI: Pendewasaan",
     "count": 14
   },
   {
     "buku": "BUKU KESATU",
     "bab": "BAB XVII",
     "value": "BUKU KESATU:BAB XVII",
-    "label": "BAB XVII: Pengampuan (Curatele) (Pasal 433–462)",
-    "shortLabel": "BAB XVII: Pengampuan (Curatele)",
+    "label": "BAB XVII: Pengampuan",
+    "shortLabel": "BAB XVII: Pengampuan",
     "count": 30
   },
   {
     "buku": "BUKU KESATU",
     "bab": "BAB XVIII",
     "value": "BUKU KESATU:BAB XVIII",
-    "label": "BAB XVIII: Keadaan Tak Hadir / Orang Hilang (Pasal 463–498)",
+    "label": "BAB XVIII: Keadaan Tak Hadir / Orang Hilang",
     "shortLabel": "BAB XVIII: Keadaan Tak Hadir / Orang Hilang",
     "count": 36
   },
@@ -147,7 +147,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB I",
     "value": "BUKU KEDUA:BAB I",
-    "label": "BAB I: Kebendaan & Pembedaannya (Pasal 499–528)",
+    "label": "BAB I: Kebendaan & Pembedaannya",
     "shortLabel": "BAB I: Kebendaan & Pembedaannya",
     "count": 30
   },
@@ -155,7 +155,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB II",
     "value": "BUKU KEDUA:BAB II",
-    "label": "BAB II: Besit & Hak Menikmatinya (Pasal 529–569)",
+    "label": "BAB II: Besit & Hak Menikmatinya",
     "shortLabel": "BAB II: Besit & Hak Menikmatinya",
     "count": 41
   },
@@ -163,15 +163,15 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB III",
     "value": "BUKU KEDUA:BAB III",
-    "label": "BAB III: Hak Milik (Eigendom) (Pasal 570–624)",
-    "shortLabel": "BAB III: Hak Milik (Eigendom)",
+    "label": "BAB III: Hak Milik",
+    "shortLabel": "BAB III: Hak Milik",
     "count": 55
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB IV",
     "value": "BUKU KEDUA:BAB IV",
-    "label": "BAB IV: Hak & Kewajiban Tetangga (Pasal 625–672)",
+    "label": "BAB IV: Hak & Kewajiban Tetangga",
     "shortLabel": "BAB IV: Hak & Kewajiban Tetangga",
     "count": 49
   },
@@ -179,7 +179,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB V",
     "value": "BUKU KEDUA:BAB V",
-    "label": "BAB V: Kerja Rodi (Pasal 673–673)",
+    "label": "BAB V: Kerja Rodi",
     "shortLabel": "BAB V: Kerja Rodi",
     "count": 1
   },
@@ -187,31 +187,31 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB VI",
     "value": "BUKU KEDUA:BAB VI",
-    "label": "BAB VI: Pengabdian Pekarangan (Servituut) (Pasal 674–710)",
-    "shortLabel": "BAB VI: Pengabdian Pekarangan (Servituut)",
+    "label": "BAB VI: Pengabdian Pekarangan",
+    "shortLabel": "BAB VI: Pengabdian Pekarangan",
     "count": 37
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB VII",
     "value": "BUKU KEDUA:BAB VII",
-    "label": "BAB VII: Hak Numpang Karang (Opstal) (Pasal 711–719)",
-    "shortLabel": "BAB VII: Hak Numpang Karang (Opstal)",
+    "label": "BAB VII: Hak Numpang Karang",
+    "shortLabel": "BAB VII: Hak Numpang Karang",
     "count": 9
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB VIII",
     "value": "BUKU KEDUA:BAB VIII",
-    "label": "BAB VIII: Hak Usaha (Erfpacht) (Pasal 720–736)",
-    "shortLabel": "BAB VIII: Hak Usaha (Erfpacht)",
+    "label": "BAB VIII: Hak Usaha",
+    "shortLabel": "BAB VIII: Hak Usaha",
     "count": 17
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB IX",
     "value": "BUKU KEDUA:BAB IX",
-    "label": "BAB IX: Bunga Tanah & Sepersepuluh (Pasal 737–755)",
+    "label": "BAB IX: Bunga Tanah & Sepersepuluh",
     "shortLabel": "BAB IX: Bunga Tanah & Sepersepuluh",
     "count": 19
   },
@@ -219,15 +219,15 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB X",
     "value": "BUKU KEDUA:BAB X",
-    "label": "BAB X: Hak Pakai Hasil (Vruchtgebruik) (Pasal 756–817)",
-    "shortLabel": "BAB X: Hak Pakai Hasil (Vruchtgebruik)",
+    "label": "BAB X: Hak Pakai Hasil",
+    "shortLabel": "BAB X: Hak Pakai Hasil",
     "count": 63
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB XI",
     "value": "BUKU KEDUA:BAB XI",
-    "label": "BAB XI: Hak Pakai & Hak Mendiami (Pasal 818–829)",
+    "label": "BAB XI: Hak Pakai & Hak Mendiami",
     "shortLabel": "BAB XI: Hak Pakai & Hak Mendiami",
     "count": 12
   },
@@ -235,7 +235,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XII",
     "value": "BUKU KEDUA:BAB XII",
-    "label": "BAB XII: Pewarisan karena Kematian (Pasal 830–834)",
+    "label": "BAB XII: Pewarisan karena Kematian",
     "shortLabel": "BAB XII: Pewarisan karena Kematian",
     "count": 5
   },
@@ -243,7 +243,7 @@
     "buku": "BUKU KEDUA",
     "bab": "Bab III buku ini mengenai penuntutan kembali hak milik.",
     "value": "BUKU KEDUA:Bab III buku ini mengenai penuntutan kembali hak milik.",
-    "label": "Bab Penuntutan Waris: Penuntutan Hak Milik & Waris (Pasal 835–873)",
+    "label": "Bab Penuntutan Waris: Penuntutan Hak Milik & Waris",
     "shortLabel": "Bab Penuntutan Waris: Penuntutan Hak Milik & Waris",
     "count": 41
   },
@@ -251,15 +251,15 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XIII",
     "value": "BUKU KEDUA:BAB XIII",
-    "label": "BAB XIII: Surat Wasiat (Testamen) (Pasal 874–1004)",
-    "shortLabel": "BAB XIII: Surat Wasiat (Testamen)",
+    "label": "BAB XIII: Surat Wasiat",
+    "shortLabel": "BAB XIII: Surat Wasiat",
     "count": 133
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB XIV",
     "value": "BUKU KEDUA:BAB XIV",
-    "label": "BAB XIV: Pelaksana Wasiat & Pengurus Warisan (Pasal 1005–1022)",
+    "label": "BAB XIV: Pelaksana Wasiat & Pengurus Warisan",
     "shortLabel": "BAB XIV: Pelaksana Wasiat & Pengurus Warisan",
     "count": 18
   },
@@ -267,7 +267,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XV",
     "value": "BUKU KEDUA:BAB XV",
-    "label": "BAB XV: Hak Memikir & Merinci Warisan (Pasal 1023–1043)",
+    "label": "BAB XV: Hak Memikir & Merinci Warisan",
     "shortLabel": "BAB XV: Hak Memikir & Merinci Warisan",
     "count": 21
   },
@@ -275,7 +275,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XVI",
     "value": "BUKU KEDUA:BAB XVI",
-    "label": "BAB XVI: Penerimaan & Penolakan Warisan (Pasal 1044–1065)",
+    "label": "BAB XVI: Penerimaan & Penolakan Warisan",
     "shortLabel": "BAB XVI: Penerimaan & Penolakan Warisan",
     "count": 22
   },
@@ -283,7 +283,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XVII",
     "value": "BUKU KEDUA:BAB XVII",
-    "label": "BAB XVII: Pemisahan Harta Warisan (Pasal 1066–1125)",
+    "label": "BAB XVII: Pemisahan Harta Warisan",
     "shortLabel": "BAB XVII: Pemisahan Harta Warisan",
     "count": 60
   },
@@ -291,7 +291,7 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XVIII",
     "value": "BUKU KEDUA:BAB XVIII",
-    "label": "BAB XVIII: Harta Peninggalan Tak Terurus (Pasal 1126–1130)",
+    "label": "BAB XVIII: Harta Peninggalan Tak Terurus",
     "shortLabel": "BAB XVIII: Harta Peninggalan Tak Terurus",
     "count": 5
   },
@@ -299,23 +299,23 @@
     "buku": "BUKU KEDUA",
     "bab": "BAB XIX",
     "value": "BUKU KEDUA:BAB XIX",
-    "label": "BAB XIX: Piutang Diistimewakan (Privilese) (Pasal 1131–1149)",
-    "shortLabel": "BAB XIX: Piutang Diistimewakan (Privilese)",
+    "label": "BAB XIX: Piutang Diistimewakan",
+    "shortLabel": "BAB XIX: Piutang Diistimewakan",
     "count": 20
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB XX",
     "value": "BUKU KEDUA:BAB XX",
-    "label": "BAB XX: Gadai (Pand) (Pasal 1150–1161)",
-    "shortLabel": "BAB XX: Gadai (Pand)",
+    "label": "BAB XX: Hak Gadai",
+    "shortLabel": "BAB XX: Hak Gadai",
     "count": 12
   },
   {
     "buku": "BUKU KEDUA",
     "bab": "BAB XXI",
     "value": "BUKU KEDUA:BAB XXI",
-    "label": "BAB XXI: Hipotek (Pasal 1162–1232)",
+    "label": "BAB XXI: Hipotek",
     "shortLabel": "BAB XXI: Hipotek",
     "count": 71
   },
@@ -323,7 +323,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB I",
     "value": "BUKU KETIGA:BAB I",
-    "label": "BAB I: Perikatan pada Umumnya (Pasal 1233–1312)",
+    "label": "BAB I: Perikatan pada Umumnya",
     "shortLabel": "BAB I: Perikatan pada Umumnya",
     "count": 80
   },
@@ -331,23 +331,23 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB II",
     "value": "BUKU KETIGA:BAB II",
-    "label": "BAB II: Perjanjian & Kontrak (Syarat Sah 1320) (Pasal 1313–1351)",
-    "shortLabel": "BAB II: Perjanjian & Kontrak (Syarat Sah 1320)",
+    "label": "BAB II: Perjanjian & Kontrak",
+    "shortLabel": "BAB II: Perjanjian & Kontrak",
     "count": 39
   },
   {
     "buku": "BUKU KETIGA",
     "bab": "BAB III",
     "value": "BUKU KETIGA:BAB III",
-    "label": "BAB III: Perikatan karena UU & PMH (1365) (Pasal 1352–1380)",
-    "shortLabel": "BAB III: Perikatan karena UU & PMH (1365)",
+    "label": "BAB III: Perikatan karena UU & PMH",
+    "shortLabel": "BAB III: Perikatan karena UU & PMH",
     "count": 29
   },
   {
     "buku": "BUKU KETIGA",
     "bab": "BAB IV",
     "value": "BUKU KETIGA:BAB IV",
-    "label": "BAB IV: Hapusnya Perikatan (Pasal 1381–1456)",
+    "label": "BAB IV: Hapusnya Perikatan",
     "shortLabel": "BAB IV: Hapusnya Perikatan",
     "count": 76
   },
@@ -355,7 +355,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB V",
     "value": "BUKU KETIGA:BAB V",
-    "label": "BAB V: Jual Beli (Pasal 1457–1540)",
+    "label": "BAB V: Jual Beli",
     "shortLabel": "BAB V: Jual Beli",
     "count": 84
   },
@@ -363,7 +363,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB VI",
     "value": "BUKU KETIGA:BAB VI",
-    "label": "BAB VI: Tukar Menukar (Pasal 1541–1546)",
+    "label": "BAB VI: Tukar Menukar",
     "shortLabel": "BAB VI: Tukar Menukar",
     "count": 6
   },
@@ -371,7 +371,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB VII",
     "value": "BUKU KETIGA:BAB VII",
-    "label": "BAB VII: Sewa Menyewa (Pasal 1547–1617)",
+    "label": "BAB VII: Sewa Menyewa",
     "shortLabel": "BAB VII: Sewa Menyewa",
     "count": 148
   },
@@ -379,7 +379,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB VIII",
     "value": "BUKU KETIGA:BAB VIII",
-    "label": "BAB VIII: Persetujuan Perburuhan / Kerja (Pasal 1618–1652)",
+    "label": "BAB VIII: Persetujuan Perburuhan / Kerja",
     "shortLabel": "BAB VIII: Persetujuan Perburuhan / Kerja",
     "count": 35
   },
@@ -387,15 +387,15 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB IX",
     "value": "BUKU KETIGA:BAB IX",
-    "label": "BAB IX: Persekutuan Perdata (Maatschap) (Pasal 1653–1665)",
-    "shortLabel": "BAB IX: Persekutuan Perdata (Maatschap)",
+    "label": "BAB IX: Persekutuan Perdata",
+    "shortLabel": "BAB IX: Persekutuan Perdata",
     "count": 13
   },
   {
     "buku": "BUKU KETIGA",
     "bab": "BAB X",
     "value": "BUKU KETIGA:BAB X",
-    "label": "BAB X: Badan Hukum (Pasal 1666–1693)",
+    "label": "BAB X: Badan Hukum",
     "shortLabel": "BAB X: Badan Hukum",
     "count": 28
   },
@@ -403,7 +403,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB XI",
     "value": "BUKU KETIGA:BAB XI",
-    "label": "BAB XI: Hibah (Pasal 1694–1739)",
+    "label": "BAB XI: Hibah",
     "shortLabel": "BAB XI: Hibah",
     "count": 46
   },
@@ -411,7 +411,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB XII",
     "value": "BUKU KETIGA:BAB XII",
-    "label": "BAB XII: Penitipan Barang (Pasal 1740–1753)",
+    "label": "BAB XII: Penitipan Barang",
     "shortLabel": "BAB XII: Penitipan Barang",
     "count": 14
   },
@@ -419,7 +419,7 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB XIII",
     "value": "BUKU KETIGA:BAB XIII",
-    "label": "BAB XIII: Pinjam Pakai (Pasal 1754–1769)",
+    "label": "BAB XIII: Pinjam Pakai",
     "shortLabel": "BAB XIII: Pinjam Pakai",
     "count": 16
   },
@@ -427,15 +427,15 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB XIV",
     "value": "BUKU KETIGA:BAB XIV",
-    "label": "BAB XIV: Pinjam Meminjam (Bunga) (Pasal 1770–1773)",
-    "shortLabel": "BAB XIV: Pinjam Meminjam (Bunga)",
+    "label": "BAB XIV: Pinjam Meminjam",
+    "shortLabel": "BAB XIV: Pinjam Meminjam",
     "count": 4
   },
   {
     "buku": "BUKU KETIGA",
     "bab": "BAB XV",
     "value": "BUKU KETIGA:BAB XV",
-    "label": "BAB XV: Perjanjian Untung-untungan (Pasal 1774–1791)",
+    "label": "BAB XV: Perjanjian Untung-untungan",
     "shortLabel": "BAB XV: Perjanjian Untung-untungan",
     "count": 18
   },
@@ -443,23 +443,23 @@
     "buku": "BUKU KETIGA",
     "bab": "BAB XVI",
     "value": "BUKU KETIGA:BAB XVI",
-    "label": "BAB XVI: Pemberian Kuasa (Lastgeving) (Pasal 1792–1819)",
-    "shortLabel": "BAB XVI: Pemberian Kuasa (Lastgeving)",
+    "label": "BAB XVI: Pemberian Kuasa",
+    "shortLabel": "BAB XVI: Pemberian Kuasa",
     "count": 28
   },
   {
     "buku": "BUKU KETIGA",
     "bab": "BAB XVII",
     "value": "BUKU KETIGA:BAB XVII",
-    "label": "BAB XVII: Penanggung Utang (Borgtocht) (Pasal 1820–1864)",
-    "shortLabel": "BAB XVII: Penanggung Utang (Borgtocht)",
+    "label": "BAB XVII: Penanggung Utang",
+    "shortLabel": "BAB XVII: Penanggung Utang",
     "count": 45
   },
   {
     "buku": "BUKU KEEMPAT",
     "bab": "BAB I",
     "value": "BUKU KEEMPAT:BAB I",
-    "label": "BAB I: Pembuktian pada Umumnya (Pasal 1865–1866)",
+    "label": "BAB I: Pembuktian pada Umumnya",
     "shortLabel": "BAB I: Pembuktian pada Umumnya",
     "count": 2
   },
@@ -467,7 +467,7 @@
     "buku": "BUKU KEEMPAT",
     "bab": "BAB II",
     "value": "BUKU KEEMPAT:BAB II",
-    "label": "BAB II: Bukti Tertulis / Akta (Pasal 1867–1894)",
+    "label": "BAB II: Bukti Tertulis / Akta",
     "shortLabel": "BAB II: Bukti Tertulis / Akta",
     "count": 29
   },
@@ -475,7 +475,7 @@
     "buku": "BUKU KEEMPAT",
     "bab": "BAB III",
     "value": "BUKU KEEMPAT:BAB III",
-    "label": "BAB III: Bukti Saksi (Pasal 1895–1914)",
+    "label": "BAB III: Bukti Saksi",
     "shortLabel": "BAB III: Bukti Saksi",
     "count": 20
   },
@@ -483,7 +483,7 @@
     "buku": "BUKU KEEMPAT",
     "bab": "BAB IV",
     "value": "BUKU KEEMPAT:BAB IV",
-    "label": "BAB IV: Persangkaan (Pasal 1915–1922)",
+    "label": "BAB IV: Persangkaan",
     "shortLabel": "BAB IV: Persangkaan",
     "count": 8
   },
@@ -491,7 +491,7 @@
     "buku": "BUKU KEEMPAT",
     "bab": "BAB V",
     "value": "BUKU KEEMPAT:BAB V",
-    "label": "BAB V: Pengakuan (Pasal 1923–1928)",
+    "label": "BAB V: Pengakuan",
     "shortLabel": "BAB V: Pengakuan",
     "count": 6
   },
@@ -499,7 +499,7 @@
     "buku": "BUKU KEEMPAT",
     "bab": "BAB VI",
     "value": "BUKU KEEMPAT:BAB VI",
-    "label": "BAB VI: Sumpah di Hadapan Hakim (Pasal 1929–1993)",
+    "label": "BAB VI: Sumpah di Hadapan Hakim",
     "shortLabel": "BAB VI: Sumpah di Hadapan Hakim",
     "count": 65
   }

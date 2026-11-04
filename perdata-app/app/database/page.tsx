@@ -7,14 +7,14 @@ import PasalCard, { ArticleDoc } from '../components/PasalCard';
 import kuhperdataBabsData from './kuhperdata_babs.json';
 
 const HIR_CATEGORIES = [
-  { label: 'Semua Bagian (283 Ketentuan)', value: '', count: '283' },
-  { label: 'Bagian 1: Pemeriksaan & Gugatan (Pasal 118–161)', value: 'Bagian 1', count: '51' },
-  { label: 'Bagian 2: 5 Alat Bukti Persidangan (Pasal 162–185)', value: 'Bagian 2', count: '15' },
-  { label: 'Bagian 3: Musyawarah & Putusan (Pasal 186–194)', value: 'Bagian 3', count: '10' },
-  { label: 'Bagian 4: Upaya Banding (Pasal 195–205)', value: 'Bagian 4', count: '9' },
-  { label: 'Bagian 5: Eksekusi & Sita Jaminan (Pasal 206–240)', value: 'Bagian 5', count: '35' },
-  { label: 'Bagian 6: Perkara Istimewa (Pasal 241–245)', value: 'Bagian 6', count: '14' },
-  { label: 'Bab XV: Berbagai Peraturan (Pasal 372–394)', value: 'BAB XV', count: '16' },
+  { label: 'Semua Bagian', value: '', count: '283' },
+  { label: 'Bagian 1: Pemeriksaan & Gugatan', value: 'Bagian 1', count: '51' },
+  { label: 'Bagian 2: Alat Bukti Persidangan', value: 'Bagian 2', count: '15' },
+  { label: 'Bagian 3: Musyawarah & Putusan', value: 'Bagian 3', count: '10' },
+  { label: 'Bagian 4: Upaya Banding', value: 'Bagian 4', count: '9' },
+  { label: 'Bagian 5: Eksekusi & Sita Jaminan', value: 'Bagian 5', count: '35' },
+  { label: 'Bagian 6: Perkara Istimewa', value: 'Bagian 6', count: '14' },
+  { label: 'Bab XV: Berbagai Peraturan', value: 'BAB XV', count: '16' },
 ];
 
 function DatabaseContent() {
@@ -115,8 +115,8 @@ function DatabaseContent() {
         </h1>
         <p className="text-xs sm:text-sm text-[#6B5559] max-w-2xl font-sans font-normal mt-1 leading-relaxed">
           {selectedSource === 'HIR'
-            ? 'Pustaka 283 ketentuan hukum acara perdata dari sumber terpercaya. Telusuri tata cara sidang, sita jaminan, dan pembuktian.'
-            : 'Pustaka 1.993 pasal hukum perdata materiil dari sumber terpercaya. Telusuri ketentuan orang, kebendaan, perikatan, dan pembuktian.'}
+            ? 'Ketentuan hukum acara perdata dari sumber terpercaya.'
+            : 'Ketentuan hukum perdata materiil dari sumber terpercaya.'}
         </p>
       </div>
 
@@ -128,8 +128,8 @@ function DatabaseContent() {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={
             selectedSource === 'HIR'
-              ? 'Cari di ketentuan HIR... (contoh: 164 alat bukti, 227 sita jaminan, putusan)'
-              : 'Cari di ketentuan KUHPerdata... (contoh: 1320 syarat sah, 1365 PMH, waris)'
+              ? 'Cari ketentuan HIR...'
+              : 'Cari ketentuan KUHPerdata...'
           }
           className="w-full pl-11 pr-4 py-3.5 rounded-full bg-white/95 border border-[#E8DEC9] text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none focus:border-[#75162D] shadow-xs font-sans transition-all focus:ring-2 focus:ring-[#75162D]/10"
         />
@@ -141,11 +141,7 @@ function DatabaseContent() {
         <div className="flex items-center justify-between gap-2 border-b border-[#FAF6EE] pb-2.5">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#75162D]">
             <Layers className="w-3.5 h-3.5" />
-            <span>
-              {selectedSource === 'KUHPerdata'
-                ? 'Filter Bab KUHPerdata (Hukum Materiel)'
-                : 'Filter Bagian HIR (Hukum Acara Formil)'}
-            </span>
+            <span>Pilih Jenis</span>
           </div>
 
           {(selectedCategory || searchQuery) && (
@@ -170,14 +166,10 @@ function DatabaseContent() {
             }}
             className="w-full appearance-none px-4 py-2.5 pr-10 rounded-xl bg-white border border-[#E8DEC9] text-xs sm:text-sm font-semibold text-[#3B010B] focus:outline-none focus:border-[#75162D] shadow-2xs cursor-pointer hover:border-[#75162D]/60 transition-colors"
           >
-            <option value="">
-              {selectedSource === 'KUHPerdata'
-                ? '— Pilih Bab Spesifik (Semua 63 Bab / 1.993 Pasal) —'
-                : '— Pilih Bagian HIR (Semua Bagian / 283 Ketentuan) —'}
-            </option>
+            <option value="">Pilih Jenis</option>
             {selectedSource === 'KUHPerdata' ? (
               <>
-                <optgroup label="Buku I: Tentang Orang & Keluarga (18 Bab)">
+                <optgroup label="Buku I: Orang & Keluarga">
                   {(kuhperdataBabsData as any[])
                     .filter((b) => b.buku === 'BUKU KESATU')
                     .map((b) => (
@@ -186,7 +178,7 @@ function DatabaseContent() {
                       </option>
                     ))}
                 </optgroup>
-                <optgroup label="Buku II: Tentang Kebendaan & Waris (21 Bab)">
+                <optgroup label="Buku II: Kebendaan & Waris">
                   {(kuhperdataBabsData as any[])
                     .filter((b) => b.buku === 'BUKU KEDUA')
                     .map((b) => (
@@ -195,7 +187,7 @@ function DatabaseContent() {
                       </option>
                     ))}
                 </optgroup>
-                <optgroup label="Buku III: Tentang Perikatan & Kontrak (18 Bab)">
+                <optgroup label="Buku III: Perikatan & Kontrak">
                   {(kuhperdataBabsData as any[])
                     .filter((b) => b.buku === 'BUKU KETIGA')
                     .map((b) => (
@@ -204,7 +196,7 @@ function DatabaseContent() {
                       </option>
                     ))}
                 </optgroup>
-                <optgroup label="Buku IV: Tentang Pembuktian & Daluwarsa (6 Bab)">
+                <optgroup label="Buku IV: Pembuktian & Daluwarsa">
                   {(kuhperdataBabsData as any[])
                     .filter((b) => b.buku === 'BUKU KEEMPAT')
                     .map((b) => (
@@ -228,13 +220,13 @@ function DatabaseContent() {
         {/* Active Bab Indicator */}
         {selectedCategory && (
           <div className="flex items-center gap-2 pt-2 border-t border-[#FAF6EE]">
-            <span className="text-[11px] text-[#6B5559] font-medium">Bab Aktif:</span>
+            <span className="text-[11px] text-[#6B5559] font-medium">Filter:</span>
             <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#75162D] text-[#F2E5C6] text-xs font-bold shadow-2xs">
               <span>{getCategoryLabel(selectedCategory)}</span>
               <button
                 onClick={() => setSelectedCategory('')}
                 className="hover:text-white transition-colors"
-                title="Hapus Filter Bab"
+                title="Hapus Filter"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -246,7 +238,7 @@ function DatabaseContent() {
       {/* Counter & Active Scope Info */}
       <div className="flex flex-wrap items-center justify-between text-xs text-[#6B5559] px-1 font-sans gap-2">
         <div className="flex items-center gap-2 flex-wrap">
-          <span>Menampilkan {articles.length} dari <strong className="text-[#3B010B]">{total}</strong> ketentuan ditemukan</span>
+          <span>Menampilkan {articles.length} dari <strong className="text-[#3B010B]">{total}</strong> ketentuan</span>
           <span className="px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] text-[10px] font-bold uppercase">
             Sumber: {selectedSource}
           </span>
@@ -282,7 +274,7 @@ function DatabaseContent() {
             onClick={resetAllFilters}
             className="mt-4 px-5 py-2.5 rounded-full bg-[#75162D] text-[#FAF6EE] text-xs font-bold font-sans hover:bg-[#560B18] transition-colors"
           >
-            Tampilkan Seluruh {selectedSource === 'HIR' ? 'HIR (283 Ketentuan)' : 'KUHPerdata (1.993 Ketentuan)'}
+            Tampilkan Semua Ketentuan
           </button>
         </div>
       ) : (

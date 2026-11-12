@@ -432,7 +432,7 @@ Pengujian komparatif membandingkan 3 strategi segmentasi korpus hukum perdata (K
 
 #### Tabel Evaluasi Komparatif Skenario Chunking:
 
-| Skenario | Strategi Segmentasi | Total Chunk | Rata-rata Token | Distorsi Multi-Pasal (%)* | Context Precision (RAGAS)* | MRR (BM25) | Recall@5 (BM25) |
+| Skenario | Strategi Segmentasi | Total Chunk | Rata-rata Token | Distorsi Multi-Pasal (%)* | Context Precision* | MRR | Recall@5 |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **C1** | **Berbasis Struktur (Per-Pasal Utuh)** | **2.276** | **95,3** | **0,00%** | **0,884** | 0,3762 | 0,5667 |
 | **C2** | Ukuran Tetap (256 Token, Overlap 32) | 822 | 255,6 | 90,15% | 0,612 | 0,4965 | 0,7000 |

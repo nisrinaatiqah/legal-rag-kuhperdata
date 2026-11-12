@@ -460,16 +460,16 @@ Evaluasi kinerja algoritma pencarian dokumen pada korpus C1 terpilih menggunakan
 
 #### Tabel Evaluasi Komparatif Retriever:
 
-| Model | Arsitektur Retriever | MRR* | Recall@5* | Hit@1 (R@1)* | Recall@10 | MAP@5 |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| **R1** | **Dense BGE-M3 (Qdrant)** | **0.7542** | **0.8333** | **0.6500 (65%)** | **0.9000** | **0.7361** |
-| **R3** | Hybrid BGE-M3 + BM25 | 0.6354 | 0.7333 | 0.5167 (51.7%) | 0.9000 | 0.6139 |
-| **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.2970 | 0.5167 | 0.1500 (15%) | 0.5833 | 0.2700 |
+| Model | Arsitektur Retriever | Recall@5 | Recall@10 | Precision@1 | Precision@5 | MRR@5 | MRR (Global) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **R1** | **Dense BGE-M3 (Qdrant)** | **0.8333** | **0.9000** | **0.6667 (66.7%)** | **0.1733** | **0.7444** | **0.7542** |
+| **R3** | Hybrid BGE-M3 + BM25 | 0.7333 | 0.9000 | 0.5333 (53.3%) | 0.1533 | 0.6139 | 0.6354 |
+| **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.5167 | 0.5833 | 0.1667 (16.7%) | 0.1067 | 0.2867 | 0.2970 |
 
-*\*Tiga Metrik Utama Evaluasi Retriever:*
-1. **MRR (0.7542)**: R1 unggul mutlak dalam menempatkan pasal rujukan di peringkat teratas.
-2. **Recall@5 (0.8333)**: 83,3% kueri berhasil menangkap pasal yang tepat dalam 5 rekomendasi teratas.
-3. **Hit@1 (0.6500 / 65%)**: Pada 65% kueri uji, pasal target langsung tepat berada di **urutan nomor 1**.
+*\*Tiga Pilar Metrik Evaluasi Retriever (Recall@K, Precision@K, MRR@K):*
+1. **Recall@K (Recall@5 = 0.8333)**: 83,3% kueri berhasil menangkap pasal target dalam 5 rekomendasi teratas (naik ke 90,0% pada Recall@10).
+2. **Precision@K (Precision@1 = 0.6667)**: Pada peringkat pertama, presisi mencapai 66,7% (unggul jauh dibanding Hybrid 53,3% dan SimCSE 16,7%).
+3. **MRR@K (MRR@5 = 0.7444 | MRR Global = 0.7542)**: Model R1 menempatkan pasal rujukan tepat di urutan teratas secara konsisten.
 
 #### Justifikasi Ilmiah: Mengapa Dense (R1) Mengungguli Hybrid (R3)?
 Eksperimen membuktikan bahwa Dense Retrieval BGE-M3 (**MRR 0,7542**) mengungguli Hybrid Retrieval (**MRR 0,6354**), didukung oleh literatur primer:
@@ -543,7 +543,7 @@ Berikut adalah ringkasan pembagian metrik baku yang digunakan pada **Bab 3 (Meto
 | No | Tahap Pengujian | Objek yang Diuji | Metrik Evaluasi Terpilih | Definisi Singkat Akademis |
 | :---: | :--- | :--- | :--- | :--- |
 | **1** | **Segmentasi Korpus (*Chunking*)** | C1 vs C2 vs C3 | 1. **Distorsi Multi-Pasal (%)**<br>2. **Context Precision** | • Mengukur persentase chunk yang memotong dan mencampurkan lebih dari 1 pasal.<br>• Mengukur rasio kemurnian pasal target dalam jendela konteks LLM. |
-| **2** | **Model Temu-Kembali (*Retriever*)** | R1 vs R2 vs R3 | 1. **MRR**<br>2. **Recall@5**<br>3. **Hit@1 (R@1)** | • Mengukur seberapa tinggi urutan peringkat pasal target ditemukan.<br>• Persentase kueri di mana pasal target masuk dalam 5 teratas.<br>• Persentase kueri di mana pasal target langsung berada di peringkat #1. |
+| **2** | **Model Temu-Kembali (*Retriever*)** | R1 vs R2 vs R3 | 1. **Recall@K**<br>2. **Precision@K**<br>3. **MRR@K** | • Mengukur proporsi pasal relevan yang berhasil tertangkap dalam Top-K.<br>• Mengukur ketepatan dokumen yang ditarik dalam batas peringkat K.<br>• Mengukur kebalikan peringkat (ranking) pasal target pertama dalam Top-K. |
 | **3** | **Kualitas Pembangkitan (*LLM*)** | L1 vs L2 vs L3 | **5 Metrik RAGAS Lengkap**:<br>• *Faithfulness*<br>• *Answer Relevancy*<br>• *Context Precision*<br>• *Context Recall*<br>• *Answer Correctness* | • Tingkat kepatuhan fakta konteks (anti-halusinasi).<br>• Tingkat kerelevanan jawaban terhadap pertanyaan.<br>• Presisi informasi konteks yang diacu.<br>• Kelengkapan pasal rujukan yang tertangkap.<br>• Kebenaran substantif jawaban terhadap ground truth pakar. |
 | **4** | **Ketahanan Keamanan (*Defense*)** | Skenario S1 s.d. S8 | 1. **Attack Success Rate (ASR)**<br>2. **False Positive Rate (FPR)**<br>3. **Defense Latency Overhead (ms)** | • Persentase serangan racun yang berhasil lolos menembus ke LLM.<br>• Persentase dokumen hukum asli yang keliru diblokir (alarm palsu).<br>• Waktu tambahan komputasi akibat verifikasi SHA-256 + NLI. |
 

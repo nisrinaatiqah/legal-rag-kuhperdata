@@ -8,11 +8,13 @@ import {
 } from 'lucide-react';
 import type { DefenseStatusProps } from '../components/SecurityBadge';
 import type { ArticleDoc } from '../components/PasalCard';
+import PasalResponseCard from '../components/PasalResponseCard';
 
 interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  kesimpulan?: string | null;
   timestamp: string;
   defenseStatus?: DefenseStatusProps;
   retrievedPasals?: ArticleDoc[];
@@ -41,136 +43,6 @@ const SUGGESTED_QUERIES = [
     query: 'Apa saja 5 alat bukti yang sah dalam persidangan perdata menurut Pasal 164 HIR?',
   },
 ];
-
-function renderFormattedContent(text: string) {
-  if (!text) return null;
-
-  const lines = text.split('\n');
-  const elements: React.ReactNode[] = [];
-  let currentList: { number?: string; content: React.ReactNode }[] = [];
-
-  const flushList = () => {
-    if (currentList.length > 0) {
-      elements.push(
-        <div key={`list-${elements.length}`} className="my-2 space-y-1.5 pl-0.5">
-          {currentList.map((item, idx) => (
-            <div key={idx} className="flex gap-2.5 items-start leading-relaxed">
-              <span className="font-semibold text-[#75162D] shrink-0 text-xs sm:text-sm">
-                {item.number ? item.number : '•'}
-              </span>
-              <span className="text-xs sm:text-sm flex-1 leading-relaxed text-[#2A171A]">
-                {item.content}
-              </span>
-            </div>
-          ))}
-        </div>
-      );
-      currentList = [];
-    }
-  };
-
-  const renderInline = (str: string): React.ReactNode => {
-    const parts = str.split(/(\*\*.*?\*\*|\*[^*]+?\*)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
-        return (
-          <strong key={i} className="font-semibold text-[#1A0A0D]">
-            {part.slice(2, -2)}
-          </strong>
-        );
-      }
-      if (part.startsWith('*') && part.endsWith('*') && part.length >= 2) {
-        return (
-          <em key={i} className="italic text-[#4A3237]">
-            {part.slice(1, -1)}
-          </em>
-        );
-      }
-      return part;
-    });
-  };
-
-  for (let i = 0; i < lines.length; i++) {
-    const rawLine = lines[i];
-    const trimmed = rawLine.trim();
-
-    // Skip horizontal divider rules
-    if (trimmed === '---' || trimmed === '***' || trimmed === '___') {
-      flushList();
-      continue;
-    }
-
-    if (!trimmed) {
-      flushList();
-      elements.push(<div key={`spacer-${i}`} className="h-1.5" />);
-      continue;
-    }
-
-    // Check for Headings: '### Heading' or '**Heading:**'
-    const isHeadingTag = trimmed.startsWith('#');
-    const isSubHeader =
-      (trimmed.startsWith('**') && trimmed.endsWith(':**')) ||
-      (trimmed.startsWith('**') && trimmed.endsWith('**') && !trimmed.slice(2, -2).includes('**'));
-
-    if (isHeadingTag) {
-      flushList();
-      const title = trimmed.replace(/^#{1,4}\s+/, '');
-      elements.push(
-        <div
-          key={`heading-${i}`}
-          className="font-semibold text-[#3B010B] text-xs sm:text-sm mt-3 mb-1 tracking-tight"
-        >
-          {renderInline(title)}
-        </div>
-      );
-      continue;
-    }
-
-    if (isSubHeader) {
-      flushList();
-      const title = trimmed.replace(/^\*\*|\*\*$/g, '');
-      elements.push(
-        <div
-          key={`subhead-${i}`}
-          className="font-semibold text-[#3B010B] text-xs sm:text-sm mt-3 mb-1 tracking-tight"
-        >
-          {title}
-        </div>
-      );
-      continue;
-    }
-
-    // Check for numbered list: '1. ', '2. ', etc.
-    const numMatch = trimmed.match(/^(\d+[\.\)])\s+(.*)$/);
-    if (numMatch) {
-      currentList.push({
-        number: numMatch[1],
-        content: renderInline(numMatch[2]),
-      });
-      continue;
-    }
-
-    // Check for bullet list: '- ', '* ', '• '
-    const bulletMatch = trimmed.match(/^[-*•]\s+(.*)$/);
-    if (bulletMatch) {
-      currentList.push({
-        content: renderInline(bulletMatch[1]),
-      });
-      continue;
-    }
-
-    // Regular paragraph
-    flushList();
-    elements.push(
-      <p key={`p-${i}`} className="text-xs sm:text-sm leading-relaxed text-[#2A171A]">
-        {renderInline(trimmed)}
-      </p>
-    );
-  }
-
-  flushList();
-  return <div className="space-y-1">{elements}</div>;
-}
 
 function ChatContent() {
   const searchParams = useSearchParams();
@@ -297,10 +169,19 @@ function ChatContent() {
   };
 
   const handleServerSuccess = (data: any) => {
+    let cleanAnswer = data.answer || '';
+    let extractedKesimpulan = data.kesimpulan || null;
+    if (!extractedKesimpulan && cleanAnswer.includes('=== KESIMPULAN ===')) {
+      const parts = cleanAnswer.split('=== KESIMPULAN ===');
+      cleanAnswer = parts[0].trim();
+      extractedKesimpulan = parts[1].trim();
+    }
+
     const assistantMsg: ChatMessage = {
       id: (Date.now() + 1).toString(),
       role: 'assistant',
-      content: data.answer,
+      content: cleanAnswer,
+      kesimpulan: extractedKesimpulan,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       defenseStatus: data.defense_status,
       retrievedPasals: data.retrieved_pasals,
@@ -454,20 +335,21 @@ function ChatContent() {
             </div>
 
             <div
-              className={`rounded-2xl p-6 leading-relaxed max-w-2xl border animate-fade-up ${
+              className={`rounded-2xl p-6 leading-relaxed border animate-fade-up ${
                 msg.role === 'user'
-                  ? 'bg-[#3B010B] text-[#FAF6EE] border-[#3B010B] shadow-sm'
-                  : 'bg-[#FFFFFF] text-[#2A171A] border-[#E8DEC9] shadow-sm'
+                  ? 'bg-[#3B010B] text-[#FAF6EE] border-[#3B010B] shadow-sm max-w-xl ml-auto'
+                  : 'bg-[#FFFFFF] text-[#2A171A] border-[#E8DEC9] shadow-sm max-w-2xl w-full'
               }`}
             >
-              {/* Main Answer Content with Clean Formatting */}
-              <div className="text-xs sm:text-sm leading-relaxed font-normal">
-                {msg.role === 'user' ? (
-                  <div className="whitespace-pre-wrap">{msg.content}</div>
-                ) : (
-                  renderFormattedContent(msg.content)
-                )}
-              </div>
+              {msg.role === 'user' ? (
+                <div className="whitespace-pre-wrap text-xs sm:text-sm">{msg.content}</div>
+              ) : (
+                <PasalResponseCard
+                  answer={msg.content}
+                  kesimpulan={msg.kesimpulan}
+                  docs={msg.retrievedPasals}
+                />
+              )}
             </div>
           </div>
         ))}

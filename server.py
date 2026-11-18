@@ -163,6 +163,7 @@ class DefenseStatus(BaseModel):
 class ChatResponse(BaseModel):
     query: str
     answer: str
+    kesimpulan: Optional[str] = None
     llm_used: str
     defense_status: DefenseStatus
     retrieved_pasals: List[ArticleResponse]
@@ -282,11 +283,17 @@ def handle_chat(req: ChatRequest):
         prompt_data = build_legal_prompt(query=query_text, retrieved_chunks=safe_chunks)
 
         answer_text = ""
+        kesimpulan_text = None
         try:
             answer_text = generator.generate(
                 system_prompt=prompt_data["system_prompt"],
                 user_prompt=prompt_data["user_prompt"],
             )
+            # Pisahkan bagian === KESIMPULAN === jika ada untuk struktur respons kartu ala Mas Nicho
+            if "=== KESIMPULAN ===" in answer_text:
+                parts = answer_text.split("=== KESIMPULAN ===")
+                answer_text = parts[0].strip()
+                kesimpulan_text = parts[1].strip()
         except Exception as e:
             logger.warning(f"[!] Gagal panggil LLM ({e}), beralih ke sintesis rujukan terstruktur.")
             # Fallback jika API key belum aktif / model lokal belum start
@@ -345,6 +352,7 @@ def handle_chat(req: ChatRequest):
         return ChatResponse(
             query=query_text,
             answer=answer_text,
+            kesimpulan=kesimpulan_text,
             llm_used=llm_label,
             defense_status=defense_summary,
             retrieved_pasals=retrieved_list,

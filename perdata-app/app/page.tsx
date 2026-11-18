@@ -376,7 +376,7 @@ export default function HomePage() {
                       KUHPerdata
                     </span>
                     <span className="text-xs text-[#6B5559] mt-0.5">
-                      Hukum Perdata Materiel
+                      Kitab Undang-Undang Hukum Perdata
                     </span>
                   </div>
                   <div className="w-9 h-9 rounded-full bg-[#FAF6EE] group-hover:bg-[#75162D] flex items-center justify-center text-[#75162D] group-hover:text-[#FAF6EE] transition-colors shrink-0">
@@ -394,7 +394,7 @@ export default function HomePage() {
                       HIR
                     </span>
                     <span className="text-xs text-[#6B5559] mt-0.5">
-                      Hukum Acara Formil
+                      Herziene Inlandsch Reglement
                     </span>
                   </div>
                   <div className="w-9 h-9 rounded-full bg-[#FAF6EE] group-hover:bg-[#75162D] flex items-center justify-center text-[#75162D] group-hover:text-[#FAF6EE] transition-colors shrink-0">

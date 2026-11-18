@@ -38,9 +38,6 @@ export default function PasalCard({ article, index }: { article: ArticleDoc; ind
             <span className="font-bodoni text-base md:text-lg font-bold tracking-tight text-[#3B010B]">
               Pasal {article.pasal}
             </span>
-            <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] border border-[#F2D9A0] font-sans">
-              {article.source === 'KUHPerdata' ? 'Hukum Materiel' : 'Hukum Acara Formil'}
-            </span>
             {article.buku && (
               <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-white text-[#75162D] border border-[#E8DEC9] font-sans">
                 {article.buku}

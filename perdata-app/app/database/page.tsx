@@ -115,8 +115,8 @@ function DatabaseContent() {
         </h1>
         <p className="text-xs sm:text-sm text-[#6B5559] max-w-2xl font-sans font-normal mt-1 leading-relaxed">
           {selectedSource === 'HIR'
-            ? 'Ketentuan hukum acara perdata dari sumber terpercaya.'
-            : 'Ketentuan hukum perdata materiil dari sumber terpercaya.'}
+            ? 'Ketentuan Herziene Inlandsch Reglement (HIR) dari sumber terpercaya.'
+            : 'Ketentuan Kitab Undang-Undang Hukum Perdata (KUHPerdata) dari sumber terpercaya.'}
         </p>
       </div>
 
@@ -141,7 +141,7 @@ function DatabaseContent() {
         <div className="flex items-center justify-between gap-2 border-b border-[#FAF6EE] pb-2.5">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#75162D]">
             <Layers className="w-3.5 h-3.5" />
-            <span>Pilih Jenis</span>
+            <span>Pilih Bab / Kategori</span>
           </div>
 
           {(selectedCategory || searchQuery) && (
@@ -166,7 +166,7 @@ function DatabaseContent() {
             }}
             className="w-full appearance-none px-4 py-2.5 pr-10 rounded-xl bg-white border border-[#E8DEC9] text-xs sm:text-sm font-semibold text-[#3B010B] focus:outline-none focus:border-[#75162D] shadow-2xs cursor-pointer hover:border-[#75162D]/60 transition-colors"
           >
-            <option value="">Pilih Jenis</option>
+            <option value="">Semua Bab / Kategori</option>
             {selectedSource === 'KUHPerdata' ? (
               <>
                 <optgroup label="Buku I: Orang & Keluarga">

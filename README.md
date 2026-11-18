@@ -1,3 +1,14 @@
+---
+title: CiviLex AI Backend
+emoji: ⚖️
+colorFrom: red
+colorTo: red
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+---
+
 # Legal Question Answering Hukum Perdata Berbasis RAG dengan Deteksi Knowledge Poisoning
 
 Repositori implementasi sistem *Legal Question Answering* (Legal QA) hukum perdata Indonesia (KUHPerdata dan HIR) berbasis *Retrieval-Augmented Generation* (RAG) yang dilengkapi modul pertahanan berlapis terhadap serangan manipulasi korpus (*knowledge poisoning*).

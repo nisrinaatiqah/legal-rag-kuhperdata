@@ -105,20 +105,20 @@ class DeepSeekOllamaGenerator(BaseLegalGenerator):
 class GeminiGenerator(BaseLegalGenerator):
     """
     [GENERATOR L2: GOOGLE GEMINI VIA OFFICIAL SDK]
-    - Menggunakan API Google Gemini (model default: gemini-3.5-flash).
-    - Cepat, memiliki jendela konteks besar, dan penulisan bahasa Indonesia yang sangat luwes.
+    - Menggunakan API Google Gemini (model aktif: gemini-3.1-flash-lite / gemini-3.5-flash-lite).
+    - Cepat, stabil, dan dilengkapi mekanisme multi-model failover otomatis jika terjadi lonjakan traffic (503).
     """
 
-    def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-3.5-flash"):
+    def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-3.1-flash-lite"):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
         self.model_name = model_name
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
-        """Memanggil API Google GenAI untuk menghasilkan jawaban hukum."""
+        """Memanggil API Google GenAI untuk menghasilkan jawaban hukum dengan failover otomatis."""
         if not self.api_key:
             return (
-                "[GEMINI_API_KEY TIDAK DITEMUKAN]: Masukkan API Key Google Gemini Anda "
-                "ke environment variable GEMINI_API_KEY, berkas .env, atau kolom input sidebar."
+                "Mohon maaf, API Key Google Gemini belum terkonfigurasi. "
+                "Silakan periksa konfigurasi GEMINI_API_KEY di file .env."
             )
 
         try:
@@ -126,23 +126,53 @@ class GeminiGenerator(BaseLegalGenerator):
             from google.genai import types
 
             client = genai.Client(api_key=self.api_key)
-            
-            # Memastikan model mengarah ke versi aktif
-            target_model = self.model_name
-            if target_model in ["gemini-2.5-flash", "gemini-1.5-flash"]:
-                target_model = "gemini-3.5-flash"
 
-            response = client.models.generate_content(
-                model=target_model,
-                contents=user_prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=system_prompt,
-                    temperature=0.1,
-                ),
+            # Daftar kandidat model aktif berurutan untuk redundansi/failover otomatis jika 503
+            candidate_models = [
+                "gemini-3.1-flash-lite",
+                "gemini-3.5-flash-lite",
+                "gemini-3-flash-preview",
+                "gemini-flash-lite-latest",
+                "gemini-3.8-flash",
+            ]
+            if self.model_name in candidate_models:
+                candidate_models.remove(self.model_name)
+                candidate_models.insert(0, self.model_name)
+            else:
+                candidate_models.insert(0, self.model_name)
+
+            last_error = None
+            for target_model in candidate_models:
+                try:
+                    response = client.models.generate_content(
+                        model=target_model,
+                        contents=user_prompt,
+                        config=types.GenerateContentConfig(
+                            system_instruction=system_prompt,
+                            temperature=0.1,
+                        ),
+                    )
+                    if response and response.text:
+                        return response.text
+                except Exception as model_err:
+                    err_msg = str(model_err)
+                    last_error = err_msg
+                    # Jika 503 (High Demand) atau 404/NOT_FOUND, coba model berikutnya
+                    if any(code in err_msg for code in ["503", "UNAVAILABLE", "NOT_FOUND", "404", "429"]):
+                        continue
+                    else:
+                        break
+
+            # Jika seluruh model cloud sedang mengalami lonjakan beban
+            return (
+                "Mohon maaf, server AI Google Gemini sedang mengalami lonjakan antrean trafik global "
+                "(503 High Demand). Silakan kirim ulang pertanyaan Anda dalam beberapa detik."
             )
-            return response.text
         except Exception as e:
-            return f"[ERROR PEMANGGILAN GEMINI]: {e}"
+            return (
+                f"Mohon maaf, terjadi kendala saat memproses jawaban: {e}. "
+                "Silakan coba kirim kembali pertanyaan Anda."
+            )
 
 
 class DeepSeekGenerator(BaseLegalGenerator):

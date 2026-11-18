@@ -16,6 +16,27 @@ if str(BASE_DIR) not in sys.path:
 from dotenv import load_dotenv
 load_dotenv(BASE_DIR / ".env")
 
+# Shim untuk kompatibilitas gradio 4.44 dengan versi terbaru huggingface_hub
+try:
+    import huggingface_hub
+    if not hasattr(huggingface_hub, "HfFolder"):
+        class HfFolder:
+            @staticmethod
+            def get_token():
+                try:
+                    return huggingface_hub.get_token()
+                except Exception:
+                    return os.environ.get("HF_TOKEN")
+            @staticmethod
+            def save_token(token):
+                pass
+            @staticmethod
+            def delete_token():
+                pass
+        huggingface_hub.HfFolder = HfFolder
+except Exception:
+    pass
+
 import gradio as gr
 from server import app as fastapi_app
 

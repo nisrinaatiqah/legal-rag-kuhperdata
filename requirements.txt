@@ -7,4 +7,5 @@ sentence-transformers>=2.5.0
 transformers>=4.38.0
 rank-bm25>=0.2.2
 requests>=2.31.0
+huggingface_hub<0.25.0
 gradio>=4.0.0

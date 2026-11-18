@@ -20,11 +20,18 @@ class LegalEmbedder:
         [PROSES 1: INISIALISASI MODEL]
         Memuat bobot pre-trained model ke memori GPU (CUDA) jika tersedia, atau CPU sebagai fallback.
         """
+        import os
         from sentence_transformers import SentenceTransformer
         import torch
 
         if device is None:
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+            if os.getenv("SPACE_ID") or os.getenv("FORCE_CPU") == "1":
+                self.device = "cpu"
+            else:
+                try:
+                    self.device = "cuda" if torch.cuda.is_available() else "cpu"
+                except Exception:
+                    self.device = "cpu"
         else:
             self.device = device
 

@@ -1,7 +1,7 @@
 """
-CiviLex AI — Hugging Face Spaces Runner (FastAPI Backend Server)
+CiviLex AI — Hugging Face Spaces Runner (FastAPI + Gradio Status)
 Menjalankan FastAPI backend (server.py) di dalam Hugging Face Space
-lengkap dengan antarmuka status elegan di root (/) dan endpoint API untuk Vercel.
+lengkap dengan antarmuka status elegan di root (/) dan Gradio monitor di (/status).
 """
 
 import os
@@ -16,17 +16,61 @@ if str(BASE_DIR) not in sys.path:
 from dotenv import load_dotenv
 load_dotenv(BASE_DIR / ".env")
 
-# Kompatibilitas dengan Hugging Face ZeroGPU
+# Shim untuk kompatibilitas gradio 4.44 dengan versi terbaru huggingface_hub
 try:
-    import spaces
-    @spaces.GPU
-    def zero_gpu_keepalive():
-        return True
+    import huggingface_hub
+    if not hasattr(huggingface_hub, "HfFolder"):
+        class HfFolder:
+            @staticmethod
+            def get_token():
+                try:
+                    return huggingface_hub.get_token()
+                except Exception:
+                    return os.environ.get("HF_TOKEN")
+            @staticmethod
+            def save_token(token):
+                pass
+            @staticmethod
+            def delete_token():
+                pass
+        huggingface_hub.HfFolder = HfFolder
 except Exception:
     pass
 
+import gradio as gr
 from fastapi.responses import HTMLResponse
 from server import app as fastapi_app
+
+# Kompatibilitas dengan Hugging Face ZeroGPU
+try:
+    import spaces
+    gpu_decorator = spaces.GPU
+except Exception:
+    def gpu_decorator(fn):
+        return fn
+
+@gpu_decorator
+def check_health():
+    return "🟢 Server CiviLex AI Aktif! Endpoint API siap melayani kueri hukum perdata (KUHPerdata & HIR)."
+
+# Antarmuka monitoring Gradio untuk validasi ZeroGPU
+with gr.Blocks(title="CiviLex AI — Legal RAG Backend") as demo:
+    gr.Markdown(
+        """
+        # ⚖️ CiviLex AI — Backend API Server
+        **Sistem Legal Question Answering Hukum Perdata (KUHPerdata & HIR) dengan Pertahanan Knowledge Poisoning**
+        
+        Server ini aktif melayani API untuk frontend resmi yang di-deploy di Vercel:
+        [https://civilexai-kuhperdata.vercel.app](https://civilexai-kuhperdata.vercel.app)
+        """
+    )
+    with gr.Row():
+        btn = gr.Button("Cek Status Server", variant="primary")
+        output = gr.Textbox(label="Status Server", value="🟢 Siap Menerima Permintaan")
+    btn.click(fn=check_health, outputs=output)
+
+    gr.Markdown("---")
+    gr.Markdown("Documentation Swagger API tersedia di: `/docs`")
 
 # Root dashboard elegan untuk kunjungan langsung via browser Hugging Face Spaces
 @fastapi_app.get("/", response_class=HTMLResponse)
@@ -180,16 +224,16 @@ def index_dashboard():
             <a href="/docs" target="_blank" class="btn btn-secondary">
                 Dokumentasi Swagger API (/docs)
             </a>
-            <a href="/api/health" target="_blank" class="btn btn-secondary">
-                Cek Status Health API (/api/health)
+            <a href="/status" target="_blank" class="btn btn-secondary">
+                Monitoring Gradio (/status)
             </a>
         </div>
     </div>
 </body>
 </html>"""
 
-# Ekspor objek app utama untuk uvicorn / Hugging Face runner
-app = fastapi_app
+# Mount Gradio pada /status agar tidak menimpa root /
+app = gr.mount_gradio_app(fastapi_app, demo, path="/status")
 
 if __name__ == "__main__":
     import uvicorn

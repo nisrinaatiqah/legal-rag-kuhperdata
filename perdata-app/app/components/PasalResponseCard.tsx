@@ -2,16 +2,9 @@
 
 import React, { useState } from 'react';
 import { BookOpen, Copy, Check, Sparkles, Scale } from 'lucide-react';
+import type { ArticleDoc } from './PasalCard';
 
-export interface ArticleDoc {
-  pasal: string;
-  source: string;
-  bab_title?: string;
-  content: string;
-  score: number;
-  sha256?: string;
-  is_poisoned?: boolean;
-}
+export type { ArticleDoc };
 
 interface PasalResponseCardProps {
   answer: string;

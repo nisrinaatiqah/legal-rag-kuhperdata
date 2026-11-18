@@ -193,12 +193,22 @@ def generate_plek_docx(
     """
     doc = docx.Document()
 
-    # Set Margins persis seperti raw PDF (1 inci)
+    # Set Paper Size & Margins persis seperti raw PDF
     for s in doc.sections:
-        s.top_margin = Inches(1.0)
-        s.bottom_margin = Inches(1.0)
-        s.left_margin = Inches(1.15)
-        s.right_margin = Inches(1.15)
+        if source_name == "KUHPerdata":
+            s.page_width = Inches(8.27)   # A4
+            s.page_height = Inches(11.69)
+            s.top_margin = Inches(1.0)
+            s.bottom_margin = Inches(1.0)
+            s.left_margin = Inches(1.18)  # ~85pt
+            s.right_margin = Inches(1.0)
+        else:
+            s.page_width = Inches(8.5)    # Letter
+            s.page_height = Inches(11.0)
+            s.top_margin = Inches(1.0)
+            s.bottom_margin = Inches(1.0)
+            s.left_margin = Inches(1.41)  # ~101.5pt
+            s.right_margin = Inches(1.0)
 
     font_name = "Garamond" if source_name == "KUHPerdata" else "Arial"
 
@@ -221,8 +231,8 @@ def generate_plek_docx(
 
         elif el_type == "text":
             p = doc.add_paragraph()
-            p.paragraph_format.space_before = Pt(3)
-            p.paragraph_format.space_after = Pt(3)
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(2)
             p.paragraph_format.line_spacing = 1.15
 
             # Deteksi apakah judul utama di halaman 1
@@ -233,6 +243,7 @@ def generate_plek_docx(
                 run.font.size = Pt(12)
                 run.font.bold = True
             else:
+                p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
                 run = p.add_run(text)
                 run.font.name = font_name
                 run.font.size = Pt(10.5)
@@ -244,6 +255,11 @@ def generate_plek_docx(
 
             # Paragraf Kepala Pasal: "Pasal X"
             p_head = doc.add_paragraph()
+            if source_name == "KUHPerdata":
+                p_head.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            else:
+                p_head.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
             p_head.paragraph_format.space_before = Pt(8)
             p_head.paragraph_format.space_after = Pt(2)
             p_head.paragraph_format.line_spacing = 1.15
@@ -261,8 +277,9 @@ def generate_plek_docx(
 
             # Paragraf Isi Pasal
             p_body = doc.add_paragraph()
+            p_body.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
             p_body.paragraph_format.space_before = Pt(0)
-            p_body.paragraph_format.space_after = Pt(6)
+            p_body.paragraph_format.space_after = Pt(4)
             p_body.paragraph_format.line_spacing = 1.15
 
             if is_poison:

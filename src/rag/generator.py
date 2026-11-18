@@ -104,44 +104,85 @@ class DeepSeekOllamaGenerator(BaseLegalGenerator):
 
 class GeminiGenerator(BaseLegalGenerator):
     """
-    [GENERATOR L2: GOOGLE GEMINI VIA OFFICIAL SDK]
-    - Menggunakan API Google Gemini (model aktif: gemini-3.1-flash-lite / gemini-3.5-flash-lite).
-    - Cepat, stabil, dan dilengkapi mekanisme multi-model failover otomatis jika terjadi lonjakan traffic (503).
+    [GENERATOR L2: GOOGLE GEMINI VIA REST API & OFFICIAL SDK]
+    - Menggunakan API Google Gemini (model aktif: gemini-2.5-flash / gemini-3.8-flash / gemini-flash-lite-latest).
+    - Beroperasi via REST HTTP calls standar (requests) untuk kompatibilitas penuh tanpa konflik dependency.
     """
 
-    def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-3.1-flash-lite"):
+    def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-2.5-flash"):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
         self.model_name = model_name
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
-        """Memanggil API Google GenAI untuk menghasilkan jawaban hukum dengan failover otomatis."""
+        """Memanggil API Google Gemini untuk menghasilkan jawaban hukum dengan failover otomatis."""
         if not self.api_key:
             return (
                 "Mohon maaf, API Key Google Gemini belum terkonfigurasi. "
                 "Silakan periksa konfigurasi GEMINI_API_KEY di file .env."
             )
 
+        candidate_models = [
+            "gemini-2.5-flash",
+            "gemini-3.8-flash",
+            "gemini-2.0-flash",
+            "gemini-flash-lite-latest",
+            "gemini-3.1-flash-lite",
+        ]
+        if self.model_name in candidate_models:
+            candidate_models.remove(self.model_name)
+            candidate_models.insert(0, self.model_name)
+        else:
+            candidate_models.insert(0, self.model_name)
+
+        # 1. Coba via REST API langsung (tanpa perlu google-genai / websockets)
+        import requests
+        payload = {
+            "system_instruction": {
+                "parts": [{"text": system_prompt}]
+            },
+            "contents": [
+                {
+                    "parts": [{"text": user_prompt}]
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0.1,
+            }
+        }
+
+        last_error = None
+        for target_model in candidate_models:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{target_model}:generateContent?key={self.api_key}"
+            try:
+                resp = requests.post(
+                    url,
+                    headers={"Content-Type": "application/json"},
+                    json=payload,
+                    timeout=45
+                )
+                if resp.status_code == 200:
+                    data = resp.json()
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts and "text" in parts[0]:
+                            return parts[0]["text"]
+                elif resp.status_code in [404, 429, 500, 503]:
+                    last_error = f"{resp.status_code}: {resp.text[:120]}"
+                    continue
+                else:
+                    last_error = f"{resp.status_code}: {resp.text[:120]}"
+                    break
+            except Exception as req_err:
+                last_error = str(req_err)
+                continue
+
+        # 2. Fallback: jika google.genai terinstall di lingkungan eksekusi
         try:
             from google import genai
             from google.genai import types
 
             client = genai.Client(api_key=self.api_key)
-
-            # Daftar kandidat model aktif berurutan untuk redundansi/failover otomatis jika 503
-            candidate_models = [
-                "gemini-3.1-flash-lite",
-                "gemini-3.5-flash-lite",
-                "gemini-3-flash-preview",
-                "gemini-flash-lite-latest",
-                "gemini-3.8-flash",
-            ]
-            if self.model_name in candidate_models:
-                candidate_models.remove(self.model_name)
-                candidate_models.insert(0, self.model_name)
-            else:
-                candidate_models.insert(0, self.model_name)
-
-            last_error = None
             for target_model in candidate_models:
                 try:
                     response = client.models.generate_content(
@@ -154,24 +195,15 @@ class GeminiGenerator(BaseLegalGenerator):
                     )
                     if response and response.text:
                         return response.text
-                except Exception as model_err:
-                    err_msg = str(model_err)
-                    last_error = err_msg
-                    # Jika 503 (High Demand) atau 404/NOT_FOUND, coba model berikutnya
-                    if any(code in err_msg for code in ["503", "UNAVAILABLE", "NOT_FOUND", "404", "429"]):
-                        continue
-                    else:
-                        break
+                except Exception:
+                    continue
+        except ImportError:
+            pass
 
-            # Jika seluruh model cloud sedang mengalami lonjakan beban
-            return (
-                "Mohon maaf, server AI Google Gemini sedang mengalami lonjakan antrean trafik global "
-                "(503 High Demand). Silakan kirim ulang pertanyaan Anda dalam beberapa detik."
-            )
-        except Exception as e:
-            return (
-                f"Mohon maaf, terjadi kendala saat memproses jawaban: {e}. "
-                "Silakan coba kirim kembali pertanyaan Anda."
+        return (
+            "Mohon maaf, server AI Google Gemini sedang mengalami lonjakan antrean trafik global "
+            f"atau kendala koneksi ({last_error}). Silakan kirim ulang pertanyaan Anda dalam beberapa detik."
+        )
             )
 
 

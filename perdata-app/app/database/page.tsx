@@ -54,9 +54,10 @@ function DatabaseContent() {
       params.append('limit', limit.toString());
       params.append('offset', (pageNum * limit).toString());
 
-      let res = await fetch(`/api/database?${params.toString()}`);
+      const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+      let res = await fetch(`${backendUrl}/api/database?${params.toString()}`).catch(() => null as any);
       if (!res || !res.ok) {
-        res = await fetch(`/api/py/database?${params.toString()}`).catch(() => null as any);
+        res = await fetch(`/api/database?${params.toString()}`).catch(() => null as any);
       }
       if (!res || !res.ok) {
         res = await fetch(`http://127.0.0.1:8000/api/database?${params.toString()}`).catch(() => null as any);

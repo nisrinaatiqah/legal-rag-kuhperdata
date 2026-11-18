@@ -425,40 +425,43 @@ def generate_plek_pdf(
 
 def main():
     print("=" * 75)
-    print("PEMBANGUNAN NASKAH HUKUM PLEK FORMAT RAW (DENGAN TEKS MERAH POISONED)")
+    print("PEMBANGUNAN NASKAH HUKUM PLEK FORMAT RAW (VERSI 1%, 5%, 10% POISONING)")
     print("=" * 75)
-
-    kuhp_map, hir_map = load_poisoned_map("1pct")
-    print(f"[*] Jumlah pasal teracuni terdeteksi: KUHPerdata = {len(kuhp_map)}, HIR = {len(hir_map)}")
 
     out_dir = BASE_DIR / "data" / "poisoning"
 
-    # 1. KUHPERDATA
-    print("\n[1/2] Memproses KUHPerdata...")
+    print("\n[*] Membaca naskah dasar...")
     kuhp_elements = parse_kuhperdata_stream()
-    print(f"    - Terurai {len(kuhp_elements)} elemen naskah.")
-    
-    kuhp_docx = out_dir / "KUHPerdata_Raw_Poisoned_1pct.docx"
-    kuhp_pdf = out_dir / "KUHPerdata_Raw_Poisoned_1pct.pdf"
-    generate_plek_docx(kuhp_elements, kuhp_map, "KUHPerdata", kuhp_docx)
-    generate_plek_pdf(kuhp_elements, kuhp_map, "KUHPerdata", kuhp_pdf)
-
-    # 2. HIR
-    print("\n[2/2] Memproses HIR...")
     hir_elements = parse_hir_stream()
-    print(f"    - Terurai {len(hir_elements)} elemen naskah.")
-    
-    hir_docx = out_dir / "HIR_Raw_Poisoned_1pct.docx"
-    hir_pdf = out_dir / "HIR_Raw_Poisoned_1pct.pdf"
-    generate_plek_docx(hir_elements, hir_map, "HIR", hir_docx)
-    generate_plek_pdf(hir_elements, hir_map, "HIR", hir_pdf)
+    print(f"    - KUHPerdata terurai: {len(kuhp_elements)} elemen.")
+    print(f"    - HIR terurai: {len(hir_elements)} elemen.")
+
+    rates = [("1pct", "1%"), ("5pct", "5%"), ("10pct", "10%")]
+
+    for rate_str, label in rates:
+        print(f"\n{'='*30} MEMPROSES TINGKAT {label} ({rate_str}) {'='*30}")
+        kuhp_map, hir_map = load_poisoned_map(rate_str)
+        print(f"[*] Terdeteksi pasal teracuni: KUHPerdata = {len(kuhp_map)}, HIR = {len(hir_map)}")
+
+        # 1. KUHPerdata
+        print(f"  -> Menyusun KUHPerdata ({label})...")
+        kuhp_docx = out_dir / f"KUHPerdata_Raw_Poisoned_{rate_str}.docx"
+        kuhp_pdf = out_dir / f"KUHPerdata_Raw_Poisoned_{rate_str}.pdf"
+        generate_plek_docx(kuhp_elements, kuhp_map, "KUHPerdata", kuhp_docx)
+        generate_plek_pdf(kuhp_elements, kuhp_map, "KUHPerdata", kuhp_pdf)
+
+        # 2. HIR
+        print(f"  -> Menyusun HIR ({label})...")
+        hir_docx = out_dir / f"HIR_Raw_Poisoned_{rate_str}.docx"
+        hir_pdf = out_dir / f"HIR_Raw_Poisoned_{rate_str}.pdf"
+        generate_plek_docx(hir_elements, hir_map, "HIR", hir_docx)
+        generate_plek_pdf(hir_elements, hir_map, "HIR", hir_pdf)
 
     print("\n" + "=" * 75)
-    print("BERHASIL! Berkas naskah raw-replica dengan teks merah telah terbit:")
-    print(f"1. KUHPerdata Word : {kuhp_docx.name}")
-    print(f"2. KUHPerdata PDF  : {kuhp_pdf.name}")
-    print(f"3. HIR Word        : {hir_docx.name}")
-    print(f"4. HIR PDF         : {hir_pdf.name}")
+    print("BERHASIL! Seluruh naskah lengkap 1%, 5%, dan 10% telah terbit:")
+    for rate_str, label in rates:
+        print(f"  - [{label}] KUHPerdata : KUHPerdata_Raw_Poisoned_{rate_str}.docx & .pdf")
+        print(f"  - [{label}] HIR        : HIR_Raw_Poisoned_{rate_str}.docx & .pdf")
     print("=" * 75)
 
 

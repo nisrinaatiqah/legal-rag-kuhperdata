@@ -40,6 +40,15 @@ except Exception:
 import gradio as gr
 from server import app as fastapi_app
 
+# Kompatibilitas dengan Hugging Face ZeroGPU
+try:
+    import spaces
+    gpu_decorator = spaces.GPU
+except Exception:
+    def gpu_decorator(fn):
+        return fn
+
+@gpu_decorator
 def check_health():
     return "🟢 Server CiviLex AI Aktif! Endpoint API siap melayani kueri hukum perdata (KUHPerdata & HIR)."
 

@@ -185,15 +185,10 @@ export default function PasalResponseCard({
       {/* 2. BAGIAN REKOMENDASI PASAL BER-TAB (ARSITEKTUR MAS NICHO) */}
       {uniqueDocs.length > 0 && activeDoc && (
         <div className="pt-2 border-t border-[#E8DEC9]/70 flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-[#75162D]" />
-              <span className="text-xs font-bold text-[#3B010B] tracking-tight">
-                Rekomendasi Ketentuan Resmi
-              </span>
-            </div>
-            <span className="text-[10px] font-medium text-[#8C7A7E] bg-[#FAF6EE] px-2 py-0.5 rounded-full border border-[#E8DEC9]">
-              {uniqueDocs.length} Ketentuan Rujukan
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-[#75162D]" />
+            <span className="text-xs font-bold text-[#3B010B] tracking-tight">
+              Rekomendasi Pasal
             </span>
           </div>
 
@@ -260,24 +255,6 @@ export default function PasalResponseCard({
               <p className="text-xs sm:text-sm leading-relaxed text-[#2A171A] font-serif whitespace-pre-wrap">
                 &ldquo;{activeDoc.content.trim()}&rdquo;
               </p>
-            </div>
-
-            {/* Relevance Score Bar */}
-            <div className="px-4 py-2 bg-[#FAF6EE]/80 border-t border-[#E8DEC9]/60 flex items-center gap-3">
-              <span className="text-[10px] font-medium text-[#6B5559] shrink-0">
-                Relevansi Retrieval
-              </span>
-              <div className="flex-1 h-1.5 bg-[#E8DEC9] rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-[#A32035] to-[#75162D] rounded-full transition-all duration-300"
-                  style={{
-                    width: `${Math.min(Math.max((activeDoc.score || 0) * 100, 15), 100)}%`,
-                  }}
-                />
-              </div>
-              <span className="text-[10px] font-bold text-[#75162D] shrink-0">
-                {Math.round((activeDoc.score || 0) * 100)}%
-              </span>
             </div>
           </div>
         </div>

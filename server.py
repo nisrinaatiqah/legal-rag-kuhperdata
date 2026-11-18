@@ -292,19 +292,15 @@ def handle_chat(req: ChatRequest):
             # Fallback jika API key belum aktif / model lokal belum start
             if not safe_chunks:
                 answer_text = (
-                    "Mohon maaf, tidak ditemukan ketentuan pasal yang sah dan lolos verifikasi integritas "
-                    "untuk menjawab kueri hukum tersebut."
+                    "Mohon maaf, tidak ditemukan ketentuan pasal yang relevan untuk menjawab kueri hukum tersebut."
                 )
             else:
                 lines = [
-                    f"Berdasarkan penelusuran naskah resmi hukum perdata terkait *'{query_text}'*:\n"
+                    f"Berdasarkan naskah regulasi terkait {query_text}:\n"
                 ]
                 for sc in safe_chunks[:3]:
-                    lines.append(f"### {sc['source']} Pasal {sc.get('pasal')}")
-                    lines.append(f"> \"{sc.get('content')}\"\n")
-                lines.append(
-                    "\n*Catatan: Jawaban disintesis langsung dari basis data pasal otentik terverifikasi.*"
-                )
+                    lines.append(f"**{sc['source']} Pasal {sc.get('pasal')}**")
+                    lines.append(f"{sc.get('content')}\n")
                 answer_text = "\n".join(lines)
 
         # 6. Format Response

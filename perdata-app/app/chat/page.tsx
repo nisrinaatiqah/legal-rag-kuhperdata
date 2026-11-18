@@ -4,14 +4,10 @@ import { useState, useRef, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
   ArrowUpRight,
-  Scale,
   RefreshCw,
-  FileText,
-  Sliders,
-  Sparkles,
 } from 'lucide-react';
-import SecurityBadge, { DefenseStatusProps } from '../components/SecurityBadge';
-import PasalCard, { ArticleDoc } from '../components/PasalCard';
+import type { DefenseStatusProps } from '../components/SecurityBadge';
+import type { ArticleDoc } from '../components/PasalCard';
 
 interface ChatMessage {
   id: string;
@@ -45,6 +41,136 @@ const SUGGESTED_QUERIES = [
     query: 'Apa saja 5 alat bukti yang sah dalam persidangan perdata menurut Pasal 164 HIR?',
   },
 ];
+
+function renderFormattedContent(text: string) {
+  if (!text) return null;
+
+  const lines = text.split('\n');
+  const elements: React.ReactNode[] = [];
+  let currentList: { number?: string; content: React.ReactNode }[] = [];
+
+  const flushList = () => {
+    if (currentList.length > 0) {
+      elements.push(
+        <div key={`list-${elements.length}`} className="my-2 space-y-1.5 pl-0.5">
+          {currentList.map((item, idx) => (
+            <div key={idx} className="flex gap-2.5 items-start leading-relaxed">
+              <span className="font-semibold text-[#75162D] shrink-0 text-xs sm:text-sm">
+                {item.number ? item.number : '•'}
+              </span>
+              <span className="text-xs sm:text-sm flex-1 leading-relaxed text-[#2A171A]">
+                {item.content}
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+      currentList = [];
+    }
+  };
+
+  const renderInline = (str: string): React.ReactNode => {
+    const parts = str.split(/(\*\*.*?\*\*|\*[^*]+?\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+        return (
+          <strong key={i} className="font-semibold text-[#1A0A0D]">
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+      if (part.startsWith('*') && part.endsWith('*') && part.length >= 2) {
+        return (
+          <em key={i} className="italic text-[#4A3237]">
+            {part.slice(1, -1)}
+          </em>
+        );
+      }
+      return part;
+    });
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const rawLine = lines[i];
+    const trimmed = rawLine.trim();
+
+    // Skip horizontal divider rules
+    if (trimmed === '---' || trimmed === '***' || trimmed === '___') {
+      flushList();
+      continue;
+    }
+
+    if (!trimmed) {
+      flushList();
+      elements.push(<div key={`spacer-${i}`} className="h-1.5" />);
+      continue;
+    }
+
+    // Check for Headings: '### Heading' or '**Heading:**'
+    const isHeadingTag = trimmed.startsWith('#');
+    const isSubHeader =
+      (trimmed.startsWith('**') && trimmed.endsWith(':**')) ||
+      (trimmed.startsWith('**') && trimmed.endsWith('**') && !trimmed.slice(2, -2).includes('**'));
+
+    if (isHeadingTag) {
+      flushList();
+      const title = trimmed.replace(/^#{1,4}\s+/, '');
+      elements.push(
+        <div
+          key={`heading-${i}`}
+          className="font-semibold text-[#3B010B] text-xs sm:text-sm mt-3 mb-1 tracking-tight"
+        >
+          {renderInline(title)}
+        </div>
+      );
+      continue;
+    }
+
+    if (isSubHeader) {
+      flushList();
+      const title = trimmed.replace(/^\*\*|\*\*$/g, '');
+      elements.push(
+        <div
+          key={`subhead-${i}`}
+          className="font-semibold text-[#3B010B] text-xs sm:text-sm mt-3 mb-1 tracking-tight"
+        >
+          {title}
+        </div>
+      );
+      continue;
+    }
+
+    // Check for numbered list: '1. ', '2. ', etc.
+    const numMatch = trimmed.match(/^(\d+[\.\)])\s+(.*)$/);
+    if (numMatch) {
+      currentList.push({
+        number: numMatch[1],
+        content: renderInline(numMatch[2]),
+      });
+      continue;
+    }
+
+    // Check for bullet list: '- ', '* ', '• '
+    const bulletMatch = trimmed.match(/^[-*•]\s+(.*)$/);
+    if (bulletMatch) {
+      currentList.push({
+        content: renderInline(bulletMatch[1]),
+      });
+      continue;
+    }
+
+    // Regular paragraph
+    flushList();
+    elements.push(
+      <p key={`p-${i}`} className="text-xs sm:text-sm leading-relaxed text-[#2A171A]">
+        {renderInline(trimmed)}
+      </p>
+    );
+  }
+
+  flushList();
+  return <div className="space-y-1">{elements}</div>;
+}
 
 function ChatContent() {
   const searchParams = useSearchParams();
@@ -322,18 +448,9 @@ function ChatContent() {
               msg.role === 'user' ? 'items-end' : 'items-start'
             }`}
           >
-            <div className="flex items-center gap-2 px-1 text-[11px] text-[#6B5559] font-medium">
-              <span>{msg.role === 'user' ? 'Pertanyaan Anda' : 'Analisis CiviLex AI'}</span>
-              <span>•</span>
+            {/* Timestamp Only */}
+            <div className="px-1 text-[11px] text-[#8C7A7E] font-medium">
               <span>{msg.timestamp}</span>
-              {msg.scopeUsed && (
-                <>
-                  <span>•</span>
-                  <span className="px-2 py-0.5 rounded-full bg-[#F2E5C6] text-[#560B18] text-[10px] font-bold">
-                    {msg.scopeUsed === 'KUHPerdata' ? 'KUHPerdata' : msg.scopeUsed === 'HIR' ? 'HIR' : 'KUHPerdata & HIR'}
-                  </span>
-                </>
-              )}
             </div>
 
             <div
@@ -343,29 +460,14 @@ function ChatContent() {
                   : 'bg-[#FFFFFF] text-[#2A171A] border-[#E8DEC9] shadow-sm'
               }`}
             >
-              {/* Security Defense Badge */}
-              {msg.defenseStatus && <SecurityBadge defense={msg.defenseStatus} />}
-
-              {/* Main Answer Content */}
-              <div className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed space-y-3 font-normal">
-                {msg.content}
+              {/* Main Answer Content with Clean Formatting */}
+              <div className="text-xs sm:text-sm leading-relaxed font-normal">
+                {msg.role === 'user' ? (
+                  <div className="whitespace-pre-wrap">{msg.content}</div>
+                ) : (
+                  renderFormattedContent(msg.content)
+                )}
               </div>
-
-              {/* Cited Official Articles */}
-              {msg.retrievedPasals && msg.retrievedPasals.length > 0 && (
-                <div className="mt-6 pt-5 border-t border-[#E8DEC9] flex flex-col gap-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#75162D] flex items-center gap-1.5">
-                    <FileText className="w-3.5 h-3.5" />
-                    Pasal Rujukan Resmi ({msg.retrievedPasals.length} Pasal Terverifikasi):
-                  </span>
-
-                  <div className="space-y-3">
-                    {msg.retrievedPasals.map((art, idx) => (
-                      <PasalCard key={idx} article={art} index={idx} />
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         ))}

@@ -463,9 +463,9 @@ function ChatContent() {
 
                 {/* Dropdown Menu Proteksi (Floating Above) */}
                 {showDefenseMenu && (
-                  <div className="absolute bottom-full mb-2 left-0 sm:left-auto sm:right-0 w-64 bg-white border border-[#E8DEC9] rounded-xl shadow-2xl p-1.5 z-50 flex flex-col gap-1">
+                  <div className="absolute bottom-full mb-2 left-0 sm:left-auto sm:right-0 w-56 bg-white border border-[#E8DEC9] rounded-xl shadow-2xl p-1.5 z-50 flex flex-col gap-1">
                     <div className="px-3 py-1.5 text-[10px] font-bold text-[#8C7A7C] uppercase tracking-wider border-b border-[#F2ECE1]">
-                      Mode Pertahanan RAG
+                      Mode Pertahanan
                     </div>
                     <button
                       type="button"
@@ -473,21 +473,16 @@ function ChatContent() {
                         setEnableDefense(true);
                         setShowDefenseMenu(false);
                       }}
-                      className={`flex flex-col text-left px-3 py-2 rounded-lg transition-all ${
+                      className={`flex items-center justify-between w-full px-3 py-2 rounded-lg transition-all ${
                         enableDefense
                           ? 'bg-[#FAF6EE] border border-[#E8DEC9]'
                           : 'hover:bg-[#FAF6EE]/60'
                       }`}
                     >
-                      <div className="flex items-center justify-between w-full">
-                        <span className="font-semibold text-xs text-emerald-700 flex items-center gap-1.5">
-                          <ShieldCheck className="w-3.5 h-3.5" /> Proteksi Aktif (ON)
-                        </span>
-                        {enableDefense && <Check className="w-3.5 h-3.5 text-emerald-700" />}
-                      </div>
-                      <span className="text-[10px] text-[#8C7A7C] mt-0.5">
-                        Mencegat pasal palsu dengan verifikasi SHA-256 dan NLI
+                      <span className="font-semibold text-xs text-emerald-700 flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5" /> ON (Proteksi Aktif)
                       </span>
+                      {enableDefense && <Check className="w-3.5 h-3.5 text-emerald-700" />}
                     </button>
                     <button
                       type="button"
@@ -495,21 +490,16 @@ function ChatContent() {
                         setEnableDefense(false);
                         setShowDefenseMenu(false);
                       }}
-                      className={`flex flex-col text-left px-3 py-2 rounded-lg transition-all ${
+                      className={`flex items-center justify-between w-full px-3 py-2 rounded-lg transition-all ${
                         !enableDefense
                           ? 'bg-[#FAF6EE] border border-[#E8DEC9]'
                           : 'hover:bg-[#FAF6EE]/60'
                       }`}
                     >
-                      <div className="flex items-center justify-between w-full">
-                        <span className="font-semibold text-xs text-rose-700 flex items-center gap-1.5">
-                          <ShieldAlert className="w-3.5 h-3.5" /> Proteksi Nonaktif (OFF)
-                        </span>
-                        {!enableDefense && <Check className="w-3.5 h-3.5 text-rose-700" />}
-                      </div>
-                      <span className="text-[10px] text-[#8C7A7C] mt-0.5">
-                        Simulasi tanpa saringan pertahanan untuk menguji kerentanan RAG
+                      <span className="font-semibold text-xs text-rose-700 flex items-center gap-1.5">
+                        <ShieldAlert className="w-3.5 h-3.5" /> OFF (Proteksi Nonaktif)
                       </span>
+                      {!enableDefense && <Check className="w-3.5 h-3.5 text-rose-700" />}
                     </button>
                   </div>
                 )}

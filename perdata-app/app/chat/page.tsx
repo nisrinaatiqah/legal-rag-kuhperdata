@@ -5,6 +5,11 @@ import { useSearchParams } from 'next/navigation';
 import {
   ArrowUpRight,
   RefreshCw,
+  FlaskConical,
+  ShieldCheck,
+  ShieldAlert,
+  ChevronDown,
+  Check,
 } from 'lucide-react';
 import type { DefenseStatusProps } from '../components/SecurityBadge';
 import type { ArticleDoc } from '../components/PasalCard';
@@ -66,10 +71,68 @@ function ChatContent() {
   const [enableDefense, setEnableDefense] = useState(true);
   const [corpusScenario, setCorpusScenario] = useState('kuhperdata_hir_bgem3');
   const [showDemoOptions, setShowDemoOptions] = useState(false);
+  const [showCorpusMenu, setShowCorpusMenu] = useState(false);
+  const [showDefenseMenu, setShowDefenseMenu] = useState(false);
+
+  const corpusMenuRef = useRef<HTMLDivElement>(null);
+  const defenseMenuRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasAutoQueried = useRef(false);
   const isInitialMount = useRef(true);
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (corpusMenuRef.current && !corpusMenuRef.current.contains(event.target as Node)) {
+        setShowCorpusMenu(false);
+      }
+      if (defenseMenuRef.current && !defenseMenuRef.current.contains(event.target as Node)) {
+        setShowDefenseMenu(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Auto-resize textarea height
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
+    }
+  }, [input]);
+
+  const corpusOptions = [
+    {
+      id: 'kuhperdata_hir_bgem3',
+      label: 'Non-Poison',
+      badge: '0% Poison',
+      desc: 'Naskah resmi otentik (2.276 pasal KUHPerdata & HIR)',
+    },
+    {
+      id: 'kuhperdata_hir_bgem3_p1pct',
+      label: 'Poison 1%',
+      badge: '1% Poison',
+      desc: 'Simulasi manipulasi minor (~23 pasal beracun)',
+    },
+    {
+      id: 'kuhperdata_hir_bgem3_p5pct',
+      label: 'Poison 5%',
+      badge: '5% Poison',
+      desc: 'Simulasi manipulasi moderat (~114 pasal beracun)',
+    },
+    {
+      id: 'kuhperdata_hir_bgem3_p10pct',
+      label: 'Poison 10%',
+      badge: '10% Poison',
+      desc: 'Simulasi manipulasi masif (~228 pasal beracun)',
+    },
+  ];
+
+  const currentCorpus =
+    corpusOptions.find((c) => c.id === corpusScenario) || corpusOptions[0];
 
   // Ensure view starts precisely at the top on initial load
   useEffect(() => {
@@ -196,89 +259,6 @@ function ChatContent() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 flex flex-col gap-6 pb-12 font-body">
-      {/* Centered Testing Controls: Korpus (Non-Poison, 1%, 5%, 10%) & Proteksi (ON/OFF) */}
-      <div className="flex flex-wrap items-center justify-center gap-3 pt-1 pb-1">
-        {/* Korpus: Non-Poison vs Poison 1%, 5%, 10% */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
-          <span className="text-[11px] text-[#6B5559] font-medium">Korpus:</span>
-          <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
-            <button
-              type="button"
-              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3')}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                corpusScenario === 'kuhperdata_hir_bgem3'
-                  ? 'bg-[#75162D] text-[#FAF6EE] shadow-2xs'
-                  : 'text-[#6B5559] hover:text-[#3B010B]'
-              }`}
-            >
-              Non-Poison
-            </button>
-            <button
-              type="button"
-              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p1pct')}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                corpusScenario === 'kuhperdata_hir_bgem3_p1pct'
-                  ? 'bg-[#c2410c] text-white shadow-2xs'
-                  : 'text-[#6B5559] hover:text-[#3B010B]'
-              }`}
-            >
-              Poison 1%
-            </button>
-            <button
-              type="button"
-              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p5pct')}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                corpusScenario === 'kuhperdata_hir_bgem3_p5pct'
-                  ? 'bg-[#ea580c] text-white shadow-2xs'
-                  : 'text-[#6B5559] hover:text-[#3B010B]'
-              }`}
-            >
-              Poison 5%
-            </button>
-            <button
-              type="button"
-              onClick={() => setCorpusScenario('kuhperdata_hir_bgem3_p10pct')}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                corpusScenario === 'kuhperdata_hir_bgem3_p10pct'
-                  ? 'bg-[#dc2626] text-white shadow-2xs'
-                  : 'text-[#6B5559] hover:text-[#3B010B]'
-              }`}
-            >
-              Poison 10%
-            </button>
-          </div>
-        </div>
-
-        {/* Proteksi: ON vs OFF */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8DEC9] shadow-2xs text-xs font-sans">
-          <span className="text-[11px] text-[#6B5559] font-medium">Proteksi:</span>
-          <div className="flex items-center bg-[#FAF6EE] p-0.5 rounded-full border border-[#E8DEC9]">
-            <button
-              type="button"
-              onClick={() => setEnableDefense(true)}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                enableDefense
-                  ? 'bg-[#15803d] text-white shadow-2xs'
-                  : 'text-[#6B5559] hover:text-[#3B010B]'
-              }`}
-            >
-              ON
-            </button>
-            <button
-              type="button"
-              onClick={() => setEnableDefense(false)}
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
-                !enableDefense
-                  ? 'bg-[#b91c1c] text-white shadow-2xs'
-                  : 'text-[#6B5559] hover:text-[#3B010B]'
-              }`}
-            >
-              OFF
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Conversation Thread */}
       <div className="min-h-[360px] flex flex-col gap-6 font-sans">
         {messages.length === 0 && (
@@ -374,31 +354,179 @@ function ChatContent() {
       {/* Ample bottom spacer so cards and articles are never covered by sticky input */}
       <div className="h-16 pointer-events-none" />
 
-      {/* Floating Query Input */}
+      {/* Floating Query Input with Integrated Controls (Antigravity Style) */}
       <div className="sticky bottom-6 z-20">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(input);
           }}
-          className="relative flex items-center rounded-full bg-white/95 backdrop-blur-md border border-[#E8DEC9] shadow-lg shadow-[#75162D]/5 p-2 focus-within:border-[#75162D] transition-all"
+          className="relative flex flex-col rounded-2xl bg-white/95 backdrop-blur-md border border-[#E8DEC9] shadow-lg shadow-[#75162D]/5 p-2.5 focus-within:border-[#75162D] focus-within:ring-2 focus-within:ring-[#75162D]/10 transition-all"
         >
-          <input
-            type="text"
+          {/* Text Input / Textarea */}
+          <textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ketik pertanyaan pasal atau persoalan perdata..."
-            className="w-full px-5 py-2.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-sans"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(input);
+              }
+            }}
+            placeholder="Ketik pertanyaan pasal atau persoalan perdata... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+            rows={1}
+            className="w-full px-3 py-1.5 text-xs sm:text-sm text-[#2A171A] placeholder-[#8C7A7C] focus:outline-none bg-transparent font-sans resize-none min-h-[38px] max-h-32"
           />
-          <button
-            type="submit"
-            disabled={!input.trim() || loading}
-            className="btn-burgundy-primary px-6 py-2.5 rounded-full disabled:opacity-40 shrink-0 ml-1 text-xs font-bold font-sans flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
-            title="Kirim Pertanyaan"
-          >
-            <span>Kirim</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
+
+          {/* Bottom Toolbar Row: Poisoning & Defense Buttons (Antigravity Style) */}
+          <div className="flex items-center justify-between pt-2 border-t border-[#F2ECE1] mt-1 gap-2">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {/* Tombol Tingkat Poisoning */}
+              <div className="relative" ref={corpusMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowCorpusMenu(!showCorpusMenu);
+                    setShowDefenseMenu(false);
+                  }}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
+                    corpusScenario === 'kuhperdata_hir_bgem3'
+                      ? 'bg-[#FAF6EE] text-[#4A3236] border-[#E8DEC9] hover:bg-[#F2EADB]'
+                      : 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100'
+                  }`}
+                  title="Pilih tingkat manipulasi korpus (Knowledge Poisoning)"
+                >
+                  <FlaskConical className="w-3.5 h-3.5 text-[#75162D]" />
+                  <span>Korpus: {currentCorpus.label}</span>
+                  <ChevronDown className="w-3 h-3 text-[#8C7A7C]" />
+                </button>
+
+                {/* Dropdown Menu Korpus (Floating Above) */}
+                {showCorpusMenu && (
+                  <div className="absolute bottom-full mb-2 left-0 w-72 bg-white border border-[#E8DEC9] rounded-xl shadow-2xl p-1.5 z-50 flex flex-col gap-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#8C7A7C] uppercase tracking-wider border-b border-[#F2ECE1]">
+                      Tingkat Knowledge Poisoning
+                    </div>
+                    {corpusOptions.map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => {
+                          setCorpusScenario(opt.id);
+                          setShowCorpusMenu(false);
+                        }}
+                        className={`flex flex-col text-left px-3 py-2 rounded-lg transition-all ${
+                          corpusScenario === opt.id
+                            ? 'bg-[#FAF6EE] border border-[#E8DEC9]'
+                            : 'hover:bg-[#FAF6EE]/60'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-semibold text-xs text-[#2A171A] flex items-center gap-1.5">
+                            {opt.label}
+                          </span>
+                          {corpusScenario === opt.id && (
+                            <Check className="w-3.5 h-3.5 text-[#75162D]" />
+                          )}
+                        </div>
+                        <span className="text-[10px] text-[#8C7A7C] mt-0.5">{opt.desc}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Tombol Mode Pertahanan (Proteksi) */}
+              <div className="relative" ref={defenseMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDefenseMenu(!showDefenseMenu);
+                    setShowCorpusMenu(false);
+                  }}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
+                    enableDefense
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                      : 'bg-rose-50 text-rose-800 border-rose-300 hover:bg-rose-100'
+                  }`}
+                  title="Pilih status proteksi SHA-256 + NLI"
+                >
+                  {enableDefense ? (
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  ) : (
+                    <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
+                  )}
+                  <span>{enableDefense ? 'Proteksi: ON' : 'Proteksi: OFF'}</span>
+                  <ChevronDown className="w-3 h-3 text-[#8C7A7C]" />
+                </button>
+
+                {/* Dropdown Menu Proteksi (Floating Above) */}
+                {showDefenseMenu && (
+                  <div className="absolute bottom-full mb-2 left-0 sm:left-auto sm:right-0 w-64 bg-white border border-[#E8DEC9] rounded-xl shadow-2xl p-1.5 z-50 flex flex-col gap-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#8C7A7C] uppercase tracking-wider border-b border-[#F2ECE1]">
+                      Mode Pertahanan RAG
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEnableDefense(true);
+                        setShowDefenseMenu(false);
+                      }}
+                      className={`flex flex-col text-left px-3 py-2 rounded-lg transition-all ${
+                        enableDefense
+                          ? 'bg-[#FAF6EE] border border-[#E8DEC9]'
+                          : 'hover:bg-[#FAF6EE]/60'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="font-semibold text-xs text-emerald-700 flex items-center gap-1.5">
+                          <ShieldCheck className="w-3.5 h-3.5" /> Proteksi Aktif (ON)
+                        </span>
+                        {enableDefense && <Check className="w-3.5 h-3.5 text-emerald-700" />}
+                      </div>
+                      <span className="text-[10px] text-[#8C7A7C] mt-0.5">
+                        Mencegat pasal manipulasi via verifikasi SHA-256 & evaluasi NLI
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEnableDefense(false);
+                        setShowDefenseMenu(false);
+                      }}
+                      className={`flex flex-col text-left px-3 py-2 rounded-lg transition-all ${
+                        !enableDefense
+                          ? 'bg-[#FAF6EE] border border-[#E8DEC9]'
+                          : 'hover:bg-[#FAF6EE]/60'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className="font-semibold text-xs text-rose-700 flex items-center gap-1.5">
+                          <ShieldAlert className="w-3.5 h-3.5" /> Proteksi Nonaktif (OFF)
+                        </span>
+                        {!enableDefense && <Check className="w-3.5 h-3.5 text-rose-700" />}
+                      </div>
+                      <span className="text-[10px] text-[#8C7A7C] mt-0.5">
+                        Simulasi tanpa saringan pertahanan (menguji kerentanan RAG)
+                      </span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Tombol Kirim */}
+            <button
+              type="submit"
+              disabled={!input.trim() || loading}
+              className="btn-burgundy-primary px-4 py-1.5 rounded-xl disabled:opacity-40 shrink-0 text-xs font-bold font-sans flex items-center gap-1.5 shadow-sm hover:scale-[1.02] transition-transform"
+              title="Kirim Pertanyaan (Enter)"
+            >
+              <span>Kirim</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -108,26 +108,26 @@ function ChatContent() {
     {
       id: 'kuhperdata_hir_bgem3',
       label: 'Non-Poison',
-      badge: '0% Poison',
-      desc: 'Naskah resmi otentik (2.276 pasal KUHPerdata & HIR)',
+      badge: '0%',
+      desc: 'Naskah resmi asli KUHPerdata dan HIR',
     },
     {
       id: 'kuhperdata_hir_bgem3_p1pct',
       label: 'Poison 1%',
-      badge: '1% Poison',
-      desc: 'Simulasi manipulasi minor (~23 pasal beracun)',
+      badge: '1%',
+      desc: 'Simulasi manipulasi 1% isi pasal',
     },
     {
       id: 'kuhperdata_hir_bgem3_p5pct',
       label: 'Poison 5%',
-      badge: '5% Poison',
-      desc: 'Simulasi manipulasi moderat (~114 pasal beracun)',
+      badge: '5%',
+      desc: 'Simulasi manipulasi 5% isi pasal',
     },
     {
       id: 'kuhperdata_hir_bgem3_p10pct',
       label: 'Poison 10%',
-      badge: '10% Poison',
-      desc: 'Simulasi manipulasi masif (~228 pasal beracun)',
+      badge: '10%',
+      desc: 'Simulasi manipulasi 10% isi pasal',
     },
   ];
 
@@ -486,7 +486,7 @@ function ChatContent() {
                         {enableDefense && <Check className="w-3.5 h-3.5 text-emerald-700" />}
                       </div>
                       <span className="text-[10px] text-[#8C7A7C] mt-0.5">
-                        Mencegat pasal manipulasi via verifikasi SHA-256 & evaluasi NLI
+                        Mencegat pasal palsu dengan verifikasi SHA-256 dan NLI
                       </span>
                     </button>
                     <button
@@ -508,7 +508,7 @@ function ChatContent() {
                         {!enableDefense && <Check className="w-3.5 h-3.5 text-rose-700" />}
                       </div>
                       <span className="text-[10px] text-[#8C7A7C] mt-0.5">
-                        Simulasi tanpa saringan pertahanan (menguji kerentanan RAG)
+                        Simulasi tanpa saringan pertahanan untuk menguji kerentanan RAG
                       </span>
                     </button>
                   </div>

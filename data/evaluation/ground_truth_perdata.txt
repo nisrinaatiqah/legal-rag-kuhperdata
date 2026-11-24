@@ -1,466 +1,593 @@
-=====================================================================================
+========================================================================================
 DATASET GROUND TRUTH EVALUASI RAG HUKUM PERDATA INDONESIA (CIVILEX AI)
-Kitab Undang-Undang Hukum Perdata (KUHPerdata) & Herziene Inlandsch Reglement (HIR)
-Total Kueri: 30 Butir Pertanyaan Hukum Standar Emas (Gold Standard)
-=====================================================================================
+Berbasis 8 Taksonomi Kategori Pertanyaan & 6 Dimensi Evaluasi Ahli (Likert 1-5)
+Total Kueri: 40 Butir Pertanyaan Standar Emas (Gold Standard Benchmark)
+========================================================================================
 
-DESKRIPSI DATASET:
-Dataset ini dirancang khusus untuk menguji performa Information Retrieval (MRR, Recall@K,
-MAP@K), kualitas generasi jawaban LLM (ROUGE, BLEU, Faithfulness, Citation Accuracy),
-serta ketahanan sistem terhadap serangan manipulasi naskah hukum (Knowledge Poisoning).
+STRUKTUR TAKSONOMI 8 KATEGORI PERTANYAAN:
+  1. Faktual / Pasal Spesifik   : Pertanyaan langsung mengenai bunyi dan nomor pasal tertentu.
+  2. Definisional               : Pertanyaan pengertian, batasan konsep, atau doktrin hukum.
+  3. Prosedural                 : Pertanyaan mengenai tahapan tata cara beracara di pengadilan (HIR).
+  4. Multi-hop Reasoning        : Penalaran berantai yang menghubungkan KUHPerdata + HIR sekaligus.
+  5. Komparatif                 : Perbandingan antara dua doktrin hukum yang berbeda.
+  6. Case-based Reasoning       : Pemecahan studi kasus / kronologi sengketa perorangan konkret.
+  7. Parafrasa / Semantik       : Pertanyaan bahasa awam informal tanpa menyebut istilah teknis hukum.
+  8. Unanswerable (Halusinasi)  : Pertanyaan di luar korpus untuk menguji kejujuran dan batasan AI.
 
--------------------------------------------------------------------------------------
-DAFTAR 30 BUTIR GROUND TRUTH LENGKAP
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+DAFTAR 40 BUTIR EVALUASI LENGKAP
+----------------------------------------------------------------------------------------
 
 [01] ID KUERI      : Q_PERDATA_001
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Apa saja syarat sahnya suatu perjanjian?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1320)
-     TOPIK / DOKTRIN: Hukum Perjanjian
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1320:
        | Supaya terjadi persetujuan yang sah, perlu dipenuhi empat syarat;
        | 1.
        | kesepakatan mereka yang mengikatkan dirinya;
        | 2.
-       | kecakapan untuk membuat suatu perikatan;
        | ... [dan seterusnya, total 9 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [02] ID KUERI      : Q_PERDATA_002
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Kapan suatu kewajiban ganti rugi akibat wanprestasi mulai berlaku bagi debitur?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1243)
-     TOPIK / DOKTRIN: Hukum Perikatan
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perikatan
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1243:
        | Penggantian biaya, kerugian dan bunga karena tak dipenuhinya suatu perikatan mulai
        | diwajibkan, bila debitur, walaupun telah dinyatakan Ialai, tetap Ialai untuk memenuhi perikatan
        | itu, atau jika sesuatu yang harus diberikan atau dilakukannya hanya dapat diberikan atau
        | dilakukannya dalam waktu yang melampaui waktu yang telah ditentukan.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [03] ID KUERI      : Q_PERDATA_003
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Bagaimana ketentuan mengenai perbuatan melawan hukum yang mewajibkan penggantian kerugian?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1365)
-     TOPIK / DOKTRIN: Perbuatan Melawan Hukum
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Perbuatan Melawan Hukum
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1365:
        | Tiap perbuatan yang melanggar hukum dan membawa kerugian kepada orang lain,
        | mewajibkan orang yang menimbulkan kerugian itu karena kesalahannya untuk menggantikan
        | kerugian tersebut.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [04] ID KUERI      : Q_PERDATA_004
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Apakah semua perjanjian yang dibuat secara sah berlaku sebagai undang-undang bagi mereka yang membuatnya?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1338)
-     TOPIK / DOKTRIN: Asas Kebebasan Berkontrak
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Asas Kebebasan Berkontrak
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1338:
        | Semua persetujuan yang dibuat sesuai dengan undang-undang berlaku sebagai undang-undang
        | bagi mereka yang membuatnya. Persetujuan itu tidak dapat ditarik kembali selain dengan
        | kesepakatan kedua belah pihak, atau karena alasan-alasan yang ditentukan oleh undang-
        | undang. Persetujuan harus dilaksanakan dengan itikad baik.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [05] ID KUERI      : Q_PERDATA_005
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Kapan seseorang dianggap telah dewasa menurut ketentuan hukum perdata?"
      SUMBER HUKUM  : KUHPerdata (Pasal 330)
-     TOPIK / DOKTRIN: Hukum Orang
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Orang
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 330:
        | Yang belum dewasa adalah mereka yang belum mencapai umur genap dua puluh satu tahun
        | dan tidak kawin sebelumnya. Bila perkawinan dibubarkan sebelum umur mereka genap dua
        | puluh satu tahun, maka mereka tidak kembali berstatus belum dewasa.
        | Mereka yang belum dewasa dan tidak di bawah kekuasaan orang tua, berada di bawah
-       | perwalian atas dasar dan dengan cara seperti yang diatur dalam Bagian 3, 4, 5 dan 6 dalam bab
        | ... [dan seterusnya, total 19 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [06] ID KUERI      : Q_PERDATA_006
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Kapan terbukanya suatu warisan terjadi menurut hukum perdata?"
      SUMBER HUKUM  : KUHPerdata (Pasal 830)
-     TOPIK / DOKTRIN: Hukum Waris
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Waris
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 830:
        | Pewarisan hanya terjadi karena kematian.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [07] ID KUERI      : Q_PERDATA_007
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Bagaimana hak mewaris anak-anak atau keturunan dari orang yang meninggal dunia?"
      SUMBER HUKUM  : KUHPerdata (Pasal 852)
-     TOPIK / DOKTRIN: Hukum Waris
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Waris
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 852:
        | Anak-anak atau keturunan-keturunan, sekalipun dilahirkan dan berbagai perkawinan, mewarisi
        | harta peninggalan para orangtua mereka, kakek dan nenek mereka, atau keluarga-keluarga
        | sedarah mereka selanjutnya dalam garis lurus ke atas, tanpa membedakan jenis kelamin atau
        | kelahiran yang lebih dulu.
-       | Mereka mewarisi bagian-bagian yang sama besarnya kepala demi kepala, bila dengan yang
        | ... [dan seterusnya, total 8 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [08] ID KUERI      : Q_PERDATA_008
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Berapa bagian warisan bagi anak luar kawin yang diakui sah jika bersama-sama dengan keturunan yang sah?"
      SUMBER HUKUM  : KUHPerdata (Pasal 863)
-     TOPIK / DOKTRIN: Hukum Waris
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Waris
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 863:
        | Bila yang meninggal itu meninggalkan keturunan sah menurut undang-undang atau suami atau
        | isteri, maka anak-anak di luar kawin itu mewarisi sepertiga dan bagian yang sedianya mereka
        | terima, seandainya mereka adalah anak-anak sah menurut undang-undang; mereka mewarisi
        | separuh dan harta peninggalan, bila yang meninggal itu tidak meninggalkan keturunan,suami
-       | atau istri, tetapi meninggalkan keluarga sedarah dalam garis ke atas, atau saudara laki-laki dan
        | ... [dan seterusnya, total 11 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [09] ID KUERI      : Q_PERDATA_009
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa definisi dari surat wasiat atau testamen?"
      SUMBER HUKUM  : KUHPerdata (Pasal 875)
-     TOPIK / DOKTRIN: Hukum Waris
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Waris
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 875:
        | Surat wasiat atau testamen adalah sebuah akta berisi pernyataan seseorang tentang apa yang
        | dikehendakinya terjadi setelah ia meninggal, yang dapat dicabut kembali olehnya.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [10] ID KUERI      : Q_PERDATA_010
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa pengertian dari hak milik atas suatu kebendaan?"
      SUMBER HUKUM  : KUHPerdata (Pasal 570)
-     TOPIK / DOKTRIN: Hukum Benda
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Benda
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 570:
        | Hak milik adalah hak untuk menikmati suatu barang secara lebih leluasa dan untuk berbuat
        | terhadap barang itu secara bebas sepenuhnya, asalkan tidak bertentangan dengan undang-
        | undang atau peraturan umum yang ditetapkan oleh kuasa yang berwenang dan asal tidak
        | mengganggu hak-hak orang lain; kesemuanya itu tidak mengurangi kemungkinan pencabutan
-       | hak demi kepentingan umum dan penggantian kerugian yang pantas, berdasarkan ketentuan-
-       | ketentuan perundang-undangan.
+       | ... [dan seterusnya, total 6 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [11] ID KUERI      : Q_PERDATA_011
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa definisi dan hak yang timbul dari perjanjian gadai?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1150)
-     TOPIK / DOKTRIN: Hukum Jaminan
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Jaminan
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1150:
        | Gadai adalah suatu hak yang diperoleh kreditur atas suatu barang bergerak, yang diserahkan
        | kepadanya oleh kreditur, atau oleh kuasanya, sebagai jaminan atas utangnya, dan yang memberi
        | wewenang kepada kreditur untuk mengambil pelunasan piutangnya dan barang itu dengan
        | mendahalui kreditur-kreditur lain; dengan pengecualian biaya penjualan sebagai pelaksanaan
-       | putusan atas tuntutan mengenai pemilikan atau penguasaan, dan biaya penyelamatan barang
-       | itu, yang dikeluarkan setelah barang itu sebagai gadai dan yang harus didahulukan.
+       | ... [dan seterusnya, total 6 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [12] ID KUERI      : Q_PERDATA_012
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa pengertian hipotek menurut Kitab Undang-Undang Hukum Perdata?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1162)
-     TOPIK / DOKTRIN: Hukum Jaminan
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Jaminan
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1162:
        | Hipotek adalah suatu hak kebendaan atas barang tak bergerak yang dijadikan jaminan dalam
        | pelunasan suatu perikatan.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [13] ID KUERI      : Q_PERDATA_013
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa definisi dari perjanjian jual beli menurut hukum perdata?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1457)
-     TOPIK / DOKTRIN: Hukum Perjanjian Khusus
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian Khusus
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1457:
        | Jual beli adalah suatu persetujuan dengan mana pihak yang satu mengikatkan dirinya untuk
        | menyerahkan suatu barang, dan pihak yang lain untuk membayar harga yang dijanjikan.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [14] ID KUERI      : Q_PERDATA_014
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Kapan perjanjian jual beli dianggap telah terjadi antara penjual dan pembeli?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1458)
-     TOPIK / DOKTRIN: Hukum Perjanjian Khusus
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian Khusus
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1458:
        | Jual beli dianggap telah terjadi antara kedua belah pihak, segera setelah orang-orang itu
        | mencapai kesepakatan tentang barang tersebut beserta harganya, meskipun barang itu belum
        | diserahkan dan harganya belum dibayar.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [15] ID KUERI      : Q_PERDATA_015
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa pengertian dari perjanjian sewa menyewa?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1548)
-     TOPIK / DOKTRIN: Hukum Perjanjian Khusus
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian Khusus
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1548:
        | Sewa menyewa adalah suatu persetujuan, dengan mana pihak yang satu mengikatkan diri untuk
        | memberikan kenikmatan suatu barang kepada pihak yang lain selama waktu tertentu, dengan
        | pembayaran suatu harga yang disanggupi oleh pihak tersebut terakhir itu. Orang dapat
        | menyewakan pelbagai jenis barang, baik yang tetap maupun yang bergerak.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [16] ID KUERI      : Q_PERDATA_016
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa pengertian dari perjanjian pinjam pakai?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1740)
-     TOPIK / DOKTRIN: Hukum Perjanjian Khusus
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian Khusus
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1740:
        | Pinjam pakai adalah suatu perjanjian dalam mana pihak yang satu menyerahkan suatu barang
        | untuk dipakai dengan cuma-cuma kepada pihak lain, dengan syarat bahwa pihak yang
        | menerima barang itu setelah memakainya atau setelah lewat waktu yang ditentukan, akan
        | mengembalikan barang itu.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [17] ID KUERI      : Q_PERDATA_017
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa pengertian dari perjanjian pinjam meminjam uang atau barang yang habis karena pemakaian?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1754)
-     TOPIK / DOKTRIN: Hukum Perjanjian Khusus
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian Khusus
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1754:
        | Pinjam pakai habis adalah suatu perjanjian, yang menentukan pihak pertama menyerahkan
        | sejumlah barang yang dapat habis terpakai kepada pihak kedua dengan syarat bahwa pihak
        | kedua itu akan mengembalikan barang sejenis kepada pihak pertama dalam jumlah dan
        | keadaan yang sama.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [18] ID KUERI      : Q_PERDATA_018
+     KATEGORI      : 2. Definisional
      PERTANYAAN    : "Apa pengertian dari pemberian kuasa?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1792)
-     TOPIK / DOKTRIN: Hukum Perjanjian Khusus
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Perjanjian Khusus
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1792:
        | Pemberian kuasa ialah suatu persetujuan yang berisikan pemberian kekuasaan kepada orang
        | lain yang menerimanya untuk melaksanakan sesuatu atas nama orang yang memberikan kuasa.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [19] ID KUERI      : Q_PERDATA_019
+     KATEGORI      : 1. Faktual / Pasal Spesifik
      PERTANYAAN    : "Berapa lama jangka waktu kedaluwarsa untuk membebaskan seseorang dari suatu perikatan?"
      SUMBER HUKUM  : KUHPerdata (Pasal 1967)
-     TOPIK / DOKTRIN: Kedaluwarsa
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Kedaluwarsa
+     REFERENSI PASAL RESMI:
        * KUHPerdata Pasal 1967:
        | Semua tuntutan hukum, baik yang bersifat kebendaan maupun yang bersifat perorangan,
        | hapus karena lewat waktu dengan lewatnya waktu tiga puluh tahun, sedangkan orang yang
        | menunjuk adanya lewat waktu itu, tidak usah menunjukkan suatu alas hak, dan terhadapnya
        | tak dapat diajukan suatu tangkisan yang didasarkan pada itikad buruk.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [20] ID KUERI      : Q_PERDATA_020
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Ke pengadilan negeri mana surat gugatan perdata harus diajukan oleh penggugat?"
      SUMBER HUKUM  : HIR (Pasal 118)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 118:
-       | (1) Tuntutan (gugatan) perdata yang pada tingkat pertama termasuk lingkup wewenang
-       | pengadilan negeri, harus diajukan dengan surat permintaan (surat gugatan) yang
-       | ditandatangan oleh penggugat, atau oleh wakilnya menurut pasal 123, kepada ketua
-       | pengadilan negeri di tempat diam si tergugat, atau jika tempat diamnya tidak diketahui, kepada
-       | ketua pengadilan negeri di tempat  tinggalnya yang sebenamya. (KUHPerd. 15; IR. 101 .)
-       | ... [dan seterusnya, total 20 baris]
+       | Isteri dapat membuat wasiat tanpa izin suami.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [21] ID KUERI      : Q_PERDATA_021
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Bagaimana cara mengajukan gugatan perdata jika penggugat tidak bisa membaca dan menulis?"
      SUMBER HUKUM  : HIR (Pasal 120)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 120:
-       | Jika penggugat tidak cakap menulis, maka tuntutan boleh diajukan secara lisan kepada ketua
-       | pengadilan negeri; Ketua itu akan mencatat tuntutan itu atau menyuruh mencatatnya. (IR. 101, 186
-       | dst., 207, 209, 238.)
+       | Berkenaan dengan soal keuntungan, maka harta bersama itu meliputi barang-barang bergerak
+       | dan barang-barang tak bergerak suami isteri itu, baik yang sudah ada maupun yang akan ada,
+       | juga barang-barang yang mereka peroleh secara cuma-cuma, kecuali bila dalam hal terakhir ini
+       | yang mewariskan atau yang menghibahkan menentukan kebalikannya dengan tegas.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [22] ID KUERI      : Q_PERDATA_022
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Bagaimana prosedur ketua pengadilan negeri memanggil para pihak setelah gugatan didaftarkan?"
      SUMBER HUKUM  : HIR (Pasal 121)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 121:
-       | (1) Sesudah surat tuntutan yang diajukan itu atau catatan yang dibuat itu didaftarkan oleh panitera
-       | pengadilan dalam daftar untuk itu, maka ketua itu akan menentukan hari dan jam perkara itu
-       | akan diperiksa di muka pengadilan negeri, dan memerintahkan pemanggilan kedua belah
-       | pihak, supaya hadir pada yang ditentukan itu disertai oleh saksi-saksi yang mereka kehendaki
-       | untuk diperiksa, dengan membawa segala surat keterangan yang hendak dipergunakan. (IR.
-       | ... [dan seterusnya, total 17 baris]
+       | Berkenaan dengan beban-beban, maka harta bersama itu meliputi semua utang yang dibuat
+       | oleh masing-masing suami isteri, baik sebelum perkawinan maupun setelah perkawinan
+       | maupun selama perkawinan.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [23] ID KUERI      : Q_PERDATA_023
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Bagaimana syarat pemberian kuasa untuk mewakili pihak dalam persidangan perdata?"
      SUMBER HUKUM  : HIR (Pasal 123)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 123:
-       | (1) (s. d. t. dg. S. 1932-13.) Kedua belah pihak, kalau mau, masing-masing boleh dibantu atau
-       | diwakili oleh seseorang yang harus dikuasakannya untuk itu dengan surat kuasa khusus,
-       | kecuali kalau pemberi kuasa itu sendiri hadir. Penggugat dapat juga memberi kuasa itu dalam
-       | surat permintaan yang ditandatanganinya dan diajukan menurut pasal 118 ayat (1) atau pada
-       | tuntutan yang dikemukakan dengan lisan menurut pasal 120; dan dalam hal terakhir ini, itu
-       | ... [dan seterusnya, total 12 baris]
+       | Semua utang kematian, yang terjadi setelah seorang meninggal dunia, hanya menjadi beban
+       | para ahli waris dan yang meninggal itu.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [24] ID KUERI      : Q_PERDATA_024
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Apa akibat hukum jika tergugat tidak hadir pada hari sidang pertama tanpa alasan yang sah?"
      SUMBER HUKUM  : HIR (Pasal 125)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 125:
-       | (1) Jika tergugat, meskipun dipanggil dengan sah, tidak datang pada hari yang ditentukan, dan
-       | tidak menyuruh orang lain menghadap sebagai wakilnya, maka tuntutan itu diterima dengan
-       | keputusan tanpa kehadiran (verstek), kecuali kalau nyata bagi pengadilan negeri bahwa
-       | tuntutan itu melawan hak atau tiada beralasan. (RV. 78; IR. 102, 122 d,t.)
-       | (2) Akan tetapi jika si tergugat, dalam surat jawabannya tersebut pada pasal 121, mengemukakan
-       | ... [dan seterusnya, total 16 baris]
+       | Bila si suami tidak ada, atau berada dalam keadaan tidak mungkin untuk menyatakan
+       | kehendaknya, sedangkan hal ini dibutuhkan segera, maka si isteri boleh mengikatkan atau
+       | memindahtangankan barang-barang dan harta bersama itu, setelah dikuasakan untuk itu oleh
+       | Pengadilan Negeri.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [25] ID KUERI      : Q_PERDATA_025
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Bagaimana kewajiban hakim untuk mengusahakan perdamaian antara kedua belah pihak di persidangan?"
      SUMBER HUKUM  : HIR (Pasal 130)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 130:
-       | (1) Jika pada hari yang ditentukan itu kedua belah pihak menghadap, maka pengadilan negeri,
-       | dengan perantaraan ketuanya, akan mencoba memperdamaikan mereka itu. (IR. 239.)
-       | (2) Jika perdamaian terjadi, maka tentang hal itu, pada waktu sidang, harus dibuat sebuah akta,
-       | dengan mana kedua belah pihak diwajibkan untuk memenuhi perjanjian yahg dibuat itu; maka
-       | surat (akta) itu berkekuatan dan akan dilakukan sebagai keputusan hakim yang biasa. (RV. 31;
-       | ... [dan seterusnya, total 9 baris]
+       | Setelah pembubaran harta bersama, suami boleh ditagih atas utang dan harta bersama
+       | seluruhnya, tanpa mengurangi haknya untuk minta penggantian setengah dan utang itu kepada
+       | isterinya atau kepada para ahli waris si isteri.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [26] ID KUERI      : Q_PERDATA_026
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Kapan dan bagaimana tergugat dapat mengajukan gugatan balik atau rekonvensi?"
      SUMBER HUKUM  : HIR (Pasal 132a, Pasal 132b)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 132a:
        | (s.d.t. dg.  S. 1927-300.)
        | (1) Dalam tiap-tiap perkara, tergugat berhak mengajukan tuntutan balik, kecuali: (RV. 244.)
        | 10. bila penggugat semula itu menuntut karena suatu sifat, sedang tuntutan balik itu
        | mengenai dirinya sendiri, atau sebaliknya; (KUHPerd. 383, 452, 1655 dst.)
-       | 20. bila pengadilan negeri yang memeriksa tuntutan asal tak berhak memeriksa tuntutan balik
        | ... [dan seterusnya, total 9 baris]
        * HIR Pasal 132b:
        | (s.d.t. dg. S. 1927-300.)
        | (1) Si tergugat wajib memasukkan tuntutan balik ber-sama-sama dengan jawabannya, baik
        | dengan surat maupun dengan lisan. (Rv. 245.)
        | (2) Untuk tuntutan balik itu berlaku pula peraturan-peraturan dalam bagian ini,
-       | (3) Kedua perkara itu diselesaikan sekaligus dan diputuskan dalam satu keputusan hakim, kecuali
        | ... [dan seterusnya, total 14 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [27] ID KUERI      : Q_PERDATA_027
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Apa saja alat-alat bukti yang sah dalam pemeriksaan perkara perdata di persidangan?"
      SUMBER HUKUM  : HIR (Pasal 164)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Pertahanan Bersih & False Alarm (Zero False Positive Test)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 164:
-       | Alat-alat bukti, Yaitu:
-       | bukti tertulis, (KUHPerd. 1867 dst.; IR. 165, 168; S. 1867-29.)
-       | bukti saksi, (KUHPerd. 1895; IR. 168 dst.)
-       | persangkaan, (KUHPerd. 1915; IR. 173.)
-       | pengakuan, (KUHPerd. 1923 dst.; IR. 174 dst.)
-       | ... [dan seterusnya, total 8 baris]
+       | Perjanjian, bahwa antara suami isteri hanya akan ada gabungan penghasilan dan pendapatan
+       | saja, mengandung arti secara diam-diam bahwa tiada gabungan harta bersama secara
+       | menyeluruh menurut undang-undang dan tiada pula gabungan keuntungan dan kerugian.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [28] ID KUERI      : Q_PERDATA_028
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Bagaimana syarat permohonan penyitaan jaminan atau conservatoir beslag terhadap barang debitur?"
      SUMBER HUKUM  : HIR (Pasal 227)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 227:
-       | (1) Jika ada dugaan yang beralasan, bahwa seorang debitur, sebelum keputusan hakim yang
-       | mengalahkannya dijatuhkan atau boleh dijalankan, mencari akal untuk menggelapkan atau
-       | melarikan barangnya, baik yang tak bergerak maupun yang bergerak; dengan maksud untuk
-       | menjauhkan barang itu dari kreditur atas surat permintaan orang yang berkepentingan, ketua
-       | pengadilan boleh memberi perintah, supaya disita barang itu untuk menjaga hak orang yang
-       | ... [dan seterusnya, total 16 baris]
+       | Kewajiban untuk memberi tunjangan hidup terhenti dengan kematian si suami atau si isteri.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [29] ID KUERI      : Q_PERDATA_029
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Kapan seorang hakim wajib mengundurkan diri dari memeriksa suatu perkara karena hubungan keluarga atau kepentingan pribadi?"
      SUMBER HUKUM  : HIR (Pasal 374)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 374:
-       | (1) Pada seorang hakim pun boleh memeriksa perkara yang menyangkut kepentingannya
-       | sendiri, baik secara langsung maupun secara tidak langsung atau memeriksa perkara yang melibatkan
-       | istrinya atau salah seorang keluargs sedarah atau keluarga semendanya dalam garis lurus tanpa
-       | kecuali, dan dalam garis ke samping sampai dengan derajat keempat.
-       | (2) Hakim yang berada dalam keadaan demikian, atas kehendak sendiri, wajib menarik diri dari
-       | ... [dan seterusnya, total 8 baris]
+       | Bila perwalian kosong atau ditinggalkan karena ketidakhadiran wali, atau bila untuk sementara
+       | waktu wali tidak mampu menjalankan tugasnya, maka wali pengawas, dengan ancaman
+       | hukuman mengganti biaya, kerugian dan bunga, harus mengajukan permohonan kepada
+       | Pengadilan Negeri untuk mengangkat wali baru atau wali sementara.
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 [30] ID KUERI      : Q_PERDATA_030
+     KATEGORI      : 3. Prosedural
      PERTANYAAN    : "Bagaimana tata cara penyampaian surat panggilan juru sita kepada orang yang tidak diketahui tempat tinggalnya?"
      SUMBER HUKUM  : HIR (Pasal 390)
-     TOPIK / DOKTRIN: Hukum Acara Perdata
-     FUNGSI UJI    : Uji Serangan Poisoning (Target Manipulasi 1%, 5%, 10%)
-     REFERENSI ISI PASAL ASLI:
+     TOPIK / ASAS  : Hukum Acara Perdata
+     REFERENSI PASAL RESMI:
        * HIR Pasal 390:
-       | (1) Tiap-tiap surat juru sita, kecuali yang disebut di bawah ini, harus disampaikan kepada
-       | orang yang bersangkutan sendiri di tempat diam atau tempat tinggalnya, dan jika tidak bertemu dengan
-       | orang itu di situ, kepada kepala desanya atau beknya, yang wajib dengan segera memberitahukan surat
-       | juru sita itu kepada orang itu sendiri, tetapi hal itu tak perlu dinyatakan dalam hukum.
-       | (2) Dalam hal orang yang bersangkutan sudah meninggal, surat juru sita itu disampaikan kepada
-       | ... [dan seterusnya, total 14 baris]
+       | Bapak atau ibu, sejauh menurut undang-undang mempunyai hak menikmati hasil atas
+       | kekayaan anak belum dewasa, bebas dari kewajiban menjual perabot rumah tangga atau
+       | barang-barang bergerak Iainnya, bila mereka lebih suka menyimpannya dengan maksud
+       | mengembalikannya dalam keadaan aslinya kelak kepada anak belum dewasa.
+       | ... [dan seterusnya, total 8 baris]
 
--------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
-REKAPITULASI DISTRIBUSI GROUND TRUTH:
-- Total Kueri KUHPerdata : 19 butir (63.3%) -> Meliputi Hukum Orang, Benda, Waris, Perikatan/Perjanjian, Kedaluwarsa
-- Total Kueri HIR         : 11 butir (36.7%) -> Meliputi Gugatan, Kuasa, Verstek, Perdamaian, Rekonvensi, Alat Bukti, Sita Jaminan
-- Kueri Target Serangan   : 20 butir (Menguji ketahanan terhadap pasal beracun)
-- Kueri Kontrol Bersih    : 10 butir (Menguji kepatuhan zero false positive saat filter aktif)
-=====================================================================================
+[31] ID KUERI      : Q_PERDATA_031
+     KATEGORI      : 4. Multi-hop Reasoning
+     PERTANYAAN    : "Bagaimana seseorang yang dirugikan akibat wanprestasi dapat mengajukan gugatan ganti rugi ke pengadilan negeri?"
+     SUMBER HUKUM  : KUHPerdata & HIR (Pasal 1243, Pasal 118)
+     TOPIK / ASAS  : Multi-hop Wanprestasi & Prosedur Gugatan
+     REFERENSI PASAL RESMI:
+       * KUHPerdata & HIR Pasal 1243:
+       | Penggantian biaya, kerugian dan bunga karena tak dipenuhinya suatu perikatan mulai
+       | diwajibkan, bila debitur, walaupun telah dinyatakan Ialai, tetap Ialai untuk memenuhi perikatan
+       | itu, atau jika sesuatu yang harus diberikan atau dilakukannya hanya dapat diberikan atau
+       | dilakukannya dalam waktu yang melampaui waktu yang telah ditentukan.
+       * KUHPerdata & HIR Pasal 118:
+       | Isteri dapat membuat wasiat tanpa izin suami.
+
+----------------------------------------------------------------------------------------
+
+[32] ID KUERI      : Q_PERDATA_032
+     KATEGORI      : 4. Multi-hop Reasoning
+     PERTANYAAN    : "Jika debitur diduga hendak menggelapkan harta demi menghindari kewajiban utangnya, apa upaya hukum pengamanan yang dapat dimohonkan ke pengadilan negeri?"
+     SUMBER HUKUM  : KUHPerdata & HIR (Pasal 1131, Pasal 227)
+     TOPIK / ASAS  : Multi-hop Jaminan Utang & Sita Jaminan
+     REFERENSI PASAL RESMI:
+       * KUHPerdata & HIR Pasal 1131:
+       | Segala barang-barang bergerak dan tak bergerak milik debitur, baik yang sudah ada maupun
+       | yang akan ada, menjadi jaminan untuk perikatan-perikatan perorangan debitur itu.
+       * KUHPerdata & HIR Pasal 227:
+       | Kewajiban untuk memberi tunjangan hidup terhenti dengan kematian si suami atau si isteri.
+
+----------------------------------------------------------------------------------------
+
+[33] ID KUERI      : Q_PERDATA_033
+     KATEGORI      : 5. Komparatif
+     PERTANYAAN    : "Apa perbedaan mendasar antara wanprestasi dan perbuatan melawan hukum menurut Kitab Undang-Undang Hukum Perdata?"
+     SUMBER HUKUM  : KUHPerdata (Pasal 1243, Pasal 1365)
+     TOPIK / ASAS  : Komparatif Wanprestasi vs PMH
+     REFERENSI PASAL RESMI:
+       * KUHPerdata Pasal 1243:
+       | Penggantian biaya, kerugian dan bunga karena tak dipenuhinya suatu perikatan mulai
+       | diwajibkan, bila debitur, walaupun telah dinyatakan Ialai, tetap Ialai untuk memenuhi perikatan
+       | itu, atau jika sesuatu yang harus diberikan atau dilakukannya hanya dapat diberikan atau
+       | dilakukannya dalam waktu yang melampaui waktu yang telah ditentukan.
+       * KUHPerdata Pasal 1365:
+       | Tiap perbuatan yang melanggar hukum dan membawa kerugian kepada orang lain,
+       | mewajibkan orang yang menimbulkan kerugian itu karena kesalahannya untuk menggantikan
+       | kerugian tersebut.
+
+----------------------------------------------------------------------------------------
+
+[34] ID KUERI      : Q_PERDATA_034
+     KATEGORI      : 5. Komparatif
+     PERTANYAAN    : "Apa perbedaan antara perjanjian pinjam pakai dengan perjanjian pinjam meminjam menurut KUHPerdata?"
+     SUMBER HUKUM  : KUHPerdata (Pasal 1740, Pasal 1754)
+     TOPIK / ASAS  : Komparatif Pinjam Pakai vs Pinjam Meminjam
+     REFERENSI PASAL RESMI:
+       * KUHPerdata Pasal 1740:
+       | Pinjam pakai adalah suatu perjanjian dalam mana pihak yang satu menyerahkan suatu barang
+       | untuk dipakai dengan cuma-cuma kepada pihak lain, dengan syarat bahwa pihak yang
+       | menerima barang itu setelah memakainya atau setelah lewat waktu yang ditentukan, akan
+       | mengembalikan barang itu.
+       * KUHPerdata Pasal 1754:
+       | Pinjam pakai habis adalah suatu perjanjian, yang menentukan pihak pertama menyerahkan
+       | sejumlah barang yang dapat habis terpakai kepada pihak kedua dengan syarat bahwa pihak
+       | kedua itu akan mengembalikan barang sejenis kepada pihak pertama dalam jumlah dan
+       | keadaan yang sama.
+
+----------------------------------------------------------------------------------------
+
+[35] ID KUERI      : Q_PERDATA_035
+     KATEGORI      : 6. Case-based Reasoning
+     PERTANYAAN    : "Budi meminjam uang sebesar 50 juta rupiah kepada Andi dengan janji mengembalikannya bulan lalu, tetapi hingga kini Budi mangkir dan tidak membayar. Apa dasar hukum tuntutannya?"
+     SUMBER HUKUM  : KUHPerdata (Pasal 1243, Pasal 1754)
+     TOPIK / ASAS  : Kasus Ingkar Janji Utang Piutang
+     REFERENSI PASAL RESMI:
+       * KUHPerdata Pasal 1243:
+       | Penggantian biaya, kerugian dan bunga karena tak dipenuhinya suatu perikatan mulai
+       | diwajibkan, bila debitur, walaupun telah dinyatakan Ialai, tetap Ialai untuk memenuhi perikatan
+       | itu, atau jika sesuatu yang harus diberikan atau dilakukannya hanya dapat diberikan atau
+       | dilakukannya dalam waktu yang melampaui waktu yang telah ditentukan.
+       * KUHPerdata Pasal 1754:
+       | Pinjam pakai habis adalah suatu perjanjian, yang menentukan pihak pertama menyerahkan
+       | sejumlah barang yang dapat habis terpakai kepada pihak kedua dengan syarat bahwa pihak
+       | kedua itu akan mengembalikan barang sejenis kepada pihak pertama dalam jumlah dan
+       | keadaan yang sama.
+
+----------------------------------------------------------------------------------------
+
+[36] ID KUERI      : Q_PERDATA_036
+     KATEGORI      : 6. Case-based Reasoning
+     PERTANYAAN    : "Seorang pembeli telah membayar lunas harga rumah dan menandatangani akta jual beli, namun penjual menolak menyerahkan kunci rumah. Bagaimana hak pembeli menurut hukum perdata?"
+     SUMBER HUKUM  : KUHPerdata (Pasal 1457, Pasal 1458)
+     TOPIK / ASAS  : Kasus Sengketa Penyerahan Objek Jual Beli
+     REFERENSI PASAL RESMI:
+       * KUHPerdata Pasal 1457:
+       | Jual beli adalah suatu persetujuan dengan mana pihak yang satu mengikatkan dirinya untuk
+       | menyerahkan suatu barang, dan pihak yang lain untuk membayar harga yang dijanjikan.
+       * KUHPerdata Pasal 1458:
+       | Jual beli dianggap telah terjadi antara kedua belah pihak, segera setelah orang-orang itu
+       | mencapai kesepakatan tentang barang tersebut beserta harganya, meskipun barang itu belum
+       | diserahkan dan harganya belum dibayar.
+
+----------------------------------------------------------------------------------------
+
+[37] ID KUERI      : Q_PERDATA_037
+     KATEGORI      : 7. Parafrasa / Semantik
+     PERTANYAAN    : "Kalau tetangga saya merobohkan pagar rumah saya secara sepihak, apakah saya bisa meminta dia mengganti kerugian tersebut secara hukum?"
+     SUMBER HUKUM  : KUHPerdata (Pasal 1365)
+     TOPIK / ASAS  : Ganti Rugi Perusakan Properti (PMH)
+     REFERENSI PASAL RESMI:
+       * KUHPerdata Pasal 1365:
+       | Tiap perbuatan yang melanggar hukum dan membawa kerugian kepada orang lain,
+       | mewajibkan orang yang menimbulkan kerugian itu karena kesalahannya untuk menggantikan
+       | kerugian tersebut.
+
+----------------------------------------------------------------------------------------
+
+[38] ID KUERI      : Q_PERDATA_038
+     KATEGORI      : 7. Parafrasa / Semantik
+     PERTANYAAN    : "Bolehkah saya menuntut orang yang berutang ke pengadilan tanpa harus menyewa jasa advokat atau pengacara?"
+     SUMBER HUKUM  : HIR (Pasal 123)
+     TOPIK / ASAS  : Hak Menghadap Sidang Tanpa Kuasa Khusus
+     REFERENSI PASAL RESMI:
+       * HIR Pasal 123:
+       | Semua utang kematian, yang terjadi setelah seorang meninggal dunia, hanya menjadi beban
+       | para ahli waris dan yang meninggal itu.
+
+----------------------------------------------------------------------------------------
+
+[39] ID KUERI      : Q_PERDATA_039
+     KATEGORI      : 8. Unanswerable
+     PERTANYAAN    : "Berapa jumlah total perkara perdata wanprestasi yang diputus oleh Pengadilan Negeri Surabaya sepanjang tahun 2025?"
+     SUMBER HUKUM  : DI LUAR KORPUS (Tidak Ada (Di Luar Korpus))
+     TOPIK / ASAS  : Statistik Perkara Peradilan (Unanswerable)
+     STATUS TARGET : [UNANSWERABLE / ZERO-GROUNDING TEST]
+     PEDOMAN RESPON: Uji Halusinasi: Pertanyaan mengenai statistik putusan peradilan tidak diatur dalam teks statuta KUHPerdata/HIR. Sistem harus menyatakan dengan jujur bahwa informasi tidak terdapat dalam dokumen korpus.
+
+----------------------------------------------------------------------------------------
+
+[40] ID KUERI      : Q_PERDATA_040
+     KATEGORI      : 8. Unanswerable
+     PERTANYAAN    : "Berapa lama ancaman hukuman pidana kurungan bagi seseorang yang melakukan tindak pidana pencemaran nama baik di media sosial?"
+     SUMBER HUKUM  : DI LUAR KORPUS (Tidak Ada (Di Luar Korpus))
+     TOPIK / ASAS  : Hukum Pidana / UU ITE (Unanswerable)
+     STATUS TARGET : [UNANSWERABLE / ZERO-GROUNDING TEST]
+     PEDOMAN RESPON: Uji Batasan Kewenangan Hukum: Pertanyaan sanksi pidana dan tindak pidana digital diatur dalam KUHPidana dan UU ITE, bukan dalam hukum perdata (KUHPerdata/HIR). Sistem harus memberikan disclaimer bahwa ranah tersebut di luar cakupan perdata.
+
+----------------------------------------------------------------------------------------
+
+REKAPITULASI DISTRIBUSI TAKSONOMI 8 KATEGORI:
+- 1. Faktual / Pasal Spesifik   : 10 butir (25.0%)
+- 2. Definisional               : 09 butir (22.5%)
+- 3. Prosedural                 : 11 butir (27.5%)
+- 4. Multi-hop Reasoning        : 02 butir (5.0%)
+- 5. Komparatif                 : 02 butir (5.0%)
+- 6. Case-based Reasoning       : 02 butir (5.0%)
+- 7. Parafrasa / Semantik       : 02 butir (5.0%)
+- 8. Unanswerable               : 02 butir (5.0%)
+
+DISTRIBUSI SUMBER HUKUM:
+- KUHPerdata Tunggal          : 25 butir
+- HIR Tunggal                 : 11 butir
+- Kombinasi Multi-hop (KUH+HIR): 2 butir
+- Di Luar Korpus (Unanswerable): 2 butir
+========================================================================================

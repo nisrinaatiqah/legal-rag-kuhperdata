@@ -619,7 +619,6 @@ Metrik keamanan dan deteksi yang diukur mencakup:
 | **Penalaran Semantik Hukum** | Tersedia | Tidak tersedia | Tersedia |
 | **Ketahanan Dokumen Baru** | Adaptif terhadap teks baru | Bergantung pada manifes | Memadukan verifikasi ganda |
 | **Prinsip Keamanan Siber** | Titik kegagalan tunggal | Pertahanan kaku | Pertahanan berlapis |
-| **Beban Latensi Komputasi (Overhead)** | ~25 ms | ~2 ms | ~27 ms |
 
 *Catatan Analisis*:
 Hasil evaluasi empiris menunjukkan bahwa pengujian semantik NLI tunggal tidak mencukupi untuk domain hukum dengan risiko tinggi karena variasi parafrase negasi masih dapat menembus sistem (ASR 17,5% pada kontaminasi 10%). Di sisi lain, verifikasi kriptografis SHA-256 bersifat deterministik namun terbatas pada verifikasi integritas biner manifes. Penggabungan hibrida SHA-256 dan NLI ($\\alpha = 0.6, \\tau = 0.5$) memberikan perlindungan komprehensif dengan ASR 0,0% dan FPR 0,0%, memadukan integritas kriptografis dan penalaran semantik hukum.
@@ -629,7 +628,6 @@ Hasil evaluasi empiris menunjukkan bahwa pengujian semantik NLI tunggal tidak me
 #### E. Analisis Kritis Kinerja Pertahanan:
 * **Urgensi Metrik FPR = 0,0% pada Ranah Hukum**: Dalam sistem *Legal QA*, metrik *False Positive Rate* (FPR) sama pentingnya dengan akurasi deteksi. Jika sistem pertahanan menghasilkan alarm palsu (FPR > 0), pasal resmi KUHPerdata/HIR akan keliru diblokir dan dikarantina, mengakibatkan LLM gagal menjawab kueri hukum pengguna. Hasil pengujian pada Skenario S2 membuktikan bahwa skor **FPR = 0,0%**, menjamin tidak ada dokumen hukum sah yang tersensor secara keliru.
 * **Eliminasi Total Attack Success Rate (ASR)**: Tanpa mekanisme pertahanan (Skenario S3, S5, S7), pasal manipulasi berhasil menyusup ke prompt penalaran LLM dengan tingkat keberhasilan serangan sebesar **47,5% s.d. 75,0%**. Setelah modul pertahanan berlapis (SHA-256 + NLI) diaktifkan pada bobot optimal $\alpha = 0,6$ dan $\tau = 0,5$, **seluruh serangan berhasil digagalkan 100% (ASR = 0,0%)** pada seluruh tingkat kontaminasi korpus (1%, 5%, dan 10%).
-* **Beban Waktu Tambahan (Defense Latency Overhead)**: Penambahan verifikasi hash SHA-256 dan perbandingan NLI semantik hanya memerlukan waktu komputasi **~15–30 ms per kueri**, mempertahankan responsivitas *real-time* sistem tanya-jawab.
 
 ---
 
@@ -642,7 +640,7 @@ Berikut adalah ringkasan pembagian metrik baku yang digunakan pada **Bab 3 (Meto
 | **1** | **Segmentasi Korpus (*Chunking*)** | C1 vs C2 vs C3 | 1. **Distorsi Multi-Pasal (%)**<br>2. **Context Precision**<br>3. **MRR & Recall@5** (*Downstream Retrieval*) | • Mengukur persentase chunk yang memotong dan mencampurkan lebih dari 1 pasal.<br>• Mengukur rasio kemurnian pasal target dalam jendela konteks LLM.<br>• Mengukur dampak ukuran potongan chunk terhadap efektivitas temu-kembali pasal rujukan. |
 | **2** | **Model Temu-Kembali (*Retriever*)** | R1 vs R2 vs R3 | 1. **Recall@K**<br>2. **Precision@K**<br>3. **MRR@K** | • Mengukur proporsi pasal relevan yang berhasil tertangkap dalam Top-K.<br>• Mengukur ketepatan dokumen yang ditarik dalam batas peringkat K.<br>• Mengukur kebalikan peringkat (ranking) pasal target pertama dalam Top-K. |
 | **3** | **Kualitas Pembangkitan (*LLM*)** | L1 vs L2 vs L3 | **5 Metrik RAGAS Lengkap**:<br>• *Faithfulness*<br>• *Answer Relevancy*<br>• *Context Precision*<br>• *Context Recall*<br>• *Answer Correctness* | • Tingkat kepatuhan fakta konteks (anti-halusinasi).<br>• Tingkat kerelevanan jawaban terhadap pertanyaan.<br>• Presisi informasi konteks yang diacu.<br>• Kelengkapan pasal rujukan yang tertangkap.<br>• Kebenaran substantif jawaban terhadap ground truth pakar. |
-| **4** | **Ketahanan Keamanan (*Defense*)** | Skenario S1 s.d. S8 | 1. **Attack Success Rate (ASR)**<br>2. **False Positive Rate (FPR)**<br>3. **Defense Latency Overhead (ms)** | • Persentase serangan racun yang berhasil lolos menembus ke LLM.<br>• Persentase dokumen hukum asli yang keliru diblokir (alarm palsu).<br>• Waktu tambahan komputasi akibat verifikasi SHA-256 + NLI. |
+| **4** | **Ketahanan Keamanan (*Defense*)** | Skenario S1 s.d. S8 | 1. **Attack Success Rate (ASR)**<br>2. **False Positive Rate (FPR)**<br>3. **Precision, Recall, F1-Score** | • Persentase serangan racun yang berhasil lolos menembus ke LLM.<br>• Persentase dokumen hukum asli yang keliru diblokir (alarm palsu).<br>• Performa akurasi deteksi pencegatan dokumen manipulasi. |
 | **5** | **Validasi Pakar Hukum (*Human Expert Evaluation*)** | Kualitas Jawaban Chatbot (*Blind Review*) | **6 Dimensi Skala Likert (1–5)**:<br>1. *Ketepatan dasar hukum*<br>2. *Kebenaran substansi*<br>3. *Kelengkapan*<br>4. *Faithfulness*<br>5. *Kejelasan*<br>6. *Keamanan* | • Pasal yang dikutip benar dan relevan.<br>• Interpretasi kaidah tepat secara hukum.<br>• Unsur penting permasalahan tidak terlewat.<br>• Bebas halusinasi atau pasal fiktif di luar konteks.<br>• Bahasa lugas dan dapat dipahami publik.<br>• Memuat batasan/disclaimer hukum proporsional. |
 
 ---

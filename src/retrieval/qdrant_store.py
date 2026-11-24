@@ -31,9 +31,8 @@ class QdrantVectorStore:
         from qdrant_client import QdrantClient
         from dotenv import load_dotenv
 
-        load_dotenv()
-
         base_dir = Path(__file__).resolve().parents[2]
+        load_dotenv(base_dir / ".env")
         if storage_path is None:
             storage_path = base_dir / "indexes" / "qdrant_storage"
 

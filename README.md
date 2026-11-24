@@ -473,17 +473,17 @@ Evaluasi kinerja algoritma pencarian dokumen pada korpus C1 terpilih menggunakan
 
 | Model | Arsitektur Retriever | Recall@5 | Recall@10 | Precision@1 | Precision@5 | MRR@5 | MRR (Global) |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **R1** | **Dense BGE-M3 (Qdrant)** | **0.8333** | **0.9000** | **0.6667 (66.7%)** | **0.1733** | **0.7444** | **0.7542** |
-| **R3** | Hybrid BGE-M3 + BM25 | 0.7333 | 0.9000 | 0.5333 (53.3%) | 0.1533 | 0.6139 | 0.6354 |
-| **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.5167 | 0.5833 | 0.1667 (16.7%) | 0.1067 | 0.2867 | 0.2970 |
+| **R1** | **Dense BGE-M3 (Qdrant)** | **0.7105 (71.1%)** | **0.7632 (76.3%)** | **0.5789 (57.9%)** | **0.1474** | **0.6474** | **0.6533** |
+| **R3** | Hybrid BGE-M3 + BM25 | 0.6316 (63.2%) | 0.7632 (76.3%) | 0.4211 (42.1%) | 0.1316 | 0.5197 | 0.5289 |
+| **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.4211 (42.1%) | 0.4868 (48.7%) | 0.1316 (13.2%) | 0.0974 | 0.2307 | 0.2397 |
 
 *\*Tiga Pilar Metrik Evaluasi Retriever (Recall@K, Precision@K, MRR@K):*
-1. **Recall@K (Recall@5 = 0.8333)**: 83,3% kueri berhasil menangkap pasal target dalam 5 rekomendasi teratas (naik ke 90,0% pada Recall@10).
-2. **Precision@K (Precision@1 = 0.6667)**: Pada peringkat pertama, presisi mencapai 66,7% (unggul jauh dibanding Hybrid 53,3% dan SimCSE 16,7%).
-3. **MRR@K (MRR@5 = 0.7444 | MRR Global = 0.7542)**: Model R1 menempatkan pasal rujukan tepat di urutan teratas secara konsisten.
+1. **Recall@K (Recall@5 = 0.7105 | Recall@10 = 0.7632)**: 71,1% kueri berhasil menangkap pasal target dalam 5 rekomendasi teratas (naik ke 76,3% pada Recall@10).
+2. **Precision@K (Precision@1 = 0.5789)**: Pada peringkat pertama, presisi mencapai 57,9% (unggul jauh dibanding Hybrid 42,1% dan SimCSE 13,2%).
+3. **MRR@K (MRR Global = 0.6533)**: Model R1 menempatkan pasal rujukan tepat di urutan teratas secara konsisten.
 
 #### Justifikasi Ilmiah: Mengapa Dense (R1) Mengungguli Hybrid (R3)?
-Eksperimen membuktikan bahwa Dense Retrieval BGE-M3 (**MRR 0,7542**) mengungguli Hybrid Retrieval (**MRR 0,6354**), didukung oleh literatur primer:
+Eksperimen membuktikan bahwa Dense Retrieval BGE-M3 (**MRR 0,6533**) mengungguli Hybrid Retrieval (**MRR 0,5289**), didukung oleh literatur primer:
 1. **The Fusion Tax (Chauhan & Agarwal, IEEE Access 2026, DOI: 10.1109/ACCESS.2026.3743502):** Pada saat model *dense retriever* sudah berstatus *State-of-the-Art* (seperti BGE-M3), penggabungan linear dengan pencarian leksikal (BM25) justru mendegradasi akurasi (*Fusion Tax*). BM25 menarik dokumen dengan kecocokan kata permukaan (*surface term matching*), sehingga menggeser pasal target yang tepat secara semantik ke urutan ranking bawah (*rank dilution*).
 2. **Term Saturation pada Teks Perundang-undangan (Chalkidis et al., 2020 - EMNLP):** Kosakata hukum seperti *'perjanjian'*, *'hak'*, dan *'ganti rugi'* muncul berulang di ribuan pasal, menyebabkan bobot IDF pada BM25 mendatar mendekati 0 sehingga kehilangan daya diskriminasi. Dense retriever menangkap keutuhan kaidah hukum tanpa terdistorsi saturasi kata kunci.
 3. **Vocabulary Mismatch / Semantic Gap (Karpukhin et al., 2020 - DPR EMNLP):** Kueri awam pengguna menggunakan bahasa informal (misal: *'ingkar janji bayar utang'*), sedangkan korpus hukum menggunakan terminologi yuridis formal (*'wanprestasi atas perikatan'*). BM25 menghasilkan skor 0, sedangkan BGE-M3 memetakan makna konsep ke ruang vektor bersama.
@@ -496,12 +496,12 @@ Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus
 
 | Tingkat Racun | Total Pasal Ditarik (Top-5) | Pasal Bersih Terambil | Pasal Racun Terambil | Persentase Racun di Konteks |
 | :---: | :---: | :---: | :---: | :---: |
-| **0% (Bersih)** | **150** chunk | **150** chunk | **0** chunk | **0.0%** |
-| **1% Poison** | **150** chunk | **129** chunk | **21** chunk | **14.0%** |
-| **5% Poison** | **150** chunk | **114** chunk | **36** chunk | **24.0%** |
-| **10% Poison** | **150** chunk | **108** chunk | **42** chunk | **28.0%** |
+| **0% (Bersih)** | **200** chunk | **200** chunk | **0** chunk | **0.0%** |
+| **1% Poison** | **200** chunk | **177** chunk | **23** chunk | **11.5%** |
+| **5% Poison** | **200** chunk | **164** chunk | **36** chunk | **18.0%** |
+| **10% Poison** | **200** chunk | **155** chunk | **45** chunk | **22.5%** |
 
-*Temuan Penting*: Semakin tinggi persentase racun di korpus, semakin banyak pasal manipulasi yang ikut ditarik oleh Retriever masuk ke konteks (hingga **28.0%** pada dosis **10%**). Hal inilah yang membuktikan mengapa **modul pertahanan verifikasi integritas SHA-256 + NLI mutlak diperlukan** sebelum pasal diserahkan ke LLM!
+*Temuan Penting*: Semakin tinggi persentase racun di korpus, semakin banyak pasal manipulasi yang ikut ditarik oleh Retriever masuk ke konteks (hingga **22.5%** pada dosis **10%**). Hal inilah yang membuktikan mengapa **modul pertahanan verifikasi integritas SHA-256 + NLI mutlak diperlukan** sebelum pasal diserahkan ke LLM!
 
 ---
 
@@ -533,16 +533,16 @@ Evaluasi mekanisme pertahanan *Knowledge Poisoning* diukur menggunakan **Kerangk
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **S1** | Korpus Bersih | NONAKTIF (Baseline) | **0.0%** | 0.0% | 100.0% | 100.0% | 100.0% | Aman (Tanpa Serangan) |
 | **S2** | Korpus Bersih | **AKTIF (Uji False Positive)** | **0.0%** | **0.0%** | 100.0% | 100.0% | 100.0% | **Aman (Zero False Alarm)** |
-| **S3** | Terkontaminasi 1% | NONAKTIF | **60.0%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
+| **S3** | Terkontaminasi 1% | NONAKTIF | **47.5%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
 | **S4** | Terkontaminasi 1% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
-| **S5** | Terkontaminasi 5% | NONAKTIF | **83.3%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
+| **S5** | Terkontaminasi 5% | NONAKTIF | **67.5%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
 | **S6** | Terkontaminasi 5% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
-| **S7** | Terkontaminasi 10% | NONAKTIF | **83.3%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
+| **S7** | Terkontaminasi 10% | NONAKTIF | **75.0%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
 | **S8** | Terkontaminasi 10% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
 
 #### Analisis Kritis Kinerja Pertahanan:
 * **Urgensi Metrik FPR = 0,0% pada Ranah Hukum**: Dalam sistem *Legal QA*, metrik *False Positive Rate* (FPR) sama pentingnya dengan akurasi deteksi. Jika sistem pertahanan menghasilkan alarm palsu (FPR > 0), pasal resmi KUHPerdata/HIR akan keliru diblokir dan dikarantina, mengakibatkan LLM gagal menjawab kueri hukum pengguna. Hasil pengujian pada Skenario S2 membuktikan bahwa skor **FPR = 0,0%**, menjamin tidak ada dokumen hukum sah yang tersensor secara keliru.
-* **Eliminasi Total Attack Success Rate (ASR)**: Tanpa mekanisme pertahanan (Skenario S3, S5, S7), pasal manipulasi berhasil menyusup ke prompt penalaran LLM dengan tingkat keberhasilan serangan sebesar **60,0% s.d. 83,3%**. Setelah modul pertahanan berlapis (SHA-256 + NLI) diaktifkan pada bobot optimal $\alpha = 0,6$ dan $\tau = 0,5$, **seluruh serangan berhasil digagalkan 100% (ASR = 0,0%)** pada seluruh tingkat kontaminasi korpus (1%, 5%, dan 10%).
+* **Eliminasi Total Attack Success Rate (ASR)**: Tanpa mekanisme pertahanan (Skenario S3, S5, S7), pasal manipulasi berhasil menyusup ke prompt penalaran LLM dengan tingkat keberhasilan serangan sebesar **47,5% s.d. 75,0%**. Setelah modul pertahanan berlapis (SHA-256 + NLI) diaktifkan pada bobot optimal $\alpha = 0,6$ dan $\tau = 0,5$, **seluruh serangan berhasil digagalkan 100% (ASR = 0,0%)** pada seluruh tingkat kontaminasi korpus (1%, 5%, dan 10%).
 * **Beban Waktu Tambahan (Defense Latency Overhead)**: Penambahan verifikasi hash SHA-256 dan perbandingan NLI semantik hanya memerlukan waktu komputasi **~15–30 ms per kueri**, mempertahankan responsivitas *real-time* sistem tanya-jawab.
 
 ---

@@ -12,8 +12,11 @@ Metrik yang Dihitung:
 """
 
 import json
+import sys
 from pathlib import Path
 from typing import List, Dict, Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from src.retrieval.embedder import LegalEmbedder
 from src.retrieval.qdrant_store import QdrantVectorStore
@@ -80,6 +83,9 @@ def evaluate_retriever_model(retriever, queries: List[Dict[str, Any]], model_nam
         qid = q["id"]
         query_text = q["query"]
         target_pasal = [normalize_pasal(p) for p in q.get("nomor_pasal", [])]
+        if not target_pasal:
+            # Lewati kueri unanswerable dari metrik retrieval dokumen
+            continue
 
         # Ambil top-10 dokumen hasil pencarian
         hits = retriever.retrieve(query=query_text, top_k=10)

@@ -1,20 +1,20 @@
 [
   {
     "model_name": "R1",
-    "mrr": 0.7542,
+    "mrr": 0.6533,
     "recall": {
-      "Recall@1": 0.65,
-      "Recall@3": 0.8167,
-      "Recall@5": 0.8333,
-      "Recall@10": 0.9
+      "Recall@1": 0.5395,
+      "Recall@3": 0.6842,
+      "Recall@5": 0.7105,
+      "Recall@10": 0.7632
     },
     "map": {
-      "MAP@1": 0.6667,
-      "MAP@3": 0.7278,
-      "MAP@5": 0.7361,
-      "MAP@10": 0.7458
+      "MAP@1": 0.5789,
+      "MAP@3": 0.6096,
+      "MAP@5": 0.6189,
+      "MAP@10": 0.6265
     },
-    "total_queries": 30,
+    "total_queries": 40,
     "query_details": [
       {
         "id": "Q_PERDATA_001",
@@ -796,25 +796,239 @@
           "R@5": 1.0,
           "R@10": 1.0
         }
+      },
+      {
+        "id": "Q_PERDATA_031",
+        "query": "Bagaimana seseorang yang dirugikan akibat wanprestasi dapat mengajukan gugatan ganti rugi ke pengadilan negeri?",
+        "target_pasal": [
+          "1243",
+          "118"
+        ],
+        "retrieved_pasal": [
+          "1601w",
+          "1371",
+          "120",
+          "1603r",
+          "118",
+          "225",
+          "124",
+          "403",
+          "463",
+          "1919"
+        ],
+        "reciprocal_rank": 0.2,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.5,
+          "R@10": 0.5
+        }
+      },
+      {
+        "id": "Q_PERDATA_032",
+        "query": "Jika debitur diduga hendak menggelapkan harta demi menghindari kewajiban utangnya, apa upaya hukum pengamanan yang dapat dimohonkan ke pengadilan negeri?",
+        "target_pasal": [
+          "1131",
+          "227"
+        ],
+        "retrieved_pasal": [
+          "227",
+          "1843",
+          "1208",
+          "1832",
+          "218",
+          "216",
+          "1834",
+          "1404",
+          "1035",
+          "1156"
+        ],
+        "reciprocal_rank": 1.0,
+        "recall": {
+          "R@1": 0.5,
+          "R@3": 0.5,
+          "R@5": 0.5,
+          "R@10": 0.5
+        }
+      },
+      {
+        "id": "Q_PERDATA_033",
+        "query": "Apa perbedaan mendasar antara wanprestasi dan perbuatan melawan hukum menurut Kitab Undang-Undang Hukum Perdata?",
+        "target_pasal": [
+          "1243",
+          "1365"
+        ],
+        "retrieved_pasal": [
+          "207",
+          "213",
+          "446",
+          "206",
+          "129",
+          "225",
+          "163",
+          "123",
+          "146",
+          "180"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_034",
+        "query": "Apa perbedaan antara perjanjian pinjam pakai dengan perjanjian pinjam meminjam menurut KUHPerdata?",
+        "target_pasal": [
+          "1740",
+          "1754"
+        ],
+        "retrieved_pasal": [
+          "1740",
+          "1743",
+          "1754",
+          "1744",
+          "1750",
+          "1762",
+          "1759",
+          "1748",
+          "1139",
+          "1185"
+        ],
+        "reciprocal_rank": 1.0,
+        "recall": {
+          "R@1": 0.5,
+          "R@3": 1.0,
+          "R@5": 1.0,
+          "R@10": 1.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_035",
+        "query": "Budi meminjam uang sebesar 50 juta rupiah kepada Andi dengan janji mengembalikannya bulan lalu, tetapi hingga kini Budi mangkir dan tidak membayar. Apa dasar hukum tuntutannya?",
+        "target_pasal": [
+          "1243",
+          "1754"
+        ],
+        "retrieved_pasal": [
+          "1359",
+          "1250",
+          "1601t",
+          "1772",
+          "1264",
+          "1285",
+          "387",
+          "1397",
+          "1764",
+          "1773"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_036",
+        "query": "Seorang pembeli telah membayar lunas harga rumah dan menandatangani akta jual beli, namun penjual menolak menyerahkan kunci rumah. Bagaimana hak pembeli menurut hukum perdata?",
+        "target_pasal": [
+          "1457",
+          "1458"
+        ],
+        "retrieved_pasal": [
+          "1495",
+          "1516",
+          "1478",
+          "1496",
+          "1492",
+          "1404",
+          "1200",
+          "1217",
+          "1178",
+          "1146a"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_037",
+        "query": "Kalau tetangga saya merobohkan pagar rumah saya secara sepihak, apakah saya bisa meminta dia mengganti kerugian tersebut secara hukum?",
+        "target_pasal": [
+          "1365"
+        ],
+        "retrieved_pasal": [
+          "651",
+          "654",
+          "643",
+          "637",
+          "641",
+          "666",
+          "667",
+          "663",
+          "635",
+          "603"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_038",
+        "query": "Bolehkah saya menuntut orang yang berutang ke pengadilan tanpa harus menyewa jasa advokat atau pengacara?",
+        "target_pasal": [
+          "123"
+        ],
+        "retrieved_pasal": [
+          "1823",
+          "1821",
+          "403",
+          "1382",
+          "1435",
+          "133",
+          "1842",
+          "1303",
+          "131",
+          "1290"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
       }
     ]
   },
   {
     "model_name": "R2",
-    "mrr": 0.297,
+    "mrr": 0.2397,
     "recall": {
-      "Recall@1": 0.15,
-      "Recall@3": 0.35,
-      "Recall@5": 0.5167,
-      "Recall@10": 0.5833
+      "Recall@1": 0.1184,
+      "Recall@3": 0.2763,
+      "Recall@5": 0.4211,
+      "Recall@10": 0.4868
     },
     "map": {
-      "MAP@1": 0.1667,
-      "MAP@3": 0.2333,
-      "MAP@5": 0.27,
-      "MAP@10": 0.2803
+      "MAP@1": 0.1316,
+      "MAP@3": 0.1842,
+      "MAP@5": 0.2158,
+      "MAP@10": 0.2283
     },
-    "total_queries": 30,
+    "total_queries": 40,
     "query_details": [
       {
         "id": "Q_PERDATA_001",
@@ -1596,25 +1810,239 @@
           "R@5": 1.0,
           "R@10": 1.0
         }
+      },
+      {
+        "id": "Q_PERDATA_031",
+        "query": "Bagaimana seseorang yang dirugikan akibat wanprestasi dapat mengajukan gugatan ganti rugi ke pengadilan negeri?",
+        "target_pasal": [
+          "1243",
+          "118"
+        ],
+        "retrieved_pasal": [
+          "1919",
+          "568",
+          "58",
+          "834",
+          "12",
+          "163",
+          "1691",
+          "1603r",
+          "133",
+          "112"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_032",
+        "query": "Jika debitur diduga hendak menggelapkan harta demi menghindari kewajiban utangnya, apa upaya hukum pengamanan yang dapat dimohonkan ke pengadilan negeri?",
+        "target_pasal": [
+          "1131",
+          "227"
+        ],
+        "retrieved_pasal": [
+          "1840",
+          "188",
+          "136",
+          "186",
+          "190",
+          "133",
+          "195",
+          "163",
+          "112",
+          "58"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_033",
+        "query": "Apa perbedaan mendasar antara wanprestasi dan perbuatan melawan hukum menurut Kitab Undang-Undang Hukum Perdata?",
+        "target_pasal": [
+          "1243",
+          "1365"
+        ],
+        "retrieved_pasal": [
+          "1993",
+          "1684",
+          "1617",
+          "1353",
+          "1693",
+          "1916",
+          "1677",
+          "1373",
+          "1774",
+          "1675"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_034",
+        "query": "Apa perbedaan antara perjanjian pinjam pakai dengan perjanjian pinjam meminjam menurut KUHPerdata?",
+        "target_pasal": [
+          "1740",
+          "1754"
+        ],
+        "retrieved_pasal": [
+          "180",
+          "164",
+          "1762",
+          "58",
+          "1740",
+          "1754",
+          "165",
+          "150",
+          "152",
+          "133"
+        ],
+        "reciprocal_rank": 0.2,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.5,
+          "R@10": 1.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_035",
+        "query": "Budi meminjam uang sebesar 50 juta rupiah kepada Andi dengan janji mengembalikannya bulan lalu, tetapi hingga kini Budi mangkir dan tidak membayar. Apa dasar hukum tuntutannya?",
+        "target_pasal": [
+          "1243",
+          "1754"
+        ],
+        "retrieved_pasal": [
+          "58",
+          "1763",
+          "82",
+          "130",
+          "1492",
+          "1694",
+          "195",
+          "393",
+          "1601t",
+          "186"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_036",
+        "query": "Seorang pembeli telah membayar lunas harga rumah dan menandatangani akta jual beli, namun penjual menolak menyerahkan kunci rumah. Bagaimana hak pembeli menurut hukum perdata?",
+        "target_pasal": [
+          "1457",
+          "1458"
+        ],
+        "retrieved_pasal": [
+          "1517",
+          "1501",
+          "146",
+          "131",
+          "1498",
+          "58",
+          "133",
+          "163",
+          "165",
+          "1466"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_037",
+        "query": "Kalau tetangga saya merobohkan pagar rumah saya secara sepihak, apakah saya bisa meminta dia mengganti kerugian tersebut secara hukum?",
+        "target_pasal": [
+          "1365"
+        ],
+        "retrieved_pasal": [
+          "663",
+          "643",
+          "666",
+          "185",
+          "162",
+          "195",
+          "654",
+          "163",
+          "168",
+          "130"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_038",
+        "query": "Bolehkah saya menuntut orang yang berutang ke pengadilan tanpa harus menyewa jasa advokat atau pengacara?",
+        "target_pasal": [
+          "123"
+        ],
+        "retrieved_pasal": [
+          "1970",
+          "58",
+          "112",
+          "116",
+          "133",
+          "74",
+          "131",
+          "130",
+          "117",
+          "43"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
       }
     ]
   },
   {
     "model_name": "R3",
-    "mrr": 0.6354,
+    "mrr": 0.5289,
     "recall": {
-      "Recall@1": 0.5167,
-      "Recall@3": 0.7,
-      "Recall@5": 0.7333,
-      "Recall@10": 0.9
+      "Recall@1": 0.4079,
+      "Recall@3": 0.5921,
+      "Recall@5": 0.6316,
+      "Recall@10": 0.7632
     },
     "map": {
-      "MAP@1": 0.5333,
-      "MAP@3": 0.6056,
-      "MAP@5": 0.6139,
-      "MAP@10": 0.6354
+      "MAP@1": 0.4211,
+      "MAP@3": 0.4978,
+      "MAP@5": 0.507,
+      "MAP@10": 0.524
     },
-    "total_queries": 30,
+    "total_queries": 40,
     "query_details": [
       {
         "id": "Q_PERDATA_001",
@@ -2395,6 +2823,220 @@
           "R@3": 1.0,
           "R@5": 1.0,
           "R@10": 1.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_031",
+        "query": "Bagaimana seseorang yang dirugikan akibat wanprestasi dapat mengajukan gugatan ganti rugi ke pengadilan negeri?",
+        "target_pasal": [
+          "1243",
+          "118"
+        ],
+        "retrieved_pasal": [
+          "1919",
+          "568",
+          "1603r",
+          "1601w",
+          "118",
+          "82",
+          "1370",
+          "834",
+          "1691",
+          "1371"
+        ],
+        "reciprocal_rank": 0.2,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.5,
+          "R@10": 0.5
+        }
+      },
+      {
+        "id": "Q_PERDATA_032",
+        "query": "Jika debitur diduga hendak menggelapkan harta demi menghindari kewajiban utangnya, apa upaya hukum pengamanan yang dapat dimohonkan ke pengadilan negeri?",
+        "target_pasal": [
+          "1131",
+          "227"
+        ],
+        "retrieved_pasal": [
+          "1831",
+          "1840",
+          "227",
+          "1843",
+          "1208",
+          "1832",
+          "218",
+          "216",
+          "1834",
+          "1404"
+        ],
+        "reciprocal_rank": 0.3333,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.5,
+          "R@5": 0.5,
+          "R@10": 0.5
+        }
+      },
+      {
+        "id": "Q_PERDATA_033",
+        "query": "Apa perbedaan mendasar antara wanprestasi dan perbuatan melawan hukum menurut Kitab Undang-Undang Hukum Perdata?",
+        "target_pasal": [
+          "1243",
+          "1365"
+        ],
+        "retrieved_pasal": [
+          "1993",
+          "1684",
+          "1617",
+          "1353",
+          "1693",
+          "1916",
+          "1677",
+          "1373",
+          "1774",
+          "1675"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_034",
+        "query": "Apa perbedaan antara perjanjian pinjam pakai dengan perjanjian pinjam meminjam menurut KUHPerdata?",
+        "target_pasal": [
+          "1740",
+          "1754"
+        ],
+        "retrieved_pasal": [
+          "1762",
+          "1740",
+          "1754",
+          "1401",
+          "1743",
+          "1763",
+          "1744",
+          "1750",
+          "1759",
+          "1748"
+        ],
+        "reciprocal_rank": 0.5,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 1.0,
+          "R@5": 1.0,
+          "R@10": 1.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_035",
+        "query": "Budi meminjam uang sebesar 50 juta rupiah kepada Andi dengan janji mengembalikannya bulan lalu, tetapi hingga kini Budi mangkir dan tidak membayar. Apa dasar hukum tuntutannya?",
+        "target_pasal": [
+          "1243",
+          "1754"
+        ],
+        "retrieved_pasal": [
+          "1601t",
+          "1766",
+          "1763",
+          "58",
+          "82",
+          "1492",
+          "1694",
+          "393",
+          "1359",
+          "1250"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_036",
+        "query": "Seorang pembeli telah membayar lunas harga rumah dan menandatangani akta jual beli, namun penjual menolak menyerahkan kunci rumah. Bagaimana hak pembeli menurut hukum perdata?",
+        "target_pasal": [
+          "1457",
+          "1458"
+        ],
+        "retrieved_pasal": [
+          "1517",
+          "1516",
+          "1496",
+          "1478",
+          "1495",
+          "1492",
+          "1532",
+          "1404",
+          "1200",
+          "1217"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_037",
+        "query": "Kalau tetangga saya merobohkan pagar rumah saya secara sepihak, apakah saya bisa meminta dia mengganti kerugian tersebut secara hukum?",
+        "target_pasal": [
+          "1365"
+        ],
+        "retrieved_pasal": [
+          "663",
+          "643",
+          "666",
+          "654",
+          "1207",
+          "651",
+          "637",
+          "641",
+          "667",
+          "635"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
+        }
+      },
+      {
+        "id": "Q_PERDATA_038",
+        "query": "Bolehkah saya menuntut orang yang berutang ke pengadilan tanpa harus menyewa jasa advokat atau pengacara?",
+        "target_pasal": [
+          "123"
+        ],
+        "retrieved_pasal": [
+          "1970",
+          "1823",
+          "1821",
+          "403",
+          "1382",
+          "1435",
+          "133",
+          "1842",
+          "1303",
+          "131"
+        ],
+        "reciprocal_rank": 0.0,
+        "recall": {
+          "R@1": 0.0,
+          "R@3": 0.0,
+          "R@5": 0.0,
+          "R@10": 0.0
         }
       }
     ]

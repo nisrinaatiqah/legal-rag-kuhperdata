@@ -19,8 +19,11 @@ Metrik yang Dihasilkan:
 """
 
 import json
+import sys
 from pathlib import Path
 from typing import Dict, Any, List
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from src.retrieval.embedder import LegalEmbedder
 from src.retrieval.qdrant_store import QdrantVectorStore
@@ -155,9 +158,7 @@ def main():
     # Inisialisasi komponen bersama
     print("[*] Menginisialisasi Embedder & Detector...")
     shared_bge = LegalEmbedder("BAAI/bge-m3")
-    shared_simcse = LegalEmbedder("LazarusNLP/simcse-indobert-base")
     detector = PoisoningDetector()
-    bm25 = BM25Retriever()
 
     # Fungsi pembantu untuk memuat koleksi Qdrant
     def get_qdrant_retriever(collection_name: str):
@@ -165,7 +166,6 @@ def main():
         return LegalRetrieverR1(embedder=shared_bge, qdrant_store=store)
 
     r_clean = get_qdrant_retriever("kuhperdata_hir_bgem3")
-    r2_simcse = LegalRetrieverR2.load(alpha=0.6, embedder=shared_simcse, bm25=bm25)
     r_pois_1 = get_qdrant_retriever("kuhperdata_hir_bgem3_p1pct")
     r_pois_5 = get_qdrant_retriever("kuhperdata_hir_bgem3_p5pct")
     r_pois_10 = get_qdrant_retriever("kuhperdata_hir_bgem3_p10pct")

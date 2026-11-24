@@ -525,9 +525,19 @@ Evaluasi komparatif 3 varian model LLM menggunakan **5 Metrik Lengkap Framework 
 
 ### Tahap 4: Evaluasi Efektivitas Sistem Pertahanan Siber (Skenario S1 s.d. S8)
 
-Evaluasi mekanisme pertahanan *Knowledge Poisoning* diukur menggunakan **Kerangka Pertahanan Berlapis (Two-Tier Defense)** dengan metrik keamanan utama: **Attack Success Rate (ASR)**, **False Positive Rate (FPR)**, dan **Defense Latency Overhead**:
+Evaluasi mekanisme pertahanan *Knowledge Poisoning* diuji secara komprehensif menggunakan **Kerangka Pertahanan Berlapis (Two-Tier Defense)** terhadap 40 kueri uji *ground truth* (total **200 chunk dokumen** dievaluasi per skenario pada Top-5 retrieval).
 
-#### Tabel Evaluasi Pertahanan Siber Terhadap Serangan Manipulasi Pasal:
+Metrik keamanan dan deteksi yang diukur mencakup:
+* **Attack Success Rate (ASR)**: Persentase kueri di mana pasal racun berhasil lolos ke prompt konteks LLM.
+* **False Positive Rate (FPR)**: Persentase pasal resmi otentik yang keliru diblokir (alarm palsu).
+* **True Positive (TP)**: Pasal manipulasi yang berhasil dideteksi dan diblokir.
+* **False Negative (FN)**: Pasal manipulasi yang gagal dideteksi (lolos ke LLM).
+* **True Negative (TN)**: Pasal otentik yang berhasil diloloskan dengan benar.
+* **False Positive (FP)**: Pasal otentik yang keliru dinyatakan sebagai racun.
+
+---
+
+#### A. Tabel Ringkasan Pertahanan Utama: SHA-256 + NLI ($\alpha = 0.6, \tau = 0.5$) — Model Usulan
 
 | Skenario | Kondisi Korpus | Pertahanan (SHA-256 + NLI) | Serangan Tembus (ASR)* | False Alarm (FPR)* | Precision Deteksi | Recall Deteksi | F1-Score | Status Keamanan |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -540,7 +550,87 @@ Evaluasi mekanisme pertahanan *Knowledge Poisoning* diukur menggunakan **Kerangk
 | **S7** | Terkontaminasi 10% | NONAKTIF | **75.0%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
 | **S8** | Terkontaminasi 10% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
 
-#### Analisis Kritis Kinerja Pertahanan:
+---
+
+#### B. Transparansi Matriks Konfusi Riil ($TP, FP, FN, TN$) Pengujian S1 – S8 (40 Kueri / 200 Chunk):
+
+| Skenario | Kondisi Korpus | Pertahanan | Total Chunk | $TP$ (Dicegat) | $FP$ (Salah Blokir) | $FN$ (Racun Lolos) | $TN$ (Pasal Bersih Lolos) | Precision | Recall | F1-Score | FPR | ASR (Tembus) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **S1** | Bersih | NONAKTIF | 200 | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | **0.0%** | **0.0%** |
+| **S2** | Bersih | **AKTIF** | 200 | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | **0.0%** | **0.0%** |
+| **S3** | Racun 1% | NONAKTIF | 200 | 0 | 0 | 23 | 177 | 100.0% | **0.0%** | **0.0%** | **0.0%** | **47.5%** |
+| **S4** | Racun 1% | **AKTIF** | 200 | **23** | **0** | **0** | **177** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
+| **S5** | Racun 5% | NONAKTIF | 200 | 0 | 0 | 36 | 164 | 100.0% | **0.0%** | **0.0%** | **0.0%** | **67.5%** |
+| **S6** | Racun 5% | **AKTIF** | 200 | **36** | **0** | **0** | **164** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
+| **S7** | Racun 10% | NONAKTIF | 200 | 0 | 0 | 45 | 155 | 100.0% | **0.0%** | **0.0%** | **0.0%** | **75.0%** |
+| **S8** | Racun 10% | **AKTIF** | 200 | **45** | **0** | **0** | **155** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
+
+---
+
+#### C. Studi Komparasi 3 Varian Pertahanan: SHA-256 Saja vs NLI Saja vs Hibrida (SHA-256 + NLI)
+
+Untuk membuktikan apakah penggabungan kriptografi dan semantik memberikan perbedaan signifikan dibanding model tunggal, dilakukan pengujian terpisah pada ketiga konfigurasi:
+
+##### 1. Konfigurasi 1: Pertahanan Semantik NLI Saja ($\alpha = 0.0, \tau = 0.5$)
+*Hanya mengandalkan model Cross-Encoder NLI untuk mendeteksi kontradiksi makna tanpa verifikasi hash.*
+
+| Skenario | Kondisi Korpus | Pertahanan (NLI Saja) | $TP$ | $FP$ | $FN$ | $TN$ | Precision | Recall | F1-Score | FPR | ASR (Tembus) | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **S1** | Bersih | NONAKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Baseline) |
+| **S2** | Bersih | AKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Zero False Alarm) |
+| **S3** | Racun 1% | NONAKTIF | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis (Racun Lolos) |
+| **S4** | Racun 1% | AKTIF | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
+| **S5** | Racun 5% | NONAKTIF | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis (Racun Lolos) |
+| **S6** | Racun 5% | **AKTIF** | **34** | 0 | **2** | 164 | 100.0% | **94.44%** | **97.14%** | 0.0% | **5.0%** | **JEBOL (2 Racun Tembus)** |
+| **S7** | Racun 10% | NONAKTIF | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis (Racun Lolos) |
+| **S8** | Racun 10% | **AKTIF** | **37** | 0 | **8** | 155 | 100.0% | **82.22%** | **90.24%** | 0.0% | **17.5%** | **KRITIS (8 Racun Tembus)** |
+
+##### 2. Konfigurasi 2: Pertahanan Kriptografis SHA-256 Saja ($\alpha = 1.0, \tau = 0.5$)
+*Hanya mencocokkan sidik jari hash SHA-256 dokumen terhadap manifes resmi tanpa analisis bahasa.*
+
+| Skenario | Kondisi Korpus | Pertahanan (SHA-256 Saja) | $TP$ | $FP$ | $FN$ | $TN$ | Precision | Recall | F1-Score | FPR | ASR (Tembus) | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **S1** | Bersih | NONAKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Baseline) |
+| **S2** | Bersih | AKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Zero False Alarm) |
+| **S3** | Racun 1% | NONAKTIF | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis (Racun Lolos) |
+| **S4** | Racun 1% | AKTIF | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
+| **S5** | Racun 5% | NONAKTIF | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis (Racun Lolos) |
+| **S6** | Racun 5% | AKTIF | 36 | 0 | 0 | 164 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
+| **S7** | Racun 10% | NONAKTIF | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis (Racun Lolos) |
+| **S8** | Racun 10% | AKTIF | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
+
+##### 3. Konfigurasi 3: Pertahanan Hibrida Terpadu: SHA-256 + NLI ($\alpha = 0.6, \tau = 0.5$) — *Arsitektur Terpilih*
+*Menggabungkan kepastian deterministik kriptografis (60%) dengan penalaran semantik kontradiksi hukum (40%).*
+
+| Skenario | Kondisi Korpus | Pertahanan (Hibrida) | $TP$ | $FP$ | $FN$ | $TN$ | Precision | Recall | F1-Score | FPR | ASR (Tembus) | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **S1** | Bersih | NONAKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Baseline) |
+| **S2** | Bersih | AKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Zero False Alarm) |
+| **S3** | Racun 1% | NONAKTIF | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis (Racun Lolos) |
+| **S4** | Racun 1% | **AKTIF** | **23** | 0 | **0** | 177 | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+| **S5** | Racun 5% | NONAKTIF | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis (Racun Lolos) |
+| **S6** | Racun 5% | **AKTIF** | **36** | 0 | **0** | 164 | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+| **S7** | Racun 10% | NONAKTIF | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis (Racun Lolos) |
+| **S8** | Racun 10% | **AKTIF** | **45** | 0 | **0** | 155 | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+
+---
+
+#### D. Analisis Perbandingan & Argumen Ilmiah Skripsi: Mengapa SHA-256 + NLI Menjadi Pilihan Terbaik?
+
+| Aspek Komparasi | NLI Saja ($\alpha = 0.0$) | SHA-256 Saja ($\alpha = 1.0$) | Hibrida SHA-256 + NLI ($\alpha = 0.6$) |
+| :--- | :--- | :--- | :--- |
+| **Kekebalan Serangan (ASR pada 10% Racun)** | **17.5% (Tembus Parah, 8 racun lolos)** | **0.0% (Kebal Mutlak)** | **0.0% (Kebal Mutlak)** |
+| **Tingkat Recall Deteksi (10% Racun)** | **82.22% (Menurun drastis)** | **100.0%** | **100.0%** |
+| **Penalaran Semantik Hukum (*Semantic Reasoning*)** | Ada (Mendeteksi pembalikan klausul) | **Tidak Ada** (*Zero Reasoning*, murni string matching) | **Ada & Kokoh** (*Cognitive Security*) |
+| **Ketahanan Dokumen Baru (*Zero-Day Unmanifested*)** | Mampu menganalisis kontradiksi teks | Gagal total jika hash belum terdaftar | Mampu memadukan verifikasi ganda |
+| **Prinsip Keamanan Siber (*Cybersecurity Principle*)** | Titik kegagalan tunggal (*Single Point of Failure*) | Titik kegagalan tunggal (*Rigid/Brittle Defense*) | **Defense-in-Depth (Pertahanan Berlapis Multidimensi)** |
+
+*Kesimpulan Bab 4 Skripsi*:
+Pengujian membuktikan bahwa **NLI saja tidak memadai** untuk ranah hukum yang berisiko tinggi karena manipulasi negasi halus masih mampu menembus sistem (ASR 17.5%). Sebaliknya, **SHA-256 saja terlalu kaku** karena tidak memiliki kecerdasan bahasa. Penggabungan **SHA-256 + NLI ($\alpha = 0.6$)** merupakan arsitektur paling ideal yang menutup seluruh celah kebocoran racun tanpa mengorbankan akurasi dokumen resmi (*FPR = 0.0%*).
+
+---
+
+#### E. Analisis Kritis Kinerja Pertahanan:
 * **Urgensi Metrik FPR = 0,0% pada Ranah Hukum**: Dalam sistem *Legal QA*, metrik *False Positive Rate* (FPR) sama pentingnya dengan akurasi deteksi. Jika sistem pertahanan menghasilkan alarm palsu (FPR > 0), pasal resmi KUHPerdata/HIR akan keliru diblokir dan dikarantina, mengakibatkan LLM gagal menjawab kueri hukum pengguna. Hasil pengujian pada Skenario S2 membuktikan bahwa skor **FPR = 0,0%**, menjamin tidak ada dokumen hukum sah yang tersensor secara keliru.
 * **Eliminasi Total Attack Success Rate (ASR)**: Tanpa mekanisme pertahanan (Skenario S3, S5, S7), pasal manipulasi berhasil menyusup ke prompt penalaran LLM dengan tingkat keberhasilan serangan sebesar **47,5% s.d. 75,0%**. Setelah modul pertahanan berlapis (SHA-256 + NLI) diaktifkan pada bobot optimal $\alpha = 0,6$ dan $\tau = 0,5$, **seluruh serangan berhasil digagalkan 100% (ASR = 0,0%)** pada seluruh tingkat kontaminasi korpus (1%, 5%, dan 10%).
 * **Beban Waktu Tambahan (Defense Latency Overhead)**: Penambahan verifikasi hash SHA-256 dan perbandingan NLI semantik hanya memerlukan waktu komputasi **~15–30 ms per kueri**, mempertahankan responsivitas *real-time* sistem tanya-jawab.

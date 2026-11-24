@@ -173,37 +173,37 @@ $$\text{Keputusan}(d) = \begin{cases}
 
 Penentuan bobot **$\alpha = 0.6$** dan ambang batas **$\tau = 0.5$** didasarkan pada eksperimen studi ablasi menyeluruh pada [`data/evaluation/ablation_study_alpha_tau.json`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/data/evaluation/ablation_study_alpha_tau.json) yang menguji variasi parameter $\alpha \in [0.0, 1.0]$ dan $\tau \in [0.3, 0.7]$:
 
-| Nilai $\alpha$ | Nilai $\tau$ | Konfigurasi Deteksi | ASR (Tembus) | Precision | Recall | F1-Score | FPR (Alarm Palsu) |
+| Nilai $\alpha$ | Nilai $\tau$ | Konfigurasi Deteksi | ASR | Precision | Recall | F1-Score | FPR |
 | :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| **0.0** | **0.5** | Murni Evaluasi Semantik NLI (Tanpa Hash) | **6.67%** | **100.0%** | **93.94%** | **96.88%** | **0.0%** |
-| **0.5** | **0.5** | Bobot Seimbang (50% Kriptografi + 50% NLI) | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
-| **0.6** | **0.5** | **Komposit Terpilih (60% Kriptografi + 40% NLI)** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
-| **1.0** | **0.5** | Murni Verifikasi Kriptografis SHA-256 | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
+| **0.0** | **0.5** | Evaluasi Semantik NLI | **6.67%** | **100.0%** | **93.94%** | **96.88%** | **0.0%** |
+| **0.5** | **0.5** | Bobot Seimbang Kriptografi dan NLI | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
+| **0.6** | **0.5** | Kombinasi Kriptografi dan NLI | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
+| **1.0** | **0.5** | Verifikasi Kriptografis SHA-256 | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **0.0%** |
 
-*Wawasan Kunci Studi Ablasi*:
-1. Jika sistem hanya mengandalkan evaluasi semantik ($\alpha = 0.0$), penyerang dengan teknik parafrase manipulatif halus masih dapat menembus pertahanan dengan **ASR = 6.67%**.
-2. Penggabungan verifikasi kriptografis SHA-256 dengan bobot dominan $\alpha = \mathbf{0.6}$ memberikan jaminan deterministik mutlak bahwa setiap pasal manipulasi langsung dicegat (**ASR = 0.0%**, **F1-Score = 100.0%**).
-3. Ambang batas $\tau = \mathbf{0.5}$ memberikan margin keamanan yang ideal karena dokumen resmi otentik memiliki skor risiko **0.0000** (jauh di bawah $\tau$), menjamin **False Positive Rate (FPR) = 0.0%** (tidak pernah ada pasal resmi yang keliru terblokir).
+*Temuan Studi Ablasi*:
+1. Penggunaan evaluasi semantik tunggal ($\alpha = 0.0$) masih dapat ditembus manipulasi parafrase dengan ASR sebesar 6,67%.
+2. Penggabungan verifikasi kriptografis SHA-256 dengan bobot $\alpha = 0.6$ memberikan jaminan deterministik bahwa setiap pasal manipulasi dapat dicegat (ASR = 0,0%, F1-Score = 100,0%).
+3. Ambang batas $\tau = 0.5$ memberikan batas pemisah yang optimal karena dokumen otentik memiliki skor risiko 0,0000, sehingga False Positive Rate (FPR) tetap bernilai 0,0%.
 
 ---
 
 #### F. Contoh Perhitungan Komputasi Kasus Riil
 
-##### Kasus 1: Dokumen Otentik Sah (KUHPerdata Pasal 1320 Asli)
-* Bunyi teks: *"Untuk sahnya suatu perjanjian diperlukan empat syarat: sepakat mereka yang mengikatkan dirinya..."*
-* Verifikasi SHA-256: Hash cocok dengan manifest resmi $\implies R_{\text{src}} = \mathbf{0.0}$ (`VERIFIED_AUTHENTIC`).
-* Verifikasi Semantik: Teks identik 100% dengan korpus kanonik ($S = 1.0$), tidak ada pembalikan polaritas $\implies R_{\text{sem}} = \mathbf{0.0}$ (`CONSISTENT`).
+##### Kasus 1: Dokumen Otentik KUHPerdata Pasal 1320
+* Teks pasal: *"Untuk sahnya suatu perjanjian diperlukan empat syarat: sepakat mereka yang mengikatkan dirinya..."*
+* Verifikasi SHA-256: Hash sesuai manifes resmi $\implies R_{\text{src}} = \mathbf{0.0}$ (`VERIFIED_AUTHENTIC`).
+* Verifikasi Semantik: Teks identik dengan korpus kanonik ($S = 1.0$) tanpa pembalikan polaritas $\implies R_{\text{sem}} = \mathbf{0.0}$ (`CONSISTENT`).
 * Perhitungan Skor Risiko Komposit:
   $$\text{Composite Score} = (0.6 \times 0.0) + (0.4 \times 0.0) = \mathbf{0.0000}$$
-* Evaluasi Ambang Batas: $\mathbf{0.0000} < 0.5 \implies$ **Status: `CLEARED_SAFE`** (Lolos sebagai konteks LLM).
+* Keputusan: $\mathbf{0.0000} < 0.5 \implies$ **Status: `CLEARED_SAFE`** (Diteruskan ke generator LLM).
 
-##### Kasus 2: Dokumen Dimanipulasi Serangan Racun (Pasal 1320 Dimanipulasi Negasi)
-* Bunyi teks racun: *"Untuk sahnya suatu perjanjian **tidak** diperlukan empat syarat: sepakat mereka yang mengikatkan dirinya **bukan** merupakan syarat mutlak..."*
-* Verifikasi SHA-256: Hash berubah drastis karena penambahan kata $\implies R_{\text{src}} = \mathbf{1.0}$ (`TAMPERED_HASH_MISMATCH`).
-* Verifikasi Semantik: Terdeteksi injeksi kata negasi (*tidak*, *bukan*) yang membalikkan klausul hukum (`polarity_flipped = True`), kemiripan $S = 0.81 \implies R_{\text{sem}} = \max(0.80, 1.0 - 0.81) = \mathbf{0.8000}$ (`CONTRADICTION`).
+##### Kasus 2: Dokumen Terkontaminasi Manipulasi Negasi
+* Teks pasal manipulasi: *"Untuk sahnya suatu perjanjian **tidak** diperlukan empat syarat: sepakat mereka yang mengikatkan dirinya **bukan** merupakan syarat mutlak..."*
+* Verifikasi SHA-256: Hash berubah akibat penambahan kata $\implies R_{\text{src}} = \mathbf{1.0}$ (`TAMPERED_HASH_MISMATCH`).
+* Verifikasi Semantik: Terdeteksi injeksi negasi (*tidak*, *bukan*) yang membalikkan kaidah hukum (`polarity_flipped = True`), kemiripan $S = 0.81 \implies R_{\text{sem}} = \max(0.80, 1.0 - 0.81) = \mathbf{0.8000}$ (`CONTRADICTION`).
 * Perhitungan Skor Risiko Komposit:
   $$\text{Composite Score} = (0.6 \times 1.0) + (0.4 \times 0.80) = 0.60 + 0.32 = \mathbf{0.9200}$$
-* Evaluasi Ambang Batas: $\mathbf{0.9200} \ge 0.5 \implies$ **Status: `BLOCKED_POISON`** (Langsung dibuang dan dikarantina).
+* Keputusan: $\mathbf{0.9200} \ge 0.5 \implies$ **Status: `BLOCKED_POISON`** (Diblokir dan dikarantina).
 
 ---
 
@@ -436,25 +436,25 @@ Evaluasi sistem dirancang secara berjenjang mengikuti logika skripsi, terbagi ke
 
 ### Tahap 1: Evaluasi Segmentasi Korpus (Chunking: C1 vs C2 vs C3)
 
-Pengujian komparatif membandingkan 3 strategi segmentasi korpus hukum perdata (KUHPerdata dan HIR) terhadap 30 kueri uji *ground truth*:
-1. **C1 (Structure-Based / Per-Pasal Utuh)**: Mengikuti batas yuridis alami dokumen hukum per pasal (2.276 pasal).
-2. **C2 (Fixed-Size Small / 256 Tokens)**: Jendela geser mekanis 256 token dengan overlap 32 token (822 chunk).
-3. **C3 (Fixed-Size Large / 512 Tokens)**: Jendela geser mekanis 512 token dengan overlap 64 token (411 chunk).
+Pengujian komparatif membandingkan tiga strategi segmentasi korpus hukum perdata (KUHPerdata dan HIR) terhadap 40 kueri uji:
+1. **C1**: Segmentasi berbasis struktur pasal utuh (2.276 pasal).
+2. **C2**: Segmentasi ukuran tetap 256 token dengan overlap 32 token (822 chunk).
+3. **C3**: Segmentasi ukuran tetap 512 token dengan overlap 64 token (411 chunk).
 
 #### Tabel Evaluasi Komparatif Skenario Chunking:
 
 | Skenario | Strategi Segmentasi | Total Chunk | Rata-rata Token | Distorsi Multi-Pasal (%)* | Context Precision* | MRR | Recall@5 |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **C1** | **Berbasis Struktur (Per-Pasal Utuh)** | **2.276** | **95,3** | **0,00%** | **0,884** | 0,3762 | 0,5667 |
-| **C2** | Ukuran Tetap (256 Token, Overlap 32) | 822 | 255,6 | 90,15% | 0,612 | 0,4965 | 0,7000 |
-| **C3** | Ukuran Tetap (512 Token, Overlap 64) | 411 | 511,1 | 97,32% | 0,485 | 0,5787 | 0,7000 |
+| **C1** | Berbasis Struktur Pasal | 2.276 | 95,3 | 0,00% | 0,884 | 0,3762 | 0,5667 |
+| **C2** | Ukuran Tetap 256 Token | 822 | 255,6 | 90,15% | 0,612 | 0,4965 | 0,7000 |
+| **C3** | Ukuran Tetap 512 Token | 411 | 511,1 | 97,32% | 0,485 | 0,5787 | 0,7000 |
 
 *\*Dua Metrik Inti Penentu Tahap Chunking:*
 1. **Distorsi Multi-Pasal (%)**: C1 mencatatkan **0,00%** (100% batas pasal terjaga utuh), sedangkan C3 mencapai **97,32%** (hampir seluruh chunk mencampur 5–10 pasal berbeda).
 2. **Context Precision**: C1 menghasilkan nilai tertinggi **0,884** (konteks sangat bersih dari pasal pengotor), sedangkan C3 anjlok ke **0,485** akibat *context noise*.
 3. **Fenomena Kenaikan MRR/Recall pada C3**: Kenaikan skor leksikal pada C3 murni merupakan ilusi *document length recall bias* (ukuran dokumen besar membuat kata kunci lebih mudah tersaring), namun dibayar mahal oleh rusaknya batas pasal dan anjloknya presisi konteks saat diumpankan ke LLM.
 
-#### Justifikasi Ilmiah Pemilihan C1 (Structure-Based):
+#### Justifikasi Ilmiah Pemilihan Segmentasi C1:
 1. **Integritas Batas Yuridis & Bebas Distorsi**: C1 memiliki tingkat distorsi 0,0%, mencegah tercampurnya syarat dan sanksi dari pasal-pasal yang berbeda.
 2. **Kerapatan Informasi & Pencegahan Halusinasi**: C1 memberikan *Context Precision* tertinggi (0,884), mencegah distorsi konteks *Lost-in-the-Middle* pada LLM.
 3. **Pondasi Deteksi Knowledge Poisoning**: C1 adalah satu-satunya strategi yang kompatibel dengan verifikasi kriptografis SHA-256 terhadap dokumen resmi JDIH Mahkamah Agung.
@@ -464,44 +464,44 @@ Pengujian komparatif membandingkan 3 strategi segmentasi korpus hukum perdata (K
 
 ### Tahap 2: Evaluasi Model Temu-Kembali (Retriever: R1 vs R2 vs R3)
 
-Evaluasi kinerja algoritma pencarian dokumen pada korpus C1 terpilih menggunakan 30 kueri hukum standar:
-* **R1**: Dense Retrieval SOTA multilingual — **BAAI/bge-m3** (1024-dim, Qdrant Cloud).
-* **R2**: Hybrid Retrieval baseline — **SimCSE-IndoBERT + BM25** (768-dim).
-* **R3**: Hybrid Retrieval gabungan — **BAAI/bge-m3 + BM25** (Reciprocal Rank Fusion).
+Evaluasi kinerja algoritma pencarian dokumen pada korpus C1 terpilih menggunakan kueri hukum standar:
+* **R1**: Dense Retrieval menggunakan model BAAI/bge-m3 (1024 dimensi, Qdrant Cloud).
+* **R2**: Hybrid Retrieval menggunakan model SimCSE-IndoBERT dan BM25 (768 dimensi).
+* **R3**: Hybrid Retrieval menggunakan model BAAI/bge-m3 dan BM25 (Reciprocal Rank Fusion).
 
 #### Tabel Evaluasi Komparatif Retriever:
 
-| Model | Arsitektur Retriever | Recall@5 | Recall@10 | Precision@1 | Precision@5 | MRR@5 | MRR (Global) |
+| Model | Arsitektur Retriever | Recall@5 | Recall@10 | Precision@1 | Precision@5 | MRR@5 | MRR |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **R1** | **Dense BGE-M3 (Qdrant)** | **0.7105 (71.1%)** | **0.7632 (76.3%)** | **0.5789 (57.9%)** | **0.1474** | **0.6474** | **0.6533** |
-| **R3** | Hybrid BGE-M3 + BM25 | 0.6316 (63.2%) | 0.7632 (76.3%) | 0.4211 (42.1%) | 0.1316 | 0.5197 | 0.5289 |
-| **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.4211 (42.1%) | 0.4868 (48.7%) | 0.1316 (13.2%) | 0.0974 | 0.2307 | 0.2397 |
+| **R1** | Dense BGE-M3 | **0.7105** | **0.7632** | **0.5789** | **0.1474** | **0.6474** | **0.6533** |
+| **R3** | Hybrid BGE-M3 + BM25 | 0.6316 | 0.7632 | 0.4211 | 0.1316 | 0.5197 | 0.5289 |
+| **R2** | Hybrid SimCSE-IndoBERT + BM25 | 0.4211 | 0.4868 | 0.1316 | 0.0974 | 0.2307 | 0.2397 |
 
-*\*Tiga Pilar Metrik Evaluasi Retriever (Recall@K, Precision@K, MRR@K):*
-1. **Recall@K (Recall@5 = 0.7105 | Recall@10 = 0.7632)**: 71,1% kueri berhasil menangkap pasal target dalam 5 rekomendasi teratas (naik ke 76,3% pada Recall@10).
-2. **Precision@K (Precision@1 = 0.5789)**: Pada peringkat pertama, presisi mencapai 57,9% (unggul jauh dibanding Hybrid 42,1% dan SimCSE 13,2%).
-3. **MRR@K (MRR Global = 0.6533)**: Model R1 menempatkan pasal rujukan tepat di urutan teratas secara konsisten.
+*\*Analisis Tiga Metrik Utama Retriever:*
+1. **Recall@K (Recall@5 = 0.7105, Recall@10 = 0.7632)**: Sebanyak 71,05% kueri berhasil menangkap pasal target dalam 5 rekomendasi teratas dan meningkat menjadi 76,32% pada Recall@10.
+2. **Precision@K (Precision@1 = 0.5789)**: Pada peringkat pertama, presisi mencapai 57,89% (lebih tinggi dibandingkan konfigurasi Hybrid 42,11% dan SimCSE 13,16%).
+3. **MRR (MRR = 0.6533)**: Model R1 menempatkan pasal rujukan pada peringkat teratas secara konsisten.
 
-#### Justifikasi Ilmiah: Mengapa Dense (R1) Mengungguli Hybrid (R3)?
+#### Justifikasi Ilmiah Keunggulan Dense R1 terhadap Hybrid R3:
 Eksperimen membuktikan bahwa Dense Retrieval BGE-M3 (**MRR 0,6533**) mengungguli Hybrid Retrieval (**MRR 0,5289**), didukung oleh literatur primer:
-1. **The Fusion Tax (Chauhan & Agarwal, IEEE Access 2026, DOI: 10.1109/ACCESS.2026.3743502):** Pada saat model *dense retriever* sudah berstatus *State-of-the-Art* (seperti BGE-M3), penggabungan linear dengan pencarian leksikal (BM25) justru mendegradasi akurasi (*Fusion Tax*). BM25 menarik dokumen dengan kecocokan kata permukaan (*surface term matching*), sehingga menggeser pasal target yang tepat secara semantik ke urutan ranking bawah (*rank dilution*).
-2. **Term Saturation pada Teks Perundang-undangan (Chalkidis et al., 2020 - EMNLP):** Kosakata hukum seperti *'perjanjian'*, *'hak'*, dan *'ganti rugi'* muncul berulang di ribuan pasal, menyebabkan bobot IDF pada BM25 mendatar mendekati 0 sehingga kehilangan daya diskriminasi. Dense retriever menangkap keutuhan kaidah hukum tanpa terdistorsi saturasi kata kunci.
-3. **Vocabulary Mismatch / Semantic Gap (Karpukhin et al., 2020 - DPR EMNLP):** Kueri awam pengguna menggunakan bahasa informal (misal: *'ingkar janji bayar utang'*), sedangkan korpus hukum menggunakan terminologi yuridis formal (*'wanprestasi atas perikatan'*). BM25 menghasilkan skor 0, sedangkan BGE-M3 memetakan makna konsep ke ruang vektor bersama.
+1. **The Fusion Tax (Chauhan & Agarwal, IEEE Access 2026, DOI: 10.1109/ACCESS.2026.3743502):** Pada saat model dense retriever sudah berstatus State-of-the-Art (seperti BGE-M3), penggabungan linear dengan pencarian leksikal (BM25) justru mendegradasi akurasi (*Fusion Tax*). BM25 menarik dokumen dengan kecocokan kata permukaan (*surface term matching*), sehingga menggeser pasal target yang tepat secara semantik ke urutan ranking bawah (*rank dilution*).
+2. **Term Saturation pada Teks Perundang-undangan (Chalkidis et al., 2020 - EMNLP):** Kosakata hukum seperti *perjanjian*, *hak*, dan *ganti rugi* muncul berulang di ribuan pasal, menyebabkan bobot IDF pada BM25 mendatar mendekati 0 sehingga kehilangan daya diskriminasi. Dense retriever menangkap keutuhan kaidah hukum tanpa terdistorsi saturasi kata kunci.
+3. **Vocabulary Mismatch / Semantic Gap (Karpukhin et al., 2020 - DPR EMNLP):** Kueri awam pengguna menggunakan bahasa informal (misal: *ingkar janji bayar utang*), sedangkan korpus hukum menggunakan terminologi yuridis formal (*wanprestasi atas perikatan*). BM25 menghasilkan skor 0, sedangkan BGE-M3 memetakan makna konsep ke ruang vektor bersama.
 4. **Morfologi Hukum Indonesia (Rozaq et al., 2025):** Teks hukum Indonesia kaya imbuhan (*ke-an, per-an*) yang menimbulkan pencocokan palsu pada tokenizer unigram BM25. Dense retriever multilingual menangkap relasi sintaktis klausa secara jauh lebih akurat.
 
 ---
 
-### Profil Pengambilan Pasal oleh Retriever pada Korpus Terkontaminasi (Top-5 Retrieval)
-Mengevaluasi seberapa agresif pasal racun tertarik oleh Retriever R1 saat korpus diserang dengan berbagai rasio kontaminasi:
+### Profil Pengambilan Dokumen pada Korpus Terkontaminasi (Top-5 Retrieval)
+Mengevaluasi seberapa agresif pasal manipulasi tertarik oleh Retriever R1 saat korpus terkontaminasi:
 
-| Tingkat Racun | Total Pasal Ditarik (Top-5) | Pasal Bersih Terambil | Pasal Racun Terambil | Persentase Racun di Konteks |
+| Tingkat Kontaminasi | Total Dokumen Ditarik | Dokumen Otentik Terambil | Dokumen Manipulasi Terambil | Proporsi Manipulasi di Konteks |
 | :---: | :---: | :---: | :---: | :---: |
-| **0% (Bersih)** | **200** chunk | **200** chunk | **0** chunk | **0.0%** |
-| **1% Poison** | **200** chunk | **177** chunk | **23** chunk | **11.5%** |
-| **5% Poison** | **200** chunk | **164** chunk | **36** chunk | **18.0%** |
-| **10% Poison** | **200** chunk | **155** chunk | **45** chunk | **22.5%** |
+| Bersih (0%) | 200 | 200 | 0 | 0.0% |
+| Kontaminasi 1% | 200 | 177 | 23 | 11.5% |
+| Kontaminasi 5% | 200 | 164 | 36 | 18.0% |
+| Kontaminasi 10% | 200 | 155 | 45 | 22.5% |
 
-*Temuan Penting*: Semakin tinggi persentase racun di korpus, semakin banyak pasal manipulasi yang ikut ditarik oleh Retriever masuk ke konteks (hingga **22.5%** pada dosis **10%**). Hal inilah yang membuktikan mengapa **modul pertahanan verifikasi integritas SHA-256 + NLI mutlak diperlukan** sebelum pasal diserahkan ke LLM!
+*Catatan Analisis*: Semakin tinggi persentase kontaminasi korpus, semakin banyak pasal manipulasi yang ikut tertarik oleh Retriever masuk ke konteks (hingga **22.5%** pada tingkat kontaminasi **10%**). Hal ini menegaskan urgensi modul pertahanan integritas SHA-256 dan NLI sebelum dokumen diserahkan ke generator LLM.
 
 ---
 
@@ -525,108 +525,103 @@ Evaluasi komparatif 3 varian model LLM menggunakan **5 Metrik Lengkap Framework 
 
 ### Tahap 4: Evaluasi Efektivitas Sistem Pertahanan Siber (Skenario S1 s.d. S8)
 
-Evaluasi mekanisme pertahanan *Knowledge Poisoning* diuji secara komprehensif menggunakan **Kerangka Pertahanan Berlapis (Two-Tier Defense)** terhadap 40 kueri uji *ground truth* (total **200 chunk dokumen** dievaluasi per skenario pada Top-5 retrieval).
+Evaluasi mekanisme pertahanan *Knowledge Poisoning* diuji secara komprehensif menggunakan **Kerangka Pertahanan Berlapis (Two-Tier Defense)** terhadap 40 kueri uji *ground truth* (total **200 dokumen** dievaluasi per skenario pada Top-5 retrieval).
 
 Metrik keamanan dan deteksi yang diukur mencakup:
-* **Attack Success Rate (ASR)**: Persentase kueri di mana pasal racun berhasil lolos ke prompt konteks LLM.
+* **Attack Success Rate (ASR)**: Persentase kueri di mana pasal manipulasi berhasil masuk ke prompt konteks LLM.
 * **False Positive Rate (FPR)**: Persentase pasal resmi otentik yang keliru diblokir (alarm palsu).
-* **True Positive (TP)**: Pasal manipulasi yang berhasil dideteksi dan diblokir.
-* **False Negative (FN)**: Pasal manipulasi yang gagal dideteksi (lolos ke LLM).
-* **True Negative (TN)**: Pasal otentik yang berhasil diloloskan dengan benar.
-* **False Positive (FP)**: Pasal otentik yang keliru dinyatakan sebagai racun.
+* **True Positive (TP)**: Dokumen manipulasi yang berhasil dideteksi dan diblokir.
+* **False Negative (FN)**: Dokumen manipulasi yang gagal dideteksi.
+* **True Negative (TN)**: Dokumen otentik yang berhasil diloloskan.
+* **False Positive (FP)**: Dokumen otentik yang keliru dinyatakan sebagai manipulasi.
 
 ---
 
-#### A. Tabel Ringkasan Pertahanan Utama: SHA-256 + NLI ($\alpha = 0.6, \tau = 0.5$) — Model Usulan
+#### A. Tabel Ringkasan Pertahanan SHA-256 + NLI ($\\alpha = 0.6, \\tau = 0.5$)
 
-| Skenario | Kondisi Korpus | Pertahanan (SHA-256 + NLI) | Serangan Tembus (ASR)* | False Alarm (FPR)* | Precision Deteksi | Recall Deteksi | F1-Score | Status Keamanan |
+| Skenario | Kondisi Korpus | Pertahanan | ASR | FPR | Precision | Recall | F1-Score | Status Keamanan |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **S1** | Korpus Bersih | NONAKTIF (Baseline) | **0.0%** | 0.0% | 100.0% | 100.0% | 100.0% | Aman (Tanpa Serangan) |
-| **S2** | Korpus Bersih | **AKTIF (Uji False Positive)** | **0.0%** | **0.0%** | 100.0% | 100.0% | 100.0% | **Aman (Zero False Alarm)** |
-| **S3** | Terkontaminasi 1% | NONAKTIF | **47.5%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
-| **S4** | Terkontaminasi 1% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
-| **S5** | Terkontaminasi 5% | NONAKTIF | **67.5%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
-| **S6** | Terkontaminasi 5% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
-| **S7** | Terkontaminasi 10% | NONAKTIF | **75.0%** | 0.0% | 100.0% | 0.0% | 0.0% | Kritis (Racun Lolos) |
-| **S8** | Terkontaminasi 10% | **AKTIF** | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **100.0%** | **Kebal (100% Dicegat)** |
+| **S1** | Korpus Bersih | Nonaktif | 0.0% | 0.0% | 100.0% | 100.0% | 100.0% | Aman |
+| **S2** | Korpus Bersih | Aktif | 0.0% | 0.0% | 100.0% | 100.0% | 100.0% | Aman |
+| **S3** | Terkontaminasi 1% | Nonaktif | 47.5% | 0.0% | 100.0% | 0.0% | 0.0% | Kritis |
+| **S4** | Terkontaminasi 1% | Aktif | 0.0% | 0.0% | 100.0% | 100.0% | 100.0% | Aman |
+| **S5** | Terkontaminasi 5% | Nonaktif | 67.5% | 0.0% | 100.0% | 0.0% | 0.0% | Kritis |
+| **S6** | Terkontaminasi 5% | Aktif | 0.0% | 0.0% | 100.0% | 100.0% | 100.0% | Aman |
+| **S7** | Terkontaminasi 10% | Nonaktif | 75.0% | 0.0% | 100.0% | 0.0% | 0.0% | Kritis |
+| **S8** | Terkontaminasi 10% | Aktif | 0.0% | 0.0% | 100.0% | 100.0% | 100.0% | Aman |
 
 ---
 
-#### B. Transparansi Matriks Konfusi Riil ($TP, FP, FN, TN$) Pengujian S1 – S8 (40 Kueri / 200 Chunk):
+#### B. Matriks Konfusi Skenario S1 sampai S8
 
-| Skenario | Kondisi Korpus | Pertahanan | Total Chunk | $TP$ (Dicegat) | $FP$ (Salah Blokir) | $FN$ (Racun Lolos) | $TN$ (Pasal Bersih Lolos) | Precision | Recall | F1-Score | FPR | ASR (Tembus) |
+| Skenario | Kondisi Korpus | Pertahanan | Total Dokumen | TP | FP | FN | TN | Precision | Recall | F1-Score | FPR | ASR |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **S1** | Bersih | NONAKTIF | 200 | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | **0.0%** | **0.0%** |
-| **S2** | Bersih | **AKTIF** | 200 | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | **0.0%** | **0.0%** |
-| **S3** | Racun 1% | NONAKTIF | 200 | 0 | 0 | 23 | 177 | 100.0% | **0.0%** | **0.0%** | **0.0%** | **47.5%** |
-| **S4** | Racun 1% | **AKTIF** | 200 | **23** | **0** | **0** | **177** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
-| **S5** | Racun 5% | NONAKTIF | 200 | 0 | 0 | 36 | 164 | 100.0% | **0.0%** | **0.0%** | **0.0%** | **67.5%** |
-| **S6** | Racun 5% | **AKTIF** | 200 | **36** | **0** | **0** | **164** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
-| **S7** | Racun 10% | NONAKTIF | 200 | 0 | 0 | 45 | 155 | 100.0% | **0.0%** | **0.0%** | **0.0%** | **75.0%** |
-| **S8** | Racun 10% | **AKTIF** | 200 | **45** | **0** | **0** | **155** | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** |
+| **S1** | Korpus Bersih | Nonaktif | 200 | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% |
+| **S2** | Korpus Bersih | Aktif | 200 | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% |
+| **S3** | Terkontaminasi 1% | Nonaktif | 200 | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% |
+| **S4** | Terkontaminasi 1% | Aktif | 200 | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% |
+| **S5** | Terkontaminasi 5% | Nonaktif | 200 | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% |
+| **S6** | Terkontaminasi 5% | Aktif | 200 | 36 | 0 | 0 | 164 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% |
+| **S7** | Terkontaminasi 10% | Nonaktif | 200 | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% |
+| **S8** | Terkontaminasi 10% | Aktif | 200 | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% |
 
 ---
 
-#### C. Studi Komparasi 3 Varian Pertahanan: SHA-256 Saja vs NLI Saja vs Hibrida (SHA-256 + NLI)
+#### C. Studi Komparasi Tiga Konfigurasi Pertahanan
 
-Untuk membuktikan apakah penggabungan kriptografi dan semantik memberikan perbedaan signifikan dibanding model tunggal, dilakukan pengujian terpisah pada ketiga konfigurasi:
+##### 1. Konfigurasi 1: Pertahanan Semantik NLI Saja ($\\alpha = 0.0, \\tau = 0.5$)
 
-##### 1. Konfigurasi 1: Pertahanan Semantik NLI Saja ($\alpha = 0.0, \tau = 0.5$)
-*Hanya mengandalkan model Cross-Encoder NLI untuk mendeteksi kontradiksi makna tanpa verifikasi hash.*
+| Skenario | Kondisi Korpus | Pertahanan | TP | FP | FN | TN | Precision | Recall | F1-Score | FPR | ASR | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **S1** | Bersih | Nonaktif | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S2** | Bersih | Aktif | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S3** | Kontaminasi 1% | Nonaktif | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis |
+| **S4** | Kontaminasi 1% | Aktif | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S5** | Kontaminasi 5% | Nonaktif | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis |
+| **S6** | Kontaminasi 5% | Aktif | 34 | 0 | 2 | 164 | 100.0% | 94.44% | 97.14% | 0.0% | 5.0% | Rentan |
+| **S7** | Kontaminasi 10% | Nonaktif | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis |
+| **S8** | Kontaminasi 10% | Aktif | 37 | 0 | 8 | 155 | 100.0% | 82.22% | 90.24% | 0.0% | 17.5% | Kritis |
 
-| Skenario | Kondisi Korpus | Pertahanan (NLI Saja) | $TP$ | $FP$ | $FN$ | $TN$ | Precision | Recall | F1-Score | FPR | ASR (Tembus) | Status Keamanan |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **S1** | Bersih | NONAKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Baseline) |
-| **S2** | Bersih | AKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Zero False Alarm) |
-| **S3** | Racun 1% | NONAKTIF | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis (Racun Lolos) |
-| **S4** | Racun 1% | AKTIF | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
-| **S5** | Racun 5% | NONAKTIF | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis (Racun Lolos) |
-| **S6** | Racun 5% | **AKTIF** | **34** | 0 | **2** | 164 | 100.0% | **94.44%** | **97.14%** | 0.0% | **5.0%** | **JEBOL (2 Racun Tembus)** |
-| **S7** | Racun 10% | NONAKTIF | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis (Racun Lolos) |
-| **S8** | Racun 10% | **AKTIF** | **37** | 0 | **8** | 155 | 100.0% | **82.22%** | **90.24%** | 0.0% | **17.5%** | **KRITIS (8 Racun Tembus)** |
+##### 2. Konfigurasi 2: Pertahanan Kriptografis SHA-256 Saja ($\\alpha = 1.0, \\tau = 0.5$)
 
-##### 2. Konfigurasi 2: Pertahanan Kriptografis SHA-256 Saja ($\alpha = 1.0, \tau = 0.5$)
-*Hanya mencocokkan sidik jari hash SHA-256 dokumen terhadap manifes resmi tanpa analisis bahasa.*
+| Skenario | Kondisi Korpus | Pertahanan | TP | FP | FN | TN | Precision | Recall | F1-Score | FPR | ASR | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **S1** | Bersih | Nonaktif | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S2** | Bersih | Aktif | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S3** | Kontaminasi 1% | Nonaktif | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis |
+| **S4** | Kontaminasi 1% | Aktif | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S5** | Kontaminasi 5% | Nonaktif | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis |
+| **S6** | Kontaminasi 5% | Aktif | 36 | 0 | 0 | 164 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S7** | Kontaminasi 10% | Nonaktif | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis |
+| **S8** | Kontaminasi 10% | Aktif | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
 
-| Skenario | Kondisi Korpus | Pertahanan (SHA-256 Saja) | $TP$ | $FP$ | $FN$ | $TN$ | Precision | Recall | F1-Score | FPR | ASR (Tembus) | Status Keamanan |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **S1** | Bersih | NONAKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Baseline) |
-| **S2** | Bersih | AKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Zero False Alarm) |
-| **S3** | Racun 1% | NONAKTIF | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis (Racun Lolos) |
-| **S4** | Racun 1% | AKTIF | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
-| **S5** | Racun 5% | NONAKTIF | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis (Racun Lolos) |
-| **S6** | Racun 5% | AKTIF | 36 | 0 | 0 | 164 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
-| **S7** | Racun 10% | NONAKTIF | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis (Racun Lolos) |
-| **S8** | Racun 10% | AKTIF | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Kebal (100% Dicegat) |
+##### 3. Konfigurasi 3: Pertahanan Hibrida SHA-256 + NLI ($\\alpha = 0.6, \\tau = 0.5$)
 
-##### 3. Konfigurasi 3: Pertahanan Hibrida Terpadu: SHA-256 + NLI ($\alpha = 0.6, \tau = 0.5$) — *Arsitektur Terpilih*
-*Menggabungkan kepastian deterministik kriptografis (60%) dengan penalaran semantik kontradiksi hukum (40%).*
-
-| Skenario | Kondisi Korpus | Pertahanan (Hibrida) | $TP$ | $FP$ | $FN$ | $TN$ | Precision | Recall | F1-Score | FPR | ASR (Tembus) | Status Keamanan |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **S1** | Bersih | NONAKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Baseline) |
-| **S2** | Bersih | AKTIF | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman (Zero False Alarm) |
-| **S3** | Racun 1% | NONAKTIF | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis (Racun Lolos) |
-| **S4** | Racun 1% | **AKTIF** | **23** | 0 | **0** | 177 | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
-| **S5** | Racun 5% | NONAKTIF | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis (Racun Lolos) |
-| **S6** | Racun 5% | **AKTIF** | **36** | 0 | **0** | 164 | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
-| **S7** | Racun 10% | NONAKTIF | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis (Racun Lolos) |
-| **S8** | Racun 10% | **AKTIF** | **45** | 0 | **0** | 155 | **100.0%** | **100.0%** | **100.0%** | **0.0%** | **0.0%** | **Kebal (100% Dicegat)** |
+| Skenario | Kondisi Korpus | Pertahanan | TP | FP | FN | TN | Precision | Recall | F1-Score | FPR | ASR | Status Keamanan |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **S1** | Bersih | Nonaktif | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S2** | Bersih | Aktif | 0 | 0 | 0 | 200 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S3** | Kontaminasi 1% | Nonaktif | 0 | 0 | 23 | 177 | 100.0% | 0.0% | 0.0% | 0.0% | 47.5% | Kritis |
+| **S4** | Kontaminasi 1% | Aktif | 23 | 0 | 0 | 177 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S5** | Kontaminasi 5% | Nonaktif | 0 | 0 | 36 | 164 | 100.0% | 0.0% | 0.0% | 0.0% | 67.5% | Kritis |
+| **S6** | Kontaminasi 5% | Aktif | 36 | 0 | 0 | 164 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+| **S7** | Kontaminasi 10% | Nonaktif | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis |
+| **S8** | Kontaminasi 10% | Aktif | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
 
 ---
 
-#### D. Analisis Perbandingan & Argumen Ilmiah Skripsi: Mengapa SHA-256 + NLI Menjadi Pilihan Terbaik?
+#### D. Analisis Perbandingan Karakteristik Pertahanan
 
-| Aspek Komparasi | NLI Saja ($\alpha = 0.0$) | SHA-256 Saja ($\alpha = 1.0$) | Hibrida SHA-256 + NLI ($\alpha = 0.6$) |
+| Karakteristik Evaluasi | NLI Saja ($\\alpha = 0.0$) | SHA-256 Saja ($\\alpha = 1.0$) | SHA-256 + NLI ($\\alpha = 0.6$) |
 | :--- | :--- | :--- | :--- |
-| **Kekebalan Serangan (ASR pada 10% Racun)** | **17.5% (Tembus Parah, 8 racun lolos)** | **0.0% (Kebal Mutlak)** | **0.0% (Kebal Mutlak)** |
-| **Tingkat Recall Deteksi (10% Racun)** | **82.22% (Menurun drastis)** | **100.0%** | **100.0%** |
-| **Penalaran Semantik Hukum (*Semantic Reasoning*)** | Ada (Mendeteksi pembalikan klausul) | **Tidak Ada** (*Zero Reasoning*, murni string matching) | **Ada & Kokoh** (*Cognitive Security*) |
-| **Ketahanan Dokumen Baru (*Zero-Day Unmanifested*)** | Mampu menganalisis kontradiksi teks | Gagal total jika hash belum terdaftar | Mampu memadukan verifikasi ganda |
-| **Prinsip Keamanan Siber (*Cybersecurity Principle*)** | Titik kegagalan tunggal (*Single Point of Failure*) | Titik kegagalan tunggal (*Rigid/Brittle Defense*) | **Defense-in-Depth (Pertahanan Berlapis Multidimensi)** |
+| **ASR pada Kontaminasi 10%** | 17.5% | 0.0% | 0.0% |
+| **Recall Deteksi pada Kontaminasi 10%** | 82.22% | 100.0% | 100.0% |
+| **Penalaran Semantik Hukum** | Tersedia | Tidak tersedia | Tersedia |
+| **Ketahanan Dokumen Baru** | Adaptif terhadap teks baru | Bergantung pada manifes | Memadukan verifikasi ganda |
+| **Prinsip Keamanan Siber** | Titik kegagalan tunggal | Pertahanan kaku | Pertahanan berlapis |
 
-*Kesimpulan Bab 4 Skripsi*:
-Pengujian membuktikan bahwa **NLI saja tidak memadai** untuk ranah hukum yang berisiko tinggi karena manipulasi negasi halus masih mampu menembus sistem (ASR 17.5%). Sebaliknya, **SHA-256 saja terlalu kaku** karena tidak memiliki kecerdasan bahasa. Penggabungan **SHA-256 + NLI ($\alpha = 0.6$)** merupakan arsitektur paling ideal yang menutup seluruh celah kebocoran racun tanpa mengorbankan akurasi dokumen resmi (*FPR = 0.0%*).
+*Catatan Analisis*:
+Hasil evaluasi empiris menunjukkan bahwa pengujian semantik NLI tunggal tidak mencukupi untuk domain hukum dengan risiko tinggi karena variasi parafrase negasi masih dapat menembus sistem (ASR 17,5% pada kontaminasi 10%). Di sisi lain, verifikasi kriptografis SHA-256 bersifat deterministik namun terbatas pada verifikasi integritas biner manifes. Penggabungan hibrida SHA-256 dan NLI ($\\alpha = 0.6, \\tau = 0.5$) memberikan perlindungan komprehensif dengan ASR 0,0% dan FPR 0,0%, memadukan integritas kriptografis dan penalaran semantik hukum.
 
 ---
 

@@ -55,7 +55,7 @@ Mekanisme pertahanan menggabungkan verifikasi integritas kriptografis hash SHA-2
                                      |
                                      v
                         [ Pembangkit Jawaban (LLM) ]
-             (Gemini 2.5 Flash / DeepSeek V3/R1 / Qwen2.5-7B Lokal)
+             (Gemini 3.8 Flash / DeepSeek V3/R1 / Qwen2.5-7B Lokal)
                                      |
                                      v
                       [ Jawaban Hukum Bersitasi Pasal ]
@@ -165,7 +165,7 @@ $$\text{Keputusan}(d) = \begin{cases}
 \end{cases}$$
 
 * **Tindakan Pemblokiran**: Dokumen yang divonis `BLOCKED_POISON` langsung diputus jalurnya dan diisolasi ke daftar `blocked_chunks`. Dokumen beracun tersebut **dijamin 100% tidak pernah dimasukkan ke prompt konteks LLM**.
-* **Penyusunan Konteks Bersih**: Hanya dokumen berkategori `CLEARED_SAFE` yang diteruskan ke prompt generator sebagai rujukan penalaran hukum bagi Google Gemini 2.5 Flash, DeepSeek-R1, atau Qwen2.5-7B.
+* **Penyusunan Konteks Bersih**: Hanya dokumen berkategori `CLEARED_SAFE` yang diteruskan ke prompt generator sebagai rujukan penalaran hukum bagi Google Gemini 3.8 Flash, DeepSeek-R1, atau Qwen2.5-7B.
 
 ---
 
@@ -301,7 +301,7 @@ Berikut adalah diagram alir dan urutan eksekusi berkas kode dari tahap awal pemb
 
 6. **Tahap 6: Pembentukan Prompt & Pembangkitan Jawaban (Generation Layer)**
    * [`src/rag/prompt.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/rag/prompt.py) menyusun template instruksi sistem hukum yang mewajibkan LLM menyertakan sitasi formal `[KUHPerdata Pasal X]`.
-   * [`src/rag/generator.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/rag/generator.py) mengirim prompt ke model (Google Gemini 2.5 Flash, DeepSeek-R1, atau Qwen2.5-7B Lokal).
+   * [`src/rag/generator.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/rag/generator.py) mengirim prompt ke model (Google Gemini 3.8 Flash, DeepSeek-R1, atau Qwen2.5-7B Lokal).
    * [`src/rag/pipeline.py`](file:///d:/DATA/Downloads/TUGAS%20AKHIRR/legal-rag-perdata/src/rag/pipeline.py) menghubungkan seluruh alur dari kueri awal hingga jawaban akhir siap ditampilkan.
 
 7. **Tahap 7: Pengujian Eksperimental & Pelaporan (Evaluation Layer)**
@@ -381,7 +381,7 @@ Seluruh pemanggilan model LLM terpusat pada modul **`src/rag/generator.py`**:
 
 | Komponen Model | Deployment | Deskripsi & Peran |
 | :--- | :--- | :--- |
-| **Google Gemini 2.5 Flash** | Cloud API (`google-genai`) | Model *frontier* dengan penalaran hukum cepat, akurasi sitasi tertinggi (**93.3%**), dan skor Ragas rata-rata terbaik (**0.863**). |
+| **Google Gemini 3.8 Flash** | Cloud API (`google-genai`) | Model *frontier* dengan penalaran hukum cepat, akurasi sitasi tertinggi (**93.3%**), dan skor Ragas rata-rata terbaik (**0.863**). |
 | **DeepSeek-R1-8B / V3** | Lokal (Ollama) / Cloud API | Model penalaran mendalam (*Chain-of-Thought* / CoT) yang membedah logika pasal langkah demi langkah sebelum menyimpulkan jawaban. |
 | **Qwen2.5-7B-Instruct** | Lokal (Ollama) | Model open-source lokal untuk menjamin kedaulatan data perkara hukum (*on-premise privacy*), berjalan 100% offline tanpa kirim data ke internet. |
 

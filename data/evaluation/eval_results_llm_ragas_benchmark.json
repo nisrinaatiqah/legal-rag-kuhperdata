@@ -15,7 +15,6 @@
       "context_recall": 0.711,
       "answer_correctness": 0.841,
       "average_score": 0.839,
-      "citation_accuracy": 0.875,
       "misinformation_rate_without_defense": 0.833,
       "misinformation_rate_with_defense": 0.0,
       "status": "Unggul dalam Kecepatan Sintesis & Kepatuhan Konteks"
@@ -30,7 +29,6 @@
       "context_recall": 0.711,
       "answer_correctness": 0.812,
       "average_score": 0.821,
-      "citation_accuracy": 0.825,
       "misinformation_rate_without_defense": 0.833,
       "misinformation_rate_with_defense": 0.0,
       "status": "Unggul dalam Analisis Penalaran Hukum Logis (CoT Reasoning)"
@@ -45,7 +43,6 @@
       "context_recall": 0.711,
       "answer_correctness": 0.756,
       "average_score": 0.792,
-      "citation_accuracy": 0.775,
       "misinformation_rate_without_defense": 0.833,
       "misinformation_rate_with_defense": 0.0,
       "status": "Unggul dalam Privasi Data Hukum Lokal (On-Premise)"

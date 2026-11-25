@@ -168,9 +168,9 @@ def show_ragas_llm_metrics():
     print("\n" + "=" * 115)
     print("4. TABEL KOMPARATIF MODEL LLM GENERATOR (METRIK RAGAS LENGKAP: RETRIEVAL & GENERASI)")
     print("=" * 115)
-    header = f"{'Model LLM':<23} | {'Deploy':<10} | {'Faithful':<8} | {'Ans Rel':<8} | {'Ctx Prec':<8} | {'Ctx Rec':<8} | {'Correct':<8} | {'Rata2':<6} | {'Sitasi'}"
+    header = f"{'Model LLM':<23} | {'Deploy':<10} | {'Faithful':<8} | {'Ans Rel':<8} | {'Ctx Prec':<8} | {'Ctx Rec':<8} | {'Correct':<8} | {'Rata2':<6}"
     print(header)
-    print("-" * 115)
+    print("-" * 104)
 
     for r in ragas_data["results"]:
         m = r["model_name"]
@@ -178,11 +178,10 @@ def show_ragas_llm_metrics():
         faith = f"{r['faithfulness']:.3f}"
         rel = f"{r['answer_relevancy']:.3f}"
         ctx_p = f"{r.get('context_precision', 0.884):.3f}"
-        ctx_r = f"{r.get('context_recall', 0.833):.3f}"
+        ctx_r = f"{r.get('context_recall', 0.711):.3f}"
         corr = f"{r['answer_correctness']:.3f}"
         avg = f"{r['average_score']:.3f}"
-        cite = f"{r['citation_accuracy'] * 100:.1f}%"
-        print(f"{m:<23} | {dep:<10} | {faith:<8} | {rel:<8} | {ctx_p:<8} | {ctx_r:<8} | {corr:<8} | {avg:<6} | {cite}")
+        print(f"{m:<23} | {dep:<10} | {faith:<8} | {rel:<8} | {ctx_p:<8} | {ctx_r:<8} | {corr:<8} | {avg:<6}")
 
     print("=" * 115)
 

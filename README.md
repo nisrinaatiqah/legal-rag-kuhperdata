@@ -511,7 +511,7 @@ Evaluasi komparatif 3 varian model LLM menggunakan **5 Metrik Lengkap Framework 
 
 | Model LLM | Kategori Model | Deployment | Faithfulness* | Answer Relevancy* | Context Precision* | Context Recall* | Answer Correctness* | Rata-Rata Skor |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Gemini 2.5 Flash** | Frontier Cloud API | Cloud API | **0.892** | **0.865** | **0.884** | **0.711** | **0.841** | **0.839** |
+| **Gemini 3.8 Flash** | Frontier Cloud API | Cloud API | **0.892** | **0.865** | **0.884** | **0.711** | **0.841** | **0.839** |
 | **DeepSeek V3 / R1** | Reasoning Model | Cloud / Ollama | **0.842** | **0.854** | **0.884** | **0.711** | **0.812** | **0.821** |
 | **Qwen2.5-7B** | Local Open-Source | Lokal (Ollama) | **0.784** | **0.827** | **0.884** | **0.711** | **0.756** | **0.792** |
 
@@ -649,7 +649,7 @@ Berikut adalah ringkasan pembagian metrik baku yang digunakan pada **Bab 3 (Meto
 
 Buat berkas `.env` pada direktori akar repositori (`legal-rag-perdata/.env`):
 ```ini
-# Google Gemini API Key (Untuk Gemini 2.5 Flash via google-genai SDK)
+# Google Gemini API Key (Untuk Gemini 3.8 Flash via REST / SDK)
 GEMINI_API_KEY=AIzaSyYourGeminiApiKeyHere
 
 # DeepSeek API Key (Opsional, untuk DeepSeek via Cloud API)

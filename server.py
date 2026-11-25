@@ -193,7 +193,7 @@ def get_stats():
         "hir_articles": hir_count,
         "embedding_model": "BAAI/bge-m3 (1024-dim)",
         "supported_llms": [
-            "Google Gemini (Auto-Failover)",
+            "Google Gemini 3.8 Flash (Auto-Failover)",
             "DeepSeek-R1-8B (Ollama)",
             "Qwen2.5-7B-Instruct (Ollama)",
             "DeepSeek-V3 (Cloud API)",
@@ -262,11 +262,11 @@ def handle_chat(req: ChatRequest):
         # 4. Inisialisasi Generator LLM
         llm_name = req.llm_model.lower()
         generator = None
-        llm_label = "Google Gemini (Auto-Failover)"
+        llm_label = "Google Gemini 3.8 Flash (Auto-Failover)"
 
         if "gemini" in llm_name:
-            generator = GeminiGenerator(model_name="gemini-3.1-flash-lite")
-            llm_label = "Google Gemini (Auto-Failover)"
+            generator = GeminiGenerator(model_name="gemini-3.8-flash")
+            llm_label = "Google Gemini 3.8 Flash (Auto-Failover)"
         elif "deepseek-r1" in llm_name:
             generator = DeepSeekOllamaGenerator(model_name="deepseek-r1:8b")
             llm_label = "DeepSeek-R1-8B (Ollama)"
@@ -277,7 +277,7 @@ def handle_chat(req: ChatRequest):
             generator = DeepSeekGenerator(model_name="deepseek-chat")
             llm_label = "DeepSeek-V3 (Cloud API)"
         else:
-            generator = GeminiGenerator(model_name="gemini-3.1-flash-lite")
+            generator = GeminiGenerator(model_name="gemini-3.8-flash")
 
         # 5. Bangun Prompt & Sintesis Jawaban
         prompt_data = build_legal_prompt(query=query_text, retrieved_chunks=safe_chunks)

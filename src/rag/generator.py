@@ -11,6 +11,11 @@ import os
 import json
 from abc import ABC, abstractmethod
 from typing import Optional, Dict, Any
+from pathlib import Path
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+load_dotenv(BASE_DIR / '.env')
 
 
 class BaseLegalGenerator(ABC):
@@ -105,11 +110,11 @@ class DeepSeekOllamaGenerator(BaseLegalGenerator):
 class GeminiGenerator(BaseLegalGenerator):
     """
     [GENERATOR L2: GOOGLE GEMINI VIA REST API & OFFICIAL SDK]
-    - Menggunakan API Google Gemini (model aktif: gemini-2.5-flash / gemini-3.8-flash / gemini-flash-lite-latest).
+    - Menggunakan API Google Gemini (model aktif: gemini-3.8-flash / gemini-3.7-flash / gemini-3.6-flash / gemini-3.5-flash).
     - Beroperasi via REST HTTP calls standar (requests) untuk kompatibilitas penuh tanpa konflik dependency.
     """
 
-    def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-2.5-flash"):
+    def __init__(self, api_key: Optional[str] = None, model_name: str = "gemini-3.8-flash"):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
         self.model_name = model_name
 
@@ -122,10 +127,10 @@ class GeminiGenerator(BaseLegalGenerator):
             )
 
         candidate_models = [
-            "gemini-2.5-flash",
             "gemini-3.8-flash",
-            "gemini-2.0-flash",
-            "gemini-flash-lite-latest",
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash",
             "gemini-3.1-flash-lite",
         ]
         if self.model_name in candidate_models:
@@ -204,7 +209,6 @@ class GeminiGenerator(BaseLegalGenerator):
             "Mohon maaf, server AI Google Gemini sedang mengalami lonjakan antrean trafik global "
             f"atau kendala koneksi ({last_error}). Silakan kirim ulang pertanyaan Anda dalam beberapa detik."
         )
-            )
 
 
 class DeepSeekGenerator(BaseLegalGenerator):

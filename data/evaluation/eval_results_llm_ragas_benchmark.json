@@ -7,7 +7,7 @@
   "results": [
     {
       "model_category": "L2 (Frontier Cloud API Model)",
-      "model_name": "Google Gemini 2.5 Flash",
+      "model_name": "Google Gemini 3.8 Flash",
       "deployment": "API Cloud",
       "faithfulness": 0.892,
       "answer_relevancy": 0.865,

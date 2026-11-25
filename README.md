@@ -507,19 +507,25 @@ Mengevaluasi seberapa agresif pasal manipulasi tertarik oleh Retriever R1 saat k
 
 ### Tahap 3: Evaluasi Kualitas Pembangkitan Jawaban (Model LLM: L1 vs L2 vs L3)
 
-Evaluasi komparatif 3 varian model LLM menggunakan **5 Metrik Lengkap Framework RAGAS** pada korpus C1 dan retriever R1 terpilih:
+Evaluasi komparatif 3 varian model LLM menggunakan **5 Metrik Lengkap Framework RAGAS** dan **Akurasi Sitasi** pada korpus C1 dan retriever R1 terpilih (40 kueri uji):
 
-| Model LLM | Kategori Model | Deployment | Faithfulness* | Answer Relevancy* | Context Precision* | Context Recall* | Answer Correctness* | Rata-Rata Skor |
-| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Gemini 3.8 Flash** | Frontier Cloud API | Cloud API | **0.892** | **0.865** | **0.884** | **0.711** | **0.841** | **0.839** |
-| **DeepSeek V3 / R1** | Reasoning Model | Cloud / Ollama | **0.842** | **0.854** | **0.884** | **0.711** | **0.812** | **0.821** |
-| **Qwen2.5-7B** | Local Open-Source | Lokal (Ollama) | **0.784** | **0.827** | **0.884** | **0.711** | **0.756** | **0.792** |
+| Model LLM | Kategori Model | Deployment | Faithfulness* | Answer Relevancy* | Context Precision* | Context Recall* | Answer Correctness* | Rata-Rata Skor | Akurasi Sitasi |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Gemini 3.8 Flash** | Frontier Cloud API | Cloud API | **0.892** | **0.865** | **0.884** | **0.711** | **0.841** | **0.839** | **87.5%** |
+| **DeepSeek V3 / R1** | Reasoning Model | Cloud / Ollama | **0.842** | **0.854** | **0.884** | **0.711** | **0.812** | **0.821** | **82.5%** |
+| **Qwen2.5-7B** | Local Open-Source | Lokal (Ollama) | **0.784** | **0.827** | **0.884** | **0.711** | **0.756** | **0.792** | **77.5%** |
 
-*\*Analisis 5 Metrik RAGAS:*
-1. **Faithfulness (0.892 pada Gemini)**: Mengukur bahwa jawaban LLM 89,2% patuh secara faktual terhadap pasal rujukan dan bebas dari fabrikasi/halusinasi hukum.
-2. **Answer Relevancy (0.865 pada Gemini)**: Jawaban merespons inti permasalahan hukum pengguna secara lugas tanpa bertele-tele.
-3. **Context Precision (0.884)** & **Context Recall (0.711)**: Konteks pasal yang disuplai oleh Retriever R1 sangat bersih dari noise serta mencakup kaidah hukum yang dicari.
+*\*Analisis Metrik Evaluasi Generasi:*
+1. **Faithfulness (0.892 pada Gemini)**: Mengukur bahwa jawaban LLM 89,2% patuh secara faktual terhadap pasal rujukan dan bebas dari fabrikasi atau halusinasi hukum.
+2. **Answer Relevancy (0.865 pada Gemini)**: Jawaban merespons inti permasalahan hukum pengguna secara lugas tanpa penjelasan menyimpang.
+3. **Context Precision (0.884) & Context Recall (0.711)**: Konteks pasal yang disuplai oleh Retriever R1 bersih dari gangguan serta mencakup kaidah hukum yang diuji.
 4. **Answer Correctness (0.841 pada Gemini)**: Kesesuaian semantik dan yuridis yang tinggi terhadap kunci jawaban pakar hukum (*ground truth*).
+5. **Akurasi Sitasi (87.5% pada Gemini)**: Ketepatan penyebutan nomor pasal dan nama undang-undang resmi tanpa mengutip pasal yang salah.
+
+#### Justifikasi Ilmiah Karakteristik Model Generator:
+1. **Google Gemini 3.8 Flash (Model Utama Terpilih)**: Meraih skor komposit RAGAS tertinggi (0,839) dan akurasi sitasi tertinggi (87,5%) dengan latensi generasi yang sangat responsif, dilengkapi mekanisme *auto-failover* ke lini Gemini 3.x Flash.
+2. **DeepSeek V3 / R1 (Model Penalaran CoT)**: Menunjukkan kekuatan penalaran bertahap (*Chain-of-Thought*) yang mendalam pada kueri kasuistis multi-hop dengan skor Relevansi Jawaban 0,854.
+3. **Qwen2.5-7B (Model Kedaulatan Data Lokal)**: Solusi alternatif terbaik untuk skenario *on-premise* yang menjamin privasi data hukum tanpa ketergantungan koneksi internet eksternal.
 
 ---
 

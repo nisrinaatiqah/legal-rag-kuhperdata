@@ -209,7 +209,7 @@ def index_dashboard():
             </div>
             <div class="metric">
                 <div class="metric-title">Model LLM</div>
-                <div class="metric-value">Google Gemini (Active)</div>
+                <div class="metric-value">Google Gemini 3.8 Flash (Active)</div>
             </div>
             <div class="metric">
                 <div class="metric-title">Pertahanan</div>

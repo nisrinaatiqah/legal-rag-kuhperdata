@@ -586,6 +586,14 @@ Metrik keamanan dan deteksi yang diukur mencakup:
 | **S7** | Kontaminasi 10% | Nonaktif | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis |
 | **S8** | Kontaminasi 10% | Aktif | 37 | 0 | 8 | 155 | 100.0% | 82.22% | 90.24% | 0.0% | 17.5% | Kritis |
 
+*Penjelasan Metrik & Angka Confusion Matrix (NLI Saja):*
+* **Total Evaluasi = 200 Chunk**: Berasal dari 40 kueri uji x Top-5 chunk yang ditarik retriever ($TP + FP + FN + TN = 200$).
+* **True Positive (TP)**: Jumlah chunk manipulasi/racun yang **berhasil dideteksi dan dicegat** oleh inferensi semantik NLI. Pada S4 dicegat **23 chunk** ($TP = 23$), pada S6 dicegat **34 chunk** ($TP = 34$), dan pada S8 dicegat **37 chunk** ($TP = 37$).
+* **False Positive (FP)**: Jumlah chunk dokumen hukum sah/asli yang **keliru dituduh racun dan diblokir (alarm palsu)**. Bernilai **0** di seluruh skenario (FPR = 0.0%), membuktikan model NLI tidak pernah salah memblokir pasal KUHPerdata/HIR yang otentik.
+* **False Negative (FN)**: Jumlah chunk racun yang **gagal dideteksi NLI sehingga lolos masuk ke prompt konteks LLM (kebocoran racun)**. Pada kontaminasi 1% (S4), NLI mampu mencegat semuanya ($FN = 0$). Namun pada kontaminasi lebih tinggi dengan parafrasa negasi halus, model NLI mengalami kebocoran: terdapat **2 chunk racun lolos pada S6 ($FN = 2$)** dan **8 chunk racun lolos pada S8 ($FN = 8$)**.
+* **True Negative (TN)**: Jumlah chunk dokumen sah/asli yang **dinyatakan aman dan diteruskan** ke generator LLM (S1–S2: 200 chunk, S3–S4: 177 chunk, S5–S6: 164 chunk, S7–S8: 155 chunk).
+* **Dampak Recall & ASR**: Akibat munculnya $FN = 8$ pada S8, Recall deteksi racun merosot ke **82.22%** ($\\frac{37}{37+8}$) dan Attack Success Rate (ASR) melonjak ke **17.5%** (7 dari 40 jawaban LLM berhasil disesatkan racun), membuktikan bahwa mengandalkan NLI semata rentan terhadap manipulasi bahasa tingkat tinggi.
+
 ##### 2. Konfigurasi 2: Pertahanan Kriptografis SHA-256 Saja ($\\alpha = 1.0, \\tau = 0.5$)
 
 | Skenario | Kondisi Korpus | Pertahanan | TP | FP | FN | TN | Precision | Recall | F1-Score | FPR | ASR | Status Keamanan |
@@ -599,6 +607,14 @@ Metrik keamanan dan deteksi yang diukur mencakup:
 | **S7** | Kontaminasi 10% | Nonaktif | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis |
 | **S8** | Kontaminasi 10% | Aktif | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
 
+*Penjelasan Metrik & Angka Confusion Matrix (SHA-256 Saja):*
+* **Total Evaluasi = 200 Chunk**: Sama dengan konfigurasi lainnya ($TP + FP + FN + TN = 200$).
+* **True Positive (TP)**: Jumlah chunk manipulasi/racun yang **berhasil dicegat secara deterministik** karena hash dokumen tidak cocok dengan manifes kanonik resmi. Pada S4 dicegat **23 chunk** ($TP = 23$), pada S6 dicegat **36 chunk** ($TP = 36$), dan pada S8 dicegat seluruh **45 chunk** ($TP = 45$).
+* **False Positive (FP)**: Bernilai **0** di seluruh skenario. Dokumen asli selalu cocok dengan hash di manifes sehingga tidak pernah ada pemblokiran keliru (FPR = 0.0%).
+* **False Negative (FN)**: Bernilai mutlak **0** di seluruh skenario aktif ($FN = 0$). Karena SHA-256 memiliki sifat *avalanche effect*, perubahan 1 karakter pada pasal manipulasi langsung mengubah nilai hash secara total, sehingga mustahil ada racun yang lolos ($ASR = 0.0\%$, Recall = 100.0%).
+* **True Negative (TN)**: Seluruh dokumen sah/asli berhasil lolos tanpa hambatan (177 pada 1%, 164 pada 5%, dan 155 pada 10%).
+* **Kelemahan Inheren**: Meskipun mencatat metrik sempurna ($ASR = 0.0\%$, Recall = 100.0%), konfigurasi ini bersifat kaku karena sepenuhnya bergantung pada tabel manifes hash statis. Jika sistem menerima masukan dokumen baru atau dokumen yurisprudensi di luar korpus manifes, verifikasi hash tidak dapat melakukan inferensi semantik.
+
 ##### 3. Konfigurasi 3: Pertahanan Hibrida SHA-256 + NLI ($\\alpha = 0.6, \\tau = 0.5$)
 
 | Skenario | Kondisi Korpus | Pertahanan | TP | FP | FN | TN | Precision | Recall | F1-Score | FPR | ASR | Status Keamanan |
@@ -611,6 +627,11 @@ Metrik keamanan dan deteksi yang diukur mencakup:
 | **S6** | Kontaminasi 5% | Aktif | 36 | 0 | 0 | 164 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
 | **S7** | Kontaminasi 10% | Nonaktif | 0 | 0 | 45 | 155 | 100.0% | 0.0% | 0.0% | 0.0% | 75.0% | Kritis |
 | **S8** | Kontaminasi 10% | Aktif | 45 | 0 | 0 | 155 | 100.0% | 100.0% | 100.0% | 0.0% | 0.0% | Aman |
+
+*Penjelasan Metrik & Angka Confusion Matrix (Hibrida SHA-256 + NLI - Konfigurasi Terpilih):*
+* **Sinergi Optimal Dua Lapis**: Menggabungkan kepastian deterministik SHA-256 ($FN = 0$, $TP = 45$ pada kontaminasi 10%) dengan kedalaman penalaran kontradiksi NLI ($R_{\\text{sem}}$).
+* **Performa Tanpa Cacat**: Menghasilkan **TP = 45**, **FP = 0**, **FN = 0**, dan **TN = 155**, yang membuktikan bahwa sistem mencapai **Precision 100.0%**, **Recall 100.0%**, **F1-Score 100.0%**, **FPR 0.0%**, dan **ASR 0.0%** di seluruh tingkat kontaminasi.
+* **Solusi Final Skripsi**: Mengeliminasi kelemahan NLI tunggal (mencegah kebocoran 8 chunk racun) sekaligus melengkapi SHA-256 dengan kemampuan pemahaman semantik hukum yang adaptif.
 
 ---
 

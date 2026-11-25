@@ -328,7 +328,7 @@ legal-rag-perdata/
 │   │   ├── corpus_poisoned_1pct.jsonl
 │   │   ├── corpus_poisoned_5pct.jsonl
 │   │   └── corpus_poisoned_10pct.jsonl
-│   └── evaluation/               # Ground truth kueri uji (30 kueri) & berkas hasil metrik
+│   └── evaluation/               # Ground truth kueri uji (40 kueri) & berkas hasil metrik
 │       ├── ground_truth_perdata.json
 │       ├── chunking_scenarios_comparison.json      # Statistik struktural C1, C2, C3
 │       ├── eval_results_chunking_scenarios.json    # Hasil retrieval 3 skenario chunking
@@ -445,9 +445,9 @@ Pengujian komparatif membandingkan tiga strategi segmentasi korpus hukum perdata
 
 | Skenario | Strategi Segmentasi | Total Chunk | Rata-rata Token | Distorsi Multi-Pasal (%)* | Context Precision* | MRR | Recall@5 |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **C1** | Berbasis Struktur Pasal | 2.276 | 95,3 | 0,00% | 0,884 | 0,3762 | 0,5667 |
-| **C2** | Ukuran Tetap 256 Token | 822 | 255,6 | 90,15% | 0,612 | 0,4965 | 0,7000 |
-| **C3** | Ukuran Tetap 512 Token | 411 | 511,1 | 97,32% | 0,485 | 0,5787 | 0,7000 |
+| **C1** | Berbasis Struktur Pasal | 2.276 | 95,3 | 0,00% | 0,884 | 0,2988 | 0,4500 |
+| **C2** | Ukuran Tetap 256 Token | 822 | 255,6 | 90,15% | 0,612 | 0,3911 | 0,5750 |
+| **C3** | Ukuran Tetap 512 Token | 411 | 511,1 | 97,32% | 0,485 | 0,4653 | 0,5750 |
 
 *\*Dua Metrik Inti Penentu Tahap Chunking:*
 1. **Distorsi Multi-Pasal (%)**: C1 mencatatkan **0,00%** (100% batas pasal terjaga utuh), sedangkan C3 mencapai **97,32%** (hampir seluruh chunk mencampur 5–10 pasal berbeda).
@@ -511,14 +511,14 @@ Evaluasi komparatif 3 varian model LLM menggunakan **5 Metrik Lengkap Framework 
 
 | Model LLM | Kategori Model | Deployment | Faithfulness* | Answer Relevancy* | Context Precision* | Context Recall* | Answer Correctness* | Rata-Rata Skor |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Gemini 2.5 Flash** | Frontier Cloud API | Cloud API | **0.892** | **0.865** | **0.884** | **0.833** | **0.841** | **0.863** |
-| **DeepSeek V3 / R1** | Reasoning Model | Cloud / Ollama | **0.842** | **0.854** | **0.884** | **0.833** | **0.812** | **0.845** |
-| **Qwen2.5-7B** | Local Open-Source | Lokal (Ollama) | **0.784** | **0.827** | **0.884** | **0.833** | **0.756** | **0.817** |
+| **Gemini 2.5 Flash** | Frontier Cloud API | Cloud API | **0.892** | **0.865** | **0.884** | **0.711** | **0.841** | **0.839** |
+| **DeepSeek V3 / R1** | Reasoning Model | Cloud / Ollama | **0.842** | **0.854** | **0.884** | **0.711** | **0.812** | **0.821** |
+| **Qwen2.5-7B** | Local Open-Source | Lokal (Ollama) | **0.784** | **0.827** | **0.884** | **0.711** | **0.756** | **0.792** |
 
 *\*Analisis 5 Metrik RAGAS:*
 1. **Faithfulness (0.892 pada Gemini)**: Mengukur bahwa jawaban LLM 89,2% patuh secara faktual terhadap pasal rujukan dan bebas dari fabrikasi/halusinasi hukum.
 2. **Answer Relevancy (0.865 pada Gemini)**: Jawaban merespons inti permasalahan hukum pengguna secara lugas tanpa bertele-tele.
-3. **Context Precision (0.884)** & **Context Recall (0.833)**: Konteks pasal yang disuplai oleh Retriever R1 sangat bersih dari noise serta mencakup kaidah hukum yang dicari.
+3. **Context Precision (0.884)** & **Context Recall (0.711)**: Konteks pasal yang disuplai oleh Retriever R1 sangat bersih dari noise serta mencakup kaidah hukum yang dicari.
 4. **Answer Correctness (0.841 pada Gemini)**: Kesesuaian semantik dan yuridis yang tinggi terhadap kunci jawaban pakar hukum (*ground truth*).
 
 ---

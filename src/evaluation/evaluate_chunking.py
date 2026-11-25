@@ -1,6 +1,6 @@
 """
 Modul: Evaluasi Komparatif 3 Skenario Chunking (C1 vs C2 vs C3)
-Fungsi: Menguji akurasi Information Retrieval (MRR, Recall@K, MAP@K) pada 30 kueri benchmark
+Fungsi: Menguji akurasi Information Retrieval (MRR, Recall@K, MAP@K) pada 40 kueri benchmark
 ground truth menggunakan 3 korpus hasil strategi pemotongan teks:
 1. C1: Structure-Based (Per Pasal Utuh, 2.276 chunk)
 2. C2: Fixed-Size Small (256 Tokens, 822 chunk)
@@ -108,7 +108,7 @@ def main():
         queries = json.load(f)
         
     print("=" * 80)
-    print("BENCHMARK RETRIEVAL PADA 3 SKENARIO CHUNKING (30 KUERI GROUND TRUTH)")
+    print("BENCHMARK RETRIEVAL PADA 3 SKENARIO CHUNKING (40 KUERI GROUND TRUTH - 8 KATEGORI)")
     print("=" * 80)
     
     print("\n[*] 1. Mengevaluasi Skenario C1: Structure-Based (Per Pasal Utuh - 2.276 chunk)...")

@@ -1,19 +1,24 @@
 {
   "summary": {
-    "total_queries": 30,
-    "mrr": 0.7541666666666667,
-    "precision@1": 0.6666666666666666,
-    "recall@1": 0.65,
-    "precision@3": 0.27777777777777773,
-    "recall@3": 0.8166666666666667,
-    "precision@5": 0.17333333333333337,
-    "recall@5": 0.8333333333333334,
-    "precision@10": 0.09333333333333335,
-    "recall@10": 0.9
+    "model_name": "R1",
+    "total_queries": 40,
+    "mrr": 0.6533,
+    "recall": {
+      "Recall@1": 0.5395,
+      "Recall@3": 0.6842,
+      "Recall@5": 0.7105,
+      "Recall@10": 0.7632
+    },
+    "map": {
+      "MAP@1": 0.5789,
+      "MAP@3": 0.6096,
+      "MAP@5": 0.6189,
+      "MAP@10": 0.6265
+    }
   },
-  "details": [
+  "query_details": [
     {
-      "query_id": "Q_PERDATA_001",
+      "id": "Q_PERDATA_001",
       "query": "Apa saja syarat sahnya suatu perjanjian?",
       "target_pasal": [
         "1320"
@@ -31,17 +36,15 @@
         "1601x"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_002",
+      "id": "Q_PERDATA_002",
       "query": "Kapan suatu kewajiban ganti rugi akibat wanprestasi mulai berlaku bagi debitur?",
       "target_pasal": [
         "1243"
@@ -59,17 +62,15 @@
         "1835"
       ],
       "reciprocal_rank": 0.125,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.0,
-      "R@3": 0.0,
-      "P@5": 0.0,
-      "R@5": 0.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_003",
+      "id": "Q_PERDATA_003",
       "query": "Bagaimana ketentuan mengenai perbuatan melawan hukum yang mewajibkan penggantian kerugian?",
       "target_pasal": [
         "1365"
@@ -87,17 +88,15 @@
         "568"
       ],
       "reciprocal_rank": 0.5,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_004",
+      "id": "Q_PERDATA_004",
       "query": "Apakah semua perjanjian yang dibuat secara sah berlaku sebagai undang-undang bagi mereka yang membuatnya?",
       "target_pasal": [
         "1338"
@@ -115,17 +114,15 @@
         "1658"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_005",
+      "id": "Q_PERDATA_005",
       "query": "Kapan seseorang dianggap telah dewasa menurut ketentuan hukum perdata?",
       "target_pasal": [
         "330"
@@ -142,18 +139,16 @@
         "331b",
         "414"
       ],
-      "reciprocal_rank": 0.16666666666666666,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.0,
-      "R@3": 0.0,
-      "P@5": 0.0,
-      "R@5": 0.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "reciprocal_rank": 0.1667,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_006",
+      "id": "Q_PERDATA_006",
       "query": "Kapan terbukanya suatu warisan terjadi menurut hukum perdata?",
       "target_pasal": [
         "830"
@@ -171,17 +166,15 @@
         "1076"
       ],
       "reciprocal_rank": 0.0,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.0,
-      "R@3": 0.0,
-      "P@5": 0.0,
-      "R@5": 0.0,
-      "P@10": 0.0,
-      "R@10": 0.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_007",
+      "id": "Q_PERDATA_007",
       "query": "Bagaimana hak mewaris anak-anak atau keturunan dari orang yang meninggal dunia?",
       "target_pasal": [
         "852"
@@ -198,18 +191,16 @@
         "974",
         "973"
       ],
-      "reciprocal_rank": 0.3333333333333333,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "reciprocal_rank": 0.3333,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_008",
+      "id": "Q_PERDATA_008",
       "query": "Berapa bagian warisan bagi anak luar kawin yang diakui sah jika bersama-sama dengan keturunan yang sah?",
       "target_pasal": [
         "863"
@@ -227,17 +218,15 @@
         "908"
       ],
       "reciprocal_rank": 0.5,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_009",
+      "id": "Q_PERDATA_009",
       "query": "Apa definisi dari surat wasiat atau testamen?",
       "target_pasal": [
         "875"
@@ -255,17 +244,15 @@
         "939"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_010",
+      "id": "Q_PERDATA_010",
       "query": "Apa pengertian dari hak milik atas suatu kebendaan?",
       "target_pasal": [
         "570"
@@ -283,17 +270,15 @@
         "1955"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_011",
+      "id": "Q_PERDATA_011",
       "query": "Apa definisi dan hak yang timbul dari perjanjian gadai?",
       "target_pasal": [
         "1150"
@@ -311,17 +296,15 @@
         "1830"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_012",
+      "id": "Q_PERDATA_012",
       "query": "Apa pengertian hipotek menurut Kitab Undang-Undang Hukum Perdata?",
       "target_pasal": [
         "1162"
@@ -339,17 +322,15 @@
         "1170"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_013",
+      "id": "Q_PERDATA_013",
       "query": "Apa definisi dari perjanjian jual beli menurut hukum perdata?",
       "target_pasal": [
         "1457"
@@ -367,17 +348,15 @@
         "1467"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_014",
+      "id": "Q_PERDATA_014",
       "query": "Kapan perjanjian jual beli dianggap telah terjadi antara penjual dan pembeli?",
       "target_pasal": [
         "1458"
@@ -395,17 +374,15 @@
         "1182"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_015",
+      "id": "Q_PERDATA_015",
       "query": "Apa pengertian dari perjanjian sewa menyewa?",
       "target_pasal": [
         "1548"
@@ -423,17 +400,15 @@
         "1185"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_016",
+      "id": "Q_PERDATA_016",
       "query": "Apa pengertian dari perjanjian pinjam pakai?",
       "target_pasal": [
         "1740"
@@ -451,17 +426,15 @@
         "1601a"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_017",
+      "id": "Q_PERDATA_017",
       "query": "Apa pengertian dari perjanjian pinjam meminjam uang atau barang yang habis karena pemakaian?",
       "target_pasal": [
         "1754"
@@ -479,17 +452,15 @@
         "1745"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_018",
+      "id": "Q_PERDATA_018",
       "query": "Apa pengertian dari pemberian kuasa?",
       "target_pasal": [
         "1792"
@@ -507,17 +478,15 @@
         "1813"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_019",
+      "id": "Q_PERDATA_019",
       "query": "Berapa lama jangka waktu kedaluwarsa untuk membebaskan seseorang dari suatu perikatan?",
       "target_pasal": [
         "1967"
@@ -535,17 +504,15 @@
         "1603l"
       ],
       "reciprocal_rank": 0.0,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.0,
-      "R@3": 0.0,
-      "P@5": 0.0,
-      "R@5": 0.0,
-      "P@10": 0.0,
-      "R@10": 0.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_020",
+      "id": "Q_PERDATA_020",
       "query": "Ke pengadilan negeri mana surat gugatan perdata harus diajukan oleh penggugat?",
       "target_pasal": [
         "118"
@@ -563,17 +530,15 @@
         "120a"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_021",
+      "id": "Q_PERDATA_021",
       "query": "Bagaimana cara mengajukan gugatan perdata jika penggugat tidak bisa membaca dan menulis?",
       "target_pasal": [
         "120"
@@ -591,17 +556,15 @@
         "129"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_022",
+      "id": "Q_PERDATA_022",
       "query": "Bagaimana prosedur ketua pengadilan negeri memanggil para pihak setelah gugatan didaftarkan?",
       "target_pasal": [
         "121"
@@ -619,17 +582,15 @@
         "14"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_023",
+      "id": "Q_PERDATA_023",
       "query": "Bagaimana syarat pemberian kuasa untuk mewakili pihak dalam persidangan perdata?",
       "target_pasal": [
         "123"
@@ -647,17 +608,15 @@
         "334"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_024",
+      "id": "Q_PERDATA_024",
       "query": "Apa akibat hukum jika tergugat tidak hadir pada hari sidang pertama tanpa alasan yang sah?",
       "target_pasal": [
         "125"
@@ -675,17 +634,15 @@
         "142"
       ],
       "reciprocal_rank": 0.5,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_025",
+      "id": "Q_PERDATA_025",
       "query": "Bagaimana kewajiban hakim untuk mengusahakan perdamaian antara kedua belah pihak di persidangan?",
       "target_pasal": [
         "130"
@@ -703,17 +660,15 @@
         "1853"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_026",
+      "id": "Q_PERDATA_026",
       "query": "Kapan dan bagaimana tergugat dapat mengajukan gugatan balik atau rekonvensi?",
       "target_pasal": [
         "132a",
@@ -732,17 +687,15 @@
         "1843"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 0.5,
-      "P@3": 0.3333333333333333,
-      "R@3": 0.5,
-      "P@5": 0.4,
-      "R@5": 1.0,
-      "P@10": 0.2,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 0.5,
+        "R@3": 0.5,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_027",
+      "id": "Q_PERDATA_027",
       "query": "Apa saja alat-alat bukti yang sah dalam pemeriksaan perkara perdata di persidangan?",
       "target_pasal": [
         "164"
@@ -760,17 +713,15 @@
         "265"
       ],
       "reciprocal_rank": 0.5,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_028",
+      "id": "Q_PERDATA_028",
       "query": "Bagaimana syarat permohonan penyitaan jaminan atau conservatoir beslag terhadap barang debitur?",
       "target_pasal": [
         "227"
@@ -788,17 +739,15 @@
         "1738"
       ],
       "reciprocal_rank": 0.0,
-      "P@1": 0.0,
-      "R@1": 0.0,
-      "P@3": 0.0,
-      "R@3": 0.0,
-      "P@5": 0.0,
-      "R@5": 0.0,
-      "P@10": 0.0,
-      "R@10": 0.0
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_029",
+      "id": "Q_PERDATA_029",
       "query": "Kapan seorang hakim wajib mengundurkan diri dari memeriksa suatu perkara karena hubungan keluarga atau kepentingan pribadi?",
       "target_pasal": [
         "374"
@@ -816,17 +765,15 @@
         "319g"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
     },
     {
-      "query_id": "Q_PERDATA_030",
+      "id": "Q_PERDATA_030",
       "query": "Bagaimana tata cara penyampaian surat panggilan juru sita kepada orang yang tidak diketahui tempat tinggalnya?",
       "target_pasal": [
         "390"
@@ -844,14 +791,226 @@
         "24"
       ],
       "reciprocal_rank": 1.0,
-      "P@1": 1.0,
-      "R@1": 1.0,
-      "P@3": 0.3333333333333333,
-      "R@3": 1.0,
-      "P@5": 0.2,
-      "R@5": 1.0,
-      "P@10": 0.1,
-      "R@10": 1.0
+      "recall": {
+        "R@1": 1.0,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
+    },
+    {
+      "id": "Q_PERDATA_031",
+      "query": "Bagaimana seseorang yang dirugikan akibat wanprestasi dapat mengajukan gugatan ganti rugi ke pengadilan negeri?",
+      "target_pasal": [
+        "1243",
+        "118"
+      ],
+      "retrieved_pasal": [
+        "1601w",
+        "1371",
+        "120",
+        "1603r",
+        "118",
+        "225",
+        "124",
+        "403",
+        "463",
+        "1919"
+      ],
+      "reciprocal_rank": 0.2,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.5,
+        "R@10": 0.5
+      }
+    },
+    {
+      "id": "Q_PERDATA_032",
+      "query": "Jika debitur diduga hendak menggelapkan harta demi menghindari kewajiban utangnya, apa upaya hukum pengamanan yang dapat dimohonkan ke pengadilan negeri?",
+      "target_pasal": [
+        "1131",
+        "227"
+      ],
+      "retrieved_pasal": [
+        "227",
+        "1843",
+        "1208",
+        "1832",
+        "218",
+        "216",
+        "1834",
+        "1404",
+        "1035",
+        "1156"
+      ],
+      "reciprocal_rank": 1.0,
+      "recall": {
+        "R@1": 0.5,
+        "R@3": 0.5,
+        "R@5": 0.5,
+        "R@10": 0.5
+      }
+    },
+    {
+      "id": "Q_PERDATA_033",
+      "query": "Apa perbedaan mendasar antara wanprestasi dan perbuatan melawan hukum menurut Kitab Undang-Undang Hukum Perdata?",
+      "target_pasal": [
+        "1243",
+        "1365"
+      ],
+      "retrieved_pasal": [
+        "207",
+        "213",
+        "446",
+        "206",
+        "129",
+        "225",
+        "163",
+        "123",
+        "146",
+        "180"
+      ],
+      "reciprocal_rank": 0.0,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
+    },
+    {
+      "id": "Q_PERDATA_034",
+      "query": "Apa perbedaan antara perjanjian pinjam pakai dengan perjanjian pinjam meminjam menurut KUHPerdata?",
+      "target_pasal": [
+        "1740",
+        "1754"
+      ],
+      "retrieved_pasal": [
+        "1740",
+        "1743",
+        "1754",
+        "1744",
+        "1750",
+        "1762",
+        "1759",
+        "1748",
+        "1139",
+        "1185"
+      ],
+      "reciprocal_rank": 1.0,
+      "recall": {
+        "R@1": 0.5,
+        "R@3": 1.0,
+        "R@5": 1.0,
+        "R@10": 1.0
+      }
+    },
+    {
+      "id": "Q_PERDATA_035",
+      "query": "Budi meminjam uang sebesar 50 juta rupiah kepada Andi dengan janji mengembalikannya bulan lalu, tetapi hingga kini Budi mangkir dan tidak membayar. Apa dasar hukum tuntutannya?",
+      "target_pasal": [
+        "1243",
+        "1754"
+      ],
+      "retrieved_pasal": [
+        "1359",
+        "1250",
+        "1601t",
+        "1772",
+        "1264",
+        "1285",
+        "387",
+        "1397",
+        "1764",
+        "1773"
+      ],
+      "reciprocal_rank": 0.0,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
+    },
+    {
+      "id": "Q_PERDATA_036",
+      "query": "Seorang pembeli telah membayar lunas harga rumah dan menandatangani akta jual beli, namun penjual menolak menyerahkan kunci rumah. Bagaimana hak pembeli menurut hukum perdata?",
+      "target_pasal": [
+        "1457",
+        "1458"
+      ],
+      "retrieved_pasal": [
+        "1495",
+        "1516",
+        "1478",
+        "1496",
+        "1492",
+        "1404",
+        "1200",
+        "1217",
+        "1178",
+        "1146a"
+      ],
+      "reciprocal_rank": 0.0,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
+    },
+    {
+      "id": "Q_PERDATA_037",
+      "query": "Kalau tetangga saya merobohkan pagar rumah saya secara sepihak, apakah saya bisa meminta dia mengganti kerugian tersebut secara hukum?",
+      "target_pasal": [
+        "1365"
+      ],
+      "retrieved_pasal": [
+        "651",
+        "654",
+        "643",
+        "637",
+        "641",
+        "666",
+        "667",
+        "663",
+        "635",
+        "603"
+      ],
+      "reciprocal_rank": 0.0,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
+    },
+    {
+      "id": "Q_PERDATA_038",
+      "query": "Bolehkah saya menuntut orang yang berutang ke pengadilan tanpa harus menyewa jasa advokat atau pengacara?",
+      "target_pasal": [
+        "123"
+      ],
+      "retrieved_pasal": [
+        "1823",
+        "1821",
+        "403",
+        "1382",
+        "1435",
+        "133",
+        "1842",
+        "1303",
+        "131",
+        "1290"
+      ],
+      "reciprocal_rank": 0.0,
+      "recall": {
+        "R@1": 0.0,
+        "R@3": 0.0,
+        "R@5": 0.0,
+        "R@10": 0.0
+      }
     }
   ]
 }
